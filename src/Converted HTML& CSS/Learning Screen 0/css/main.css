@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v543_4085 {
+  width: 100%;
+  height: 960px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v543_4086 {
+  width: 100%;
+  height: 91px;
+  background: rgba(255,255,255,0.9100000262260437);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 14px;
+  box-shadow: 0px 8px 24px rgba(0.5843137502670288, 0.615686297416687, 0.6470588445663452, 0.20000000298023224);
+}
+.v543_4088 {
+  width: 143px;
+  height: 151px;
+  background: url("../images/v543_4088.png");
+  opacity: 1;
+  position: absolute;
+  top: 141px;
+  left: 1796px;
+}
+.name {
+  color: #fff;
+}
+.v543_4096 {
+  width: 178px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 702px;
+  left: 1085px;
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 64px;
+  opacity: 1;
+  text-align: center;
+}
+.name {
+  color: #fff;
+}
+.v543_4152 {
+  width: 530px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 102px;
+  left: 456px;
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 64px;
+  opacity: 1;
+  text-align: center;
+}
+.name {
+  color: #fff;
+}
+.v543_4155 {
+  width: 241px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 803px;
+  left: 181px;
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 48px;
+  opacity: 1;
+  text-align: center;
+}
+.name {
+  color: #fff;
+}
+.v543_4158 {
+  width: 147px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 804px;
+  left: 673px;
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 48px;
+  opacity: 1;
+  text-align: center;
+}
+.name {
+  color: #fff;
+}
+.v543_4161 {
+  width: 86px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 803px;
+  left: 1148px;
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 48px;
+  opacity: 1;
+  text-align: center;
+}
+.v543_4163 {
+  width: 100%;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 217px;
+  left: 191px;
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 64px;
+  opacity: 1;
+  text-align: center;
+}
+.v547_4144 {
+  width: 378px;
+  height: 275px;
+  background: url("../images/v547_4144.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 429px;
+  left: 494px;
+  overflow: hidden;
+}

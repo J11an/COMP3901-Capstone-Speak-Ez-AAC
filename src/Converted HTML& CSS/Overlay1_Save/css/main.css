@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v261_5663 {
+  width: 686px;
+  height: 335px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 148px;
+  border-top-right-radius: 148px;
+  border-bottom-left-radius: 148px;
+  border-bottom-right-radius: 148px;
+  overflow: hidden;
+}
+.v261_5664 {
+  width: 111px;
+  height: 105px;
+  background: url("../images/v261_5664.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 168px;
+  left: 288px;
+  overflow: hidden;
+}
+.v261_5665 {
+  width: 274px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 88px;
+  left: 206px;
+  font-family: DM Sans;
+  font-weight: Medium;
+  font-size: 36px;
+  opacity: 1;
+  text-align: center;
+}

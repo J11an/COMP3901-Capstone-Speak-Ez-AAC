@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v522_5338 {
+  width: 676px;
+  height: 369px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 74px;
+  border-top-right-radius: 74px;
+  border-bottom-left-radius: 74px;
+  border-bottom-right-radius: 74px;
+  overflow: hidden;
+}
+.v522_5339 {
+  width: 306px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 28px;
+  left: 195px;
+  font-family: Inder;
+  font-weight: Regular;
+  font-size: 34px;
+  opacity: 1;
+  text-align: left;
+}
+.v522_5340 {
+  width: 167px;
+  color: rgba(255,255,255,1);
+  position: absolute;
+  top: 286px;
+  left: 255px;
+  font-family: Thabit;
+  font-weight: Regular;
+  font-size: 42px;
+  opacity: 1;
+  text-align: center;
+}
+.v522_5341 {
+  width: 455px;
+  height: 52px;
+  background: url("../images/v522_5341.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 104px;
+  left: 110px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.v522_5342 {
+  width: 455px;
+  height: 52px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.10000000149011612);
+  overflow: hidden;
+}
+.v522_5343 {
+  width: 16px;
+  height: 4px;
+  background: url("../images/v522_5343.png");
+  opacity: 0.800000011920929;
+  position: absolute;
+  top: 24px;
+  left: 403px;
+  border: 3px solid rgba(0,0,0,1);
+}
+.name {
+  color: #fff;
+}
+.v522_5345 {
+  width: 456px;
+  height: 79px;
+  background: rgba(217,217,217,1);
+  opacity: 1;
+  position: absolute;
+  top: 185px;
+  left: 109px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+}
+.v522_5346 {
+  width: 348px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 203px;
+  left: 181px;
+  font-family: Inder;
+  font-weight: Regular;
+  font-size: 34px;
+  opacity: 1;
+  text-align: left;
+}
+.v522_5347 {
+  width: 58px;
+  height: 54px;
+  background: url("../images/v522_5347.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 19px;
+  left: 27px;
+  overflow: hidden;
+}
