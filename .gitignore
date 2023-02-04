@@ -33,3 +33,4 @@ db.sqlite3
 /venv
 __pycache__
 /.vscode/
+/app/TestData/Voice_ Recognition_Test_Data/
