@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-  <div class="card aac-card mb-4 mx-auto" style="width: 18rem">
+  <div class="card aac-card mx-auto" style="width: 18rem">
     <p class="card-text tile-text">{{ title }}</p>
     <img class="card-img-top img-orientation" :src="imageUrl" alt="" />
   </div>

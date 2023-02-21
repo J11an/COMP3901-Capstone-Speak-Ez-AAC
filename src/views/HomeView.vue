@@ -19,45 +19,43 @@ export default {
   <div class="container">
     <div class="text-center">
       <h1 class="mode-title-text pd-3">Select the Mode you wish to use</h1>
-      <div class="row">
-        <div class="col">
-          <RouterLink to="/speaking">
-            <AACTile title="SPEAKING" image-url="/SpeakingScreen.png" />
-          </RouterLink>
-        </div>
-        <div class="col">
-          <RouterLink to="/typing">
-            <AACTile title="TYPING" image-url="/TypingScreen.png" />
-          </RouterLink>
-        </div>
-        <div class="col">
-          <RouterLink to="/listening">
-            <AACTile title="LISTENING" image-url="/ListeningScreen.png" />
-          </RouterLink>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <RouterLink to="/neweditword">
-            <AACTile
-              title="NEW/EDIT WORD"
-              image-url="/NewEditScreen.png"
-            ></AACTile>
-          </RouterLink>
-        </div>
-        <div class="col">
-          <RouterLink to="/savedphrases">
-            <AACTile
-              title="SAVED PHRASES"
-              image-url="/SavedPhrasesScreen.png"
-            ></AACTile>
-          </RouterLink>
-        </div>
-        <div class="col">
-          <RouterLink to="/learning">
-            <AACTile title="LEARNING" image-url="/LearningScreen.png" />
-          </RouterLink>
-        </div>
+      <div class="d-flex flex-wrap justify-content-between">
+
+        <RouterLink to="/speaking">
+          <AACTile title="SPEAKING" image-url="/SpeakingScreen.png" />
+        </RouterLink>
+
+        <RouterLink to="/typing">
+          <AACTile title="TYPING" image-url="/TypingScreen.png" />
+        </RouterLink>
+      
+
+        <RouterLink to="/listening">
+          <AACTile title="LISTENING" image-url="/ListeningScreen.png" />
+        </RouterLink>
+      
+
+        <RouterLink to="/neweditword">
+          <AACTile
+            title="NEW/EDIT WORD"
+            image-url="/NewEditScreen.png"
+          ></AACTile>
+        </RouterLink>
+      
+
+        <RouterLink to="/savedphrases">
+          <AACTile
+            title="SAVED PHRASES"
+            image-url="/SavedPhrasesScreen.png"
+          ></AACTile>
+        </RouterLink>
+      
+
+        <RouterLink to="/learning">
+          <AACTile title="LEARNING" image-url="/LearningScreen.png" />
+        </RouterLink>
+        
+
       </div>
     </div>
   </div>
@@ -76,5 +74,7 @@ export default {
 a {
   text-decoration: none;
   color: inherit;
+  border-radius: 100px;
+  margin: 10px;
 }
 </style>
