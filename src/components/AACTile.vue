@@ -44,5 +44,11 @@ export default {
   border-radius: 48px;
   width: 291.54px;
   height: 272.67px;
+  transition: 300ms;
+}
+
+.aac-card:hover{
+  transform: scale(1.1);
+  transition: 200ms;
 }
 </style>
