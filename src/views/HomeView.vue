@@ -21,30 +21,42 @@ export default {
       <h1 class="mode-title-text pd-3">Select the Mode you wish to use</h1>
       <div class="row">
         <div class="col">
-          <AACTile title="SPEAKING" image-url="/SpeakingScreen.png"></AACTile>
+          <RouterLink to="/speaking">
+            <AACTile title="SPEAKING" image-url="/SpeakingScreen.png" />
+          </RouterLink>
         </div>
         <div class="col">
-          <AACTile title="TYPING" image-url="/TypingScreen.png"></AACTile>
+          <RouterLink to="/typing">
+            <AACTile title="TYPING" image-url="/TypingScreen.png" />
+          </RouterLink>
         </div>
         <div class="col">
-          <AACTile title="LISTENING" image-url="/ListeningScreen.png"></AACTile>
+          <RouterLink to="/listening">
+            <AACTile title="LISTENING" image-url="/ListeningScreen.png" />
+          </RouterLink>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <AACTile
-            title="NEW/EDIT WORD"
-            image-url="/NewEditScreen.png"
-          ></AACTile>
+          <RouterLink to="/neweditword">
+            <AACTile
+              title="NEW/EDIT WORD"
+              image-url="/NewEditScreen.png"
+            ></AACTile>
+          </RouterLink>
         </div>
         <div class="col">
-          <AACTile
-            title="SAVED PHRASES"
-            image-url="/SavedPhrasesScreen.png"
-          ></AACTile>
+          <RouterLink to="/savedphrases">
+            <AACTile
+              title="SAVED PHRASES"
+              image-url="/SavedPhrasesScreen.png"
+            ></AACTile>
+          </RouterLink>
         </div>
         <div class="col">
-          <AACTile title="LEARNING" image-url="/LearningScreen.png"></AACTile>
+          <RouterLink to="/learning">
+            <AACTile title="LEARNING" image-url="/LearningScreen.png" />
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -59,5 +71,10 @@ export default {
   font-size: 48px;
   line-height: 62px;
   text-transform: uppercase;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
