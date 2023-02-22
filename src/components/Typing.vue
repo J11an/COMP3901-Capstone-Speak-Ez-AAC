@@ -698,7 +698,7 @@ body {
 .Emoji {
   width: 30px;
   height: 30px;
-  background: url("../images/Emoji.png");
+  background: url("/public/Emoji.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -737,7 +737,7 @@ body {
 .v441_2112 {
   width: 258px;
   height: 85px;
-  /* background: url("../images/v441_2112.png"); */
+  /* background: url("/public/v441_2112.png"); */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -786,7 +786,7 @@ body {
 .SpeakerIcon {
   width: 71px;
   height: 71px;
-  background: url("../images/SpeakerIcon.png");
+  background: url("/public/SpeakerIcon.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -799,7 +799,7 @@ body {
 .Backspace {
   width: 71px;
   height: 71px;
-  background: url("../images/Backspace.png");
+  background: url("/public/Backspace.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
