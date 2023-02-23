@@ -34,6 +34,11 @@ const router = createRouter({
       name: "savedphrases",
       component: () => import("../views/SavedPhrasesView.vue"),
     },
+    {
+      path: "/phraseview",
+      name: "phraseview",
+      component: () => import("../views/PhraseView.vue"),
+    },
   ],
 });
 

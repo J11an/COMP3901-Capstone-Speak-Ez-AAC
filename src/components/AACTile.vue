@@ -47,7 +47,7 @@ export default {
   transition: 300ms;
 }
 
-.aac-card:hover{
+.aac-card:hover {
   transform: scale(1.1);
   transition: 200ms;
 }

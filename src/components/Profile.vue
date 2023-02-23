@@ -1,165 +1,88 @@
 <template>
-     <div class="v178_845">
-            <div class="v178_846">
-
-            </div>
-            <div class="BWHelpIcon">
-
-            </div>
-            <div class="v178_857">
-
-            </div>
-            <div class="v178_858">
-
-            </div>
-            <div class="v178_859">
-
-            </div>
-            <div class="v178_860">
-
-            </div><div class="v178_866">
-
-            </div><div class="v178_867">
-
-            </div>
-            <div class="v178_868">
-
-            </div>
-            <span class="v178_869">Main User</span>
-            <span class="v178_870">Others</span>
-            <span class="v178_871">Add User</span>
-            <div class="v471_3698">
-                <div class="v471_3699">
-                    <div class="v471_3700">
-
-                    </div>
-                    <span class="v471_3701">Speaking</span>
-                    <div class="v471_3702">
-                        <div class="SpeakingScreen">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="v471_3704">
-                    <div class="v471_3705">
-
-                    </div><div class="v471_3706">
-
-                    </div>
-                    <span class="v471_3707">Typing</span>
-                </div>
-                <div class="v471_3708">
-                    <div class="v471_3709">
-
-                    </div><div class="ListeningScreen">
-
-                    </div>
-                    <span class="v471_3711">Listening</span>
-                </div>
-                <div class="v471_3712">
-                    <div class="v471_3713">
-
-                    </div>
-                    <span class="v471_3714">Saved Phrases </span>
-                    <div class="SavedPhraseScreen">
-
-                    </div>
-                </div>
-                <div class="v471_3716">
-                    <div class="v471_3717">
-
-                    </div>
-                    <span class="v471_3718">Categories</span>
-                    <div class="Categories">
-
-                    </div>
-                </div>
-                <div class="v471_3720">
-                    <div class="v471_3721">
-
-                    </div>
-                    <div class="LearningScreen">
-
-                    </div>
-                    <span class="v471_3723">Learning</span>
-                </div>
-                <div class="v471_3724">
-                    <div class="v471_3725">
-
-                    </div>
-                    <div class="ProfileIcon">
-
-                    </div>
-                    <span class="v471_3727">Profile </span>
-                </div>
-                <div class="v471_3728">
-                    <div class="v471_3729">
-
-                    </div>
-                    <div class="SettingIcon">
-
-                    </div>
-                    <span class="v471_3731">Settings </span>
-                </div><div class="v471_3732">
-                    <div class="v471_3733">
-
-                    </div>
-                    <div class="HelpIcon">
-
-                    </div>
-                    <span class="v471_3735">Help</span>
-                </div>
-                <div class="name">
-
-                </div>
-                <div class="v471_3737">
-                    <div class="v471_3738">
-
-                    </div>
-                    <span class="v471_3739">New/Edit Phrases</span>
-                    <div class="NewEditScreen">
-
-                    </div>
-                </div>
-                <div class="name">
-
-                </div>
-            </div>
-            <span class="v178_849">Profile </span>
-            <div class="MainUserIcon">
-
-            </div>
-            <div class="v520_3446">
-
-            </div>
-            <div class="v520_3447">
-
-            </div>
-            <div class="ProfileGroup">
-
-            </div>
-            <div class="v178_862">
-
-            </div>
-            <div class="ProfileIcon">
-
-            </div>
-            <div class="Add">
-
-            </div>
-            <div class="name">
-
-            </div>
+  <div class="v178_845">
+    <div class="v178_846"></div>
+    <div class="BWHelpIcon"></div>
+    <div class="v178_857"></div>
+    <div class="v178_858"></div>
+    <div class="v178_859"></div>
+    <div class="v178_860"></div>
+    <div class="v178_866"></div>
+    <div class="v178_867"></div>
+    <div class="v178_868"></div>
+    <span class="v178_869">Main User</span>
+    <span class="v178_870">Others</span>
+    <span class="v178_871">Add User</span>
+    <div class="v471_3698">
+      <div class="v471_3699">
+        <div class="v471_3700"></div>
+        <span class="v471_3701">Speaking</span>
+        <div class="v471_3702">
+          <div class="SpeakingScreen"></div>
         </div>
-    
+      </div>
+      <div class="v471_3704">
+        <div class="v471_3705"></div>
+        <div class="v471_3706"></div>
+        <span class="v471_3707">Typing</span>
+      </div>
+      <div class="v471_3708">
+        <div class="v471_3709"></div>
+        <div class="ListeningScreen"></div>
+        <span class="v471_3711">Listening</span>
+      </div>
+      <div class="v471_3712">
+        <div class="v471_3713"></div>
+        <span class="v471_3714">Saved Phrases </span>
+        <div class="SavedPhraseScreen"></div>
+      </div>
+      <div class="v471_3716">
+        <div class="v471_3717"></div>
+        <span class="v471_3718">Categories</span>
+        <div class="Categories"></div>
+      </div>
+      <div class="v471_3720">
+        <div class="v471_3721"></div>
+        <div class="LearningScreen"></div>
+        <span class="v471_3723">Learning</span>
+      </div>
+      <div class="v471_3724">
+        <div class="v471_3725"></div>
+        <div class="ProfileIcon"></div>
+        <span class="v471_3727">Profile </span>
+      </div>
+      <div class="v471_3728">
+        <div class="v471_3729"></div>
+        <div class="SettingIcon"></div>
+        <span class="v471_3731">Settings </span>
+      </div>
+      <div class="v471_3732">
+        <div class="v471_3733"></div>
+        <div class="HelpIcon"></div>
+        <span class="v471_3735">Help</span>
+      </div>
+      <div class="name"></div>
+      <div class="v471_3737">
+        <div class="v471_3738"></div>
+        <span class="v471_3739">New/Edit Phrases</span>
+        <div class="NewEditScreen"></div>
+      </div>
+      <div class="name"></div>
+    </div>
+    <span class="v178_849">Profile </span>
+    <div class="MainUserIcon"></div>
+    <div class="v520_3446"></div>
+    <div class="v520_3447"></div>
+    <div class="ProfileGroup"></div>
+    <div class="v178_862"></div>
+    <div class="ProfileIcon"></div>
+    <div class="Add"></div>
+    <div class="name"></div>
+  </div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
@@ -169,7 +92,7 @@ body {
 .v178_845 {
   width: 100%;
   height: 960px;
-  background: rgba(255,255,255,1);
+  background: rgba(255, 255, 255, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -179,12 +102,18 @@ body {
 .v178_846 {
   width: 100%;
   height: 91px;
-  background: rgba(255,255,255,0.9100000262260437);
+  background: rgba(255, 255, 255, 0.9100000262260437);
   opacity: 1;
   position: absolute;
   top: 0px;
   left: 14px;
-  box-shadow: 0px 8px 24px rgba(0.5843137502670288, 0.615686297416687, 0.6470588445663452, 0.20000000298023224);
+  box-shadow: 0px 8px 24px
+    rgba(
+      0.5843137502670288,
+      0.615686297416687,
+      0.6470588445663452,
+      0.20000000298023224
+    );
 }
 .BWHelpIcon {
   width: 143px;
@@ -198,7 +127,7 @@ body {
 .v178_857 {
   width: 100%;
   height: 220px;
-  background: rgba(103,80,164,0.11999999731779099);
+  background: rgba(103, 80, 164, 0.11999999731779099);
   opacity: 1;
   position: absolute;
   top: 217px;
@@ -212,7 +141,7 @@ body {
 .v178_858 {
   width: 506px;
   height: 186px;
-  background: rgba(103,80,164,0.11999999731779099);
+  background: rgba(103, 80, 164, 0.11999999731779099);
   opacity: 1;
   position: absolute;
   top: 553px;
@@ -226,7 +155,7 @@ body {
 .v178_859 {
   width: 506px;
   height: 186px;
-  background: rgba(103,80,164,0.11999999731779099);
+  background: rgba(103, 80, 164, 0.11999999731779099);
   opacity: 1;
   position: absolute;
   top: 553px;
@@ -240,7 +169,7 @@ body {
 .v178_860 {
   width: 160px;
   height: 155px;
-  background: rgba(255,255,255,0.9100000262260437);
+  background: rgba(255, 255, 255, 0.9100000262260437);
   opacity: 1;
   position: absolute;
   top: 243px;
@@ -250,7 +179,7 @@ body {
 .v178_866 {
   width: 599px;
   height: 86px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 278px;
@@ -260,7 +189,7 @@ body {
 .v178_867 {
   width: 305px;
   height: 62px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 609px;
@@ -270,7 +199,7 @@ body {
 .v178_868 {
   width: 305px;
   height: 62px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 609px;
@@ -279,7 +208,7 @@ body {
 }
 .v178_869 {
   width: 597px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 278px;
   left: 481px;
@@ -291,7 +220,7 @@ body {
 }
 .v178_870 {
   width: 304px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 609px;
   left: 392px;
@@ -303,7 +232,7 @@ body {
 }
 .v178_871 {
   width: 304px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 609px;
   left: 977px;
@@ -316,7 +245,7 @@ body {
 .v471_3698 {
   width: 100%;
   height: 92px;
-  background: rgba(255,255,255,1);
+  background: rgba(255, 255, 255, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -339,7 +268,7 @@ body {
 .v471_3700 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -347,7 +276,7 @@ body {
 }
 .v471_3701 {
   width: 120px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 50px;
   left: 0px;
@@ -395,7 +324,7 @@ body {
 .v471_3705 {
   width: 78px;
   height: 67px;
-  background: linear-gradient(rgba(47,224,248,1), rgba(47,176,248,1));
+  background: linear-gradient(rgba(47, 224, 248, 1), rgba(47, 176, 248, 1));
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -417,7 +346,7 @@ body {
 }
 .v471_3707 {
   width: 69px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 47px;
   left: 5px;
@@ -443,7 +372,7 @@ body {
 .v471_3709 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -460,7 +389,7 @@ body {
 }
 .v471_3711 {
   width: 162px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 48px;
   left: 0px;
@@ -486,7 +415,7 @@ body {
 .v471_3713 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -494,7 +423,7 @@ body {
 }
 .v471_3714 {
   width: 160px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 47px;
   left: 0px;
@@ -529,7 +458,7 @@ body {
 .v471_3717 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -537,7 +466,7 @@ body {
 }
 .v471_3718 {
   width: 298px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 45px;
   left: 0px;
@@ -576,7 +505,7 @@ body {
 .v471_3721 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -593,7 +522,7 @@ body {
 }
 .v471_3723 {
   width: 163px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 42px;
   left: 0px;
@@ -619,13 +548,13 @@ body {
 .v471_3725 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
   left: 43px;
 }
-.ProfileIcon{
+.ProfileIcon {
   width: 32px;
   height: 40px;
   background: url("../public/ProfileIcon.png");
@@ -662,7 +591,7 @@ body {
 .v471_3729 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -705,7 +634,7 @@ body {
 .v471_3733 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -722,7 +651,7 @@ body {
 }
 .v471_3735 {
   width: 163px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 44px;
   left: 0px;
@@ -751,7 +680,7 @@ body {
 .v471_3738 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -759,7 +688,7 @@ body {
 }
 .v471_3739 {
   width: 160px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 47px;
   left: 0px;
@@ -783,7 +712,7 @@ body {
 }
 .v178_849 {
   width: 104px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 22px;
   left: 39px;
@@ -809,7 +738,7 @@ body {
 .v520_3446 {
   width: 160px;
   height: 155px;
-  background: rgba(255,255,255,0.9100000262260437);
+  background: rgba(255, 255, 255, 0.9100000262260437);
   opacity: 1;
   position: absolute;
   top: 568px;
@@ -819,7 +748,7 @@ body {
 .v520_3447 {
   width: 160px;
   height: 155px;
-  background: rgba(255,255,255,0.9100000262260437);
+  background: rgba(255, 255, 255, 0.9100000262260437);
   opacity: 1;
   position: absolute;
   top: 568px;
@@ -842,7 +771,7 @@ body {
 .v178_862 {
   width: 148px;
   height: 134px;
-  background: rgba(255,255,255,0.9100000262260437);
+  background: rgba(255, 255, 255, 0.9100000262260437);
   opacity: 1;
   position: absolute;
   top: 579px;
@@ -878,6 +807,4 @@ body {
 .name {
   color: #fff;
 }
-
-
 </style>

@@ -20,7 +20,6 @@ export default {
     <div class="text-center">
       <h1 class="mode-title-text pd-3">Select the Mode you wish to use</h1>
       <div class="d-flex flex-wrap justify-content-between">
-
         <RouterLink to="/speaking">
           <AACTile title="SPEAKING" image-url="/SpeakingScreen.png" />
         </RouterLink>
@@ -28,12 +27,10 @@ export default {
         <RouterLink to="/typing">
           <AACTile title="TYPING" image-url="/TypingScreen.png" />
         </RouterLink>
-      
 
         <RouterLink to="/listening">
           <AACTile title="LISTENING" image-url="/ListeningScreen.png" />
         </RouterLink>
-      
 
         <RouterLink to="/neweditword">
           <AACTile
@@ -41,7 +38,6 @@ export default {
             image-url="/NewEditScreen.png"
           ></AACTile>
         </RouterLink>
-      
 
         <RouterLink to="/savedphrases">
           <AACTile
@@ -49,13 +45,10 @@ export default {
             image-url="/SavedPhrasesScreen.png"
           ></AACTile>
         </RouterLink>
-      
 
         <RouterLink to="/learning">
           <AACTile title="LEARNING" image-url="/LearningScreen.png" />
         </RouterLink>
-        
-
       </div>
     </div>
   </div>
