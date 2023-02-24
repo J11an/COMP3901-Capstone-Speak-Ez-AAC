@@ -1,7 +1,7 @@
 <script>
 export default {
   props: {
-    title: String,
+    word: String,
     imageUrl: String,
   },
   data() {
@@ -11,9 +11,9 @@ export default {
 </script>
 
 <template>
-  <div class="card mode-card mx-auto" style="width: 18rem">
-    <p class="card-text tile-text">{{ title }}</p>
+  <div class="card aac-card mx-auto" style="width: 18rem">
     <img class="card-img-top img-orientation" :src="imageUrl" alt="" />
+    <p class="card-text tile-text">{{ word }}</p>
   </div>
 </template>
 
@@ -22,17 +22,19 @@ export default {
   position: relative;
   width: 164.19px;
   height: 165.32px;
+  top: 10px;
   left: 60px;
 }
 .tile-text {
-  font-family: "Inter";
+  font-family: "Thabit";
   font-style: normal;
   font-weight: 600;
   font-size: 32px;
-  line-height: 65px;
+  line-height: 100px;
+  text-align: center;
 }
 
-.mode-card {
+.aac-card {
   background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -44,10 +46,10 @@ export default {
   border-radius: 48px;
   width: 291.54px;
   height: 272.67px;
-  transition: 300ms;
 }
 
-.mode-card:hover {
-  transform: scale(1.1);
+.aac-card:hover {
+  transform: scale(1.01);
+  transition: 100ms;
 }
 </style>
