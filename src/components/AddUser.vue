@@ -97,7 +97,24 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default({
+  data() {
+    return{
+     
+
+    }
+  },
+  created(){
+    
+
+  },
+  methods:{
+
+  }
+})
+
+</script>
 
 <style>
 * {

@@ -1,226 +1,153 @@
 <template>
+
     <div class="v217_2338">
-        <div class="v307_2069">
-
-        </div>
-        <div class="v217_2339">
-
-        </div>
-        <div class="BWHelpIcon">
-
-        </div>
+        <div class="v307_2069"></div>
+        <div class="v217_2339"></div>
+        <div class="BWHelpIcon"></div>
         <span class="v217_2342">Age</span>
-        <div class="v217_2351">
-
-        </div>
-        <div class="name">
-
-        </div>
+        <div class="v217_2351"></div>
+        <div class="name"></div>
         <span class="v217_2363">Enter Age</span>
-        <div class="v217_2365">
-
-        </div>
+        <div class="v217_2365"></div>
         <span class="v217_2366">Enter Age</span>
-        <div class="v217_2374">
-
-        </div>
+        <div class="v217_2374"></div>
         <div class="v284_7711">
-            <div class="v217_2377">
-
-            </div>
-            <div class="v217_2378">
-
-            </div>
-            <div class="v217_2379">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <span class="v522_4233">1</span>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="Backspace">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="name">
-
-            </div>
-            <span class="v522_4241">7</span>
-            <span class="v522_4242">8</span>
-            <span class="v522_4243">9</span>
+            <div class="v217_2377"></div>
+            <div class="v217_2378"></div>
+            <div class="v217_2379"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <span class="v522_4233" @click="pad1">1</span>
+            <div class="name"> </div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="Backspace"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <div class="name"></div>
+            <span class="v522_4241" @click="pad7">7</span>
+            <span class="v522_4242" @click="pad8">8</span>
+            <span class="v522_4243" @click="pad9">9</span>
         </div>
         <div class="v261_18767">
-            <div class="v261_18768">
-
-            </div>
-            <div class="v261_18769">
-
-            </div>
-            <div class="v261_18770">
-
-            </div>
-            <div class="v261_18771">
-
-            </div>
-            <div class="v261_18772">
-
-            </div>
-            <div class="v261_18773">
-
-            </div>
+            <div class="v261_18768"></div>
+            <div class="v261_18769"></div>
+            <div class="v261_18770"></div>
+            <div class="v261_18771"></div>
+            <div class="v261_18772"></div>
+            <div class="v261_18773"></div>
         </div>
-        <span class="v307_2067">Back</span>
-        <span class="v307_2068">Next</span>
+        <span class="v307_2067" @click="back">Back</span>
+        <span class="v307_2068" @click="next">Next</span>
         <div class="v472_3642">
             <div class="v472_3643">
-                <div class="v472_3644">
-
-                </div>
-                <span class="v472_3645">Speaking</span>
+                <div class="v472_3644"></div>
+                <span class="v472_3645" @click="speaking">Speaking</span>
                 <div class="v472_3646">
-                    <div class="SpeakingScreen">
-
-                    </div>
+                    <div class="SpeakingScreen"></div>
                 </div>
             </div>
             <div class="v472_3648">
-                <div class="v472_3649">
-
-                </div>
-                <div class="TypingScreen">
-
-                </div>
-                <span class="v472_3651">Typing</span>
+                <div class="v472_3649"></div>
+                <div class="TypingScreen"></div>
+                <span class="v472_3651" @click="typing">Typing</span>
             </div>
             <div class="v472_3652">
-                <div class="v472_3653">
-
-                </div><div class="ListeningScreen">
-
-                </div>
-                <span class="v472_3655">Listening</span>
+                <div class="v472_3653"></div>
+                <div class="ListeningScreen"></div>
+                <span class="v472_3655" @click="listening">Listening</span>
             </div>
             <div class="v472_3656">
-                <div class="v472_3657">
-
-                </div>
-                <span class="v472_3658">Saved Phrases </span>
-                <div class="SavedPhrasesScreen">
-
-                </div>
+                <div class="v472_3657"></div>
+                <span class="v472_3658" @click="savedprhases">Saved Phrases </span>
+                <div class="SavedPhrasesScreen"></div>
             </div>
             <div class="v472_3660">
-                <div class="v472_3661">
-
-                </div>
-                <span class="v472_3662">Categories</span>
-                <div class="Categories">
-
-                </div>
+              <div class="v472_3661"></div>
+              <span class="v472_3662" @click="categories">Categories</span>
+              <div class="Categories"></div>
             </div>
             <div class="v472_3664">
-                <div class="v472_3665">
-
-                </div>
-                <div class="LearningScreen">
-
-                </div>
-                <span class="v472_3667">Learning</span>
+                <div class="v472_3665"></div>
+                <div class="LearningScreen"><div>
+                <span class="v472_3667" @click="learning">Learning</span>
             </div>
             <div class="v472_3668">
                 <div class="v472_3669"></div>
-                <div class="ProfileIcon">
-
-                </div>
+                <div class="ProfileIcon"></div>
                 <span class="v472_3671">Profile </span>
             </div>
             <div class="v472_3672">
-                <div class="v472_3673">
-
-                </div>
-                <div class="SettingIcon">
-
-                </div>
-                <span class="v472_3675">Settings </span>
+                <div class="v472_3673"> </div>
+                <div class="SettingIcon"> </div>
+                <span class="v472_3675" @click="setting">Settings </span>
             </div>
             <div class="v472_3676">
-                <div class="v472_3677">
-
-                </div>
-                <div class="HelpIcon">
-
-                </div>
-                <span class="v472_3679">Help</span>
+                <div class="v472_3677"></div>
+                <div class="HelpIcon"></div>
+                <span class="v472_3679" @click="help">Help</span>
             </div>
-            <div class="name">
-
-            </div>
+            <div class="name"></div>
             <div class="v472_3681">
-                <div class="v472_3682">
+                <div class="v472_3682"></div>
 
-                </div>
-                <span class="v472_3683">New/Edit Phrases</span>
-                <div class="NewEditScreen">
-
-                </div>
+                <span class="v472_3683" @click="newedit">New/Edit Phrases</span>
+                <div class="NewEditScreen"></div>
             </div>
         </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v522_4230">Done</span>
-        <span class="v522_4236">2</span>
-        <span class="v522_4237">3</span>
-        <span class="v522_4238">4</span>
-        <span class="v522_4239">5</span>
-        <span class="v522_4240">6</span>
-        <span class="v522_4244">0</span>
-        <div class="name">
-
-        </div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <span class="v522_4230" @click="done">Done</span>
+        <span class="v522_4236" @click="pad2">2</span>
+        <span class="v522_4237" @click="pad3">3</span>
+        <span class="v522_4238" @click="pad4">4</span>
+        <span class="v522_4239" @click="pad5">5</span>
+        <span class="v522_4240" @click="pad6">6</span>
+        <span class="v522_4244" @click="pad0">0</span>
+        <div class="name"></div>
     </div>
 
 </template>
 
 <script>
+
+import router from "../router";
+export default({
+  data() {
+    return{
+      csrf_token: 'token',
+      errors:[],
+      message: ''
+     
+
+    }
+  },
+  created(){
+    this.getCsrToken();    
+
+  },
+  methods:{
+    AddAge(){
+      let self= this
+      fetch("api/adduser/2",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+    }
+
+  }
+})
 
 </script>
 
@@ -264,7 +191,7 @@ body {
 .BWHelpIcon {
   width: 143px;
   height: 151px;
-  background: url("/public/BWHelpIcon.png");
+  background: url("../public/BWHelpIcon.png");
   opacity: 1;
   position: absolute;
   top: 141px;
@@ -354,7 +281,7 @@ body {
 .v284_7711 {
   width: 736px;
   height: 530px;
-  background: url("/public/v284_7711.png");
+  background: url("../public/v284_7711.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -410,11 +337,12 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .Backspace {
   width: 71px;
   height: 71px;
-  background: url("/public/Backspace.png");
+  background: url("../public/Backspace.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -436,6 +364,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4242 {
   width: 24px;
@@ -448,6 +377,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4243 {
   width: 23px;
@@ -460,11 +390,12 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v261_18767 {
   width: 100%;
   height: 36px;
-  background: url("/public/v261_18767.png");
+  background: url("../public/v261_18767.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -570,6 +501,7 @@ body {
   font-size: 48px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v307_2068 {
   width: 102px;
@@ -582,6 +514,7 @@ body {
   font-size: 48px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v472_3642 {
   width: 100%;
@@ -596,7 +529,7 @@ body {
 .v472_3643 {
   width: 120px;
   height: 68px;
-  background: url("/public/v472_3643.png");
+  background: url("../public/v472_3643.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -626,11 +559,12 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v472_3646 {
   width: 40px;
   height: 48px;
-  background: url("/public/v472_3646.png");
+  background: url("../public/v472_3646.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -643,7 +577,7 @@ body {
 .SpeakingScreen {
   width: 40px;
   height: 48px;
-  background: url("/public/SpeakingScreen.png");
+  background: url("../public/SpeakingScreen.png");
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -652,7 +586,7 @@ body {
 .v472_3648 {
   width: 78px;
   height: 67px;
-  background: url("/public/v472_3648.png");
+  background: url("../public/v472_3648.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -679,7 +613,7 @@ body {
 .TypingScreen {
   width: 39px;
   height: 40px;
-  background: url("/public/TypingScreen.png");
+  background: url("../public/TypingScreen.png");
   opacity: 1;
   position: absolute;
   top: 5px;
@@ -696,11 +630,12 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v472_3652 {
   width: 162px;
   height: 68px;
-  background: url("/public/v472_3652.png");
+  background: url("../public/v472_3652.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -722,7 +657,7 @@ body {
 .ListeningScreen {
   width: 41px;
   height: 43px;
-  background: url("/public/ListeningScreen.png");
+  background: url("../public/ListeningScreen.png");
   opacity: 1;
   position: absolute;
   top: 5px;
@@ -739,11 +674,12 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v472_3656 {
   width: 160px;
   height: 68px;
-  background: url("/public/v472_3656.png");
+  background: url("../public/v472_3656.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -773,11 +709,12 @@ body {
   font-size: 11px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .SavedPhrasesScreen {
   width: 38px;
   height: 44px;
-  background: url("/public/SavedPhrasesScreen.png");
+  background: url("../public/SavedPhrasesScreen.png");
   opacity: 1;
   position: absolute;
   top: 4px;
@@ -786,7 +723,7 @@ body {
 .v472_3660 {
   width: 298px;
   height: 68px;
-  background: url("/public/v472_3660.png");
+  background: url("../public/v472_3660.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -816,11 +753,12 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .Categories {
   width: 41px;
   height: 45px;
-  background: url("/public/Categories.png");
+  background: url("../public/Categories.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -833,7 +771,7 @@ body {
 .v472_3664 {
   width: 163px;
   height: 69px;
-  background: url("/public/v472_3664.png");
+  background: url("../public/v472_3664.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -855,7 +793,7 @@ body {
 .LearningScreen {
   width: 39px;
   height: 45px;
-  background: url("/public/LearningScreen.png");
+  background: url("../public/LearningScreen.png");
   opacity: 1;
   position: absolute;
   top: 2px;
@@ -872,11 +810,12 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v472_3668 {
   width: 163px;
   height: 72px;
-  background: url("/public/v472_3668.png");
+  background: url("../public/v472_3668.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -898,7 +837,7 @@ body {
 .ProfileIcon {
   width: 32px;
   height: 40px;
-  background: url("/public/ProfileIcon.png");
+  background: url("../public/ProfileIcon.png");
   opacity: 1;
   position: absolute;
   top: 3px;
@@ -906,7 +845,7 @@ body {
 }
 .v472_3671 {
   width: 163px;
-  color: url("/public/v472_3671.png");
+  color: url("../public/v472_3671.png");
   position: absolute;
   top: 45px;
   left: 0px;
@@ -919,7 +858,7 @@ body {
 .v472_3672 {
   width: 164px;
   height: 70px;
-  background: url("/public/v472_3672.png");
+  background: url("../public/v472_3672.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -941,7 +880,7 @@ body {
 .SettingIcon {
   width: 40px;
   height: 40px;
-  background: url("/public/SettingIcon.png");
+  background: url("../public/SettingIcon.png");
   opacity: 1;
   position: absolute;
   top: 5px;
@@ -949,7 +888,7 @@ body {
 }
 .v472_3675 {
   width: 164px;
-  color: url("/public/v472_3675.png");
+  color: url("../public/v472_3675.png");
   position: absolute;
   top: 45px;
   left: 0px;
@@ -958,11 +897,12 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .v472_3676 {
   width: 163px;
   height: 71px;
-  background: url("/public/v472_3676.png");
+  background: url("../public/v472_3676.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -984,7 +924,7 @@ body {
 .HelpIcon {
   width: 36px;
   height: 36px;
-  background: url("/public/HelpIcon.png");
+  background: url("../public/HelpIcon.png");
   opacity: 1;
   position: absolute;
   top: 8px;
@@ -1001,12 +941,13 @@ body {
   font-size: 12px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 
 .v472_3681 {
   width: 160px;
   height: 68px;
-  background: url("/public/v472_3681.png");
+  background: url("../public/v472_3681.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1036,11 +977,12 @@ body {
   font-size: 10px;
   opacity: 1;
   text-align: center;
+  cursor: pointer;
 }
 .NewEditScreen {
   width: 42px;
   height: 49px;
-  background: url("/public/NewEditScreen.png");
+  background: url("../public/NewEditScreen.png");
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -1058,6 +1000,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4236 {
   width: 23px;
@@ -1070,6 +1013,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4237 {
   width: 23px;
@@ -1082,6 +1026,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4238 {
   width: 23px;
@@ -1094,6 +1039,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4239 {
   width: 22px;
@@ -1106,6 +1052,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4240 {
   width: 23px;
@@ -1118,6 +1065,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 .v522_4244 {
   width: 25px;
@@ -1130,6 +1078,7 @@ body {
   font-size: 40px;
   opacity: 1;
   text-align: left;
+  cursor: pointer;
 }
 
 </style>
