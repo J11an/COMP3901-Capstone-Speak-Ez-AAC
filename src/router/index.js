@@ -1,5 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+// import AddAgeView from "../views/AddAgeView.vue";
+// import AddUserView from "../views/AddUserView.vue";
+// import CategoriesProfileView from "../views/CategoriesProfileView.vue";
+// import ConfirmProfileView from "../views/CategoriesProfileView.vue";
+// import ProfileView from "../views/ProfileView.vue";
+// import SelectLayoutView from "../views/SelectLayoutView.vue";
+import TypingView from "../views/TypingView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
