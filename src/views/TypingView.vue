@@ -1,5 +1,11 @@
-<script></script>
+<script setup>
+import Typing from '../components/Typing.vue'
+
+</script>
 <template>
-  <div></div>
+  <Typing/>
+ 
 </template>
-<style></style>
+<style>
+
+</style>
