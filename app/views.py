@@ -23,6 +23,11 @@ def index():
 # The functions below should be applicable to all Flask apps.
 ###
 
+#Profile Section
+@app.route('api/adduser')
+@app.route('api/adduser/2')
+@app.route('api/adduser/3')
+
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 def form_errors(form):
