@@ -10,5 +10,3 @@ python-dotenv==0.19.2
 Werkzeug==2.0.3
 WTForms==3.0.1
 
-#Keyboard
-Flask-Cors

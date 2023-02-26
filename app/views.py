@@ -23,24 +23,6 @@ def index():
 # The functions below should be applicable to all Flask apps.
 ###
 
-@app.route("/api/typing")
-
-# def typing():
-
-#     keyboard_layout = {
-#     "rows": [
-#         []
-#         ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-#         ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-#         ["-","z", "x", "c", "v", "b", "n", "m"]
-#     ],
-#     "special_keys": ["shift","space","emojis","123","@&#"]
-# }
-#     return jsonify(keyboard_layout)
-
-
-
-
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 def form_errors(form):
