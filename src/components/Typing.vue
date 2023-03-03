@@ -1,191 +1,124 @@
 <template>
     <div class="v77_943">
-        <div class="v77_944">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_987">Q</span>
-        <span class="v77_988">F</span>
-        <span class="v77_989">W</span>
-        <div class="name">
-
-        </div>
-        <span class="v77_991">SHIFT</span>
-        <div class="name">
-            
-        </div>
-        <span class="v77_993">SPACE</span>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div><div class="name">
-
-        </div><div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_1006">?</span>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div><div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_1016">‘</span>
-        <div class="name">
-
-        </div>
-        <span class="v77_1018">“</span>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_1022">@&#</span>
-        <div class="name">
-            
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_1028">A</span>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_1035">D</span>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
-        <span class="v77_1038">H</span>
-        <span class="v77_1039">J</span>
-        <span class="v77_1040">K</span>
-        <span class="v77_1041">L</span>
-        <span class="v77_1042">-</span>
-        <span class="v77_1043">E</span>
-        <span class="v77_1044">S</span>
-        <span class="v77_1045">R</span>
-        <span class="v77_1046">T</span>
-        <span class="v77_1047">Y</span>
-        <span class="v77_1048">U</span>
-        <span class="v77_1049">I</span>
-        <span class="v77_1050">O</span>
-        <span class="v77_1051">P</span>
-        <span class="v77_1052">G</span>
-        <span class="v77_1053">Z</span>
-        <span class="v77_1054">_</span>
-        <span class="v77_1055">X</span>
-        <span class="v77_1056">C</span>
-        <span class="v77_1057">B</span>
-        <span class="v77_1058">N</span>
-        <span class="v77_1059">M</span>
-        <span class="v77_1060">V</span>
-        <span class="v77_1061">123</span>
-        <span class="v77_1062">.</span>
-        <span class="v77_1063">,</span>
-        <span class="v77_1064">!</span>
-        <div class="Emoji">
-
-        </div>
-        <span class="v77_1066">emojis</span>
+        <div class="v77_944"></div>
         <div class="name"></div>
-        <div class="name">
+        <div class="name"></div>
+        <div class="name"></div>
 
-        </div>
-        <span class="v413_2069">_</span>
-        <div class="name">
+        <span class="v77_987" @click="handleClick(Q)">Q</span>
+        <span class="v77_988" @click="handleClick(F)">F</span>
+        <span class="v77_989" @click="handleClick(W)">W</span>
 
-        </div>
+        <div class="name"></div>
+
+        <span class="v77_991" @click="handleClick(shift)">SHIFT</span>
+
+        <div class="name"></div>
+        
+        <span class="v77_993">SPACE</span>
+
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v77_1006" @click="handleClick(?)" >?</span>
+
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v77_1016" @click="handleClick(‘)">‘</span>
+
+        <div class="name"></div>
+
+        <span class="v77_1018">“</span>
+
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v77_1022" @click="handleClick(@&#)" >@&#</span>
+        
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v77_1028" @click="handleClick(A)">A</span>
+
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v77_1035" @click="handleClick(D)" >D</span>
+
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v77_1038" @click="handleClick(H)">H</span>
+        <span class="v77_1039" @click="handleClick(J)">J</span>
+        <span class="v77_1040" @click="handleClick(K)">K</span>
+        <span class="v77_1041" @click="handleClick(L)">L</span>
+        <span class="v77_1042" @click="handleClick(-)">-</span>
+        <span class="v77_1043" @click="handleClick(D)">E</span>
+        <span class="v77_1044" @click="handleClick(S)">S</span>
+        <span class="v77_1045" @click="handleClick(R)">R</span>
+        <span class="v77_1046" @click="handleClick(T)">T</span>
+        <span class="v77_1047" @click="handleClick(Y)">Y</span>
+        <span class="v77_1048" @click="handleClick(U)">U</span>
+        <span class="v77_1049" @click="handleClick(I)">I</span>
+        <span class="v77_1050" @click="handleClick(O)">O</span>
+        <span class="v77_1051" @click="handleClick(P)">P</span>
+        <span class="v77_1052" @click="handleClick(G)">G</span>
+        <span class="v77_1053" @click="handleClick(Z)">Z</span>
+        <span class="v77_1054" @click="handleClick(_)">_</span>
+        <span class="v77_1055" @click="handleClick(X)">X</span>
+        <span class="v77_1056" @click="handleClick(C)">C</span>
+        <span class="v77_1057" @click="handleClick(B)">B</span>
+        <span class="v77_1058" @click="handleClick(N)">N</span>
+        <span class="v77_1059" @click="handleClick(M)">M</span>
+        <span class="v77_1060" @click="handleClick(V)">V</span>
+        <span class="v77_1061" @click="handleClick(123)">123</span>
+        <span class="v77_1062" @click="handleClick(.)">.</span>
+        <span class="v77_1063" @click="handleClick(,)">,</span>
+        <span class="v77_1064" @click="handleClick(!)">!</span>
+
+        <div class="Emoji"></div>
+
+        <span class="v77_1066" @click="handleClick(emojis)">emojis</span>
+
+        <div class="name"></div>
+        <div class="name"></div>
+
+        <span class="v413_2069"@click="handleClick(_)" >_</span>
+
+        <div class="name"></div>
         <div class="v441_2112">
-            <div class="name">
+            <div class="name"></div>
 
-            </div>
             <span class="v441_2111">Enter</span>
         </div>
         <span class="v416_2069">SHIFT</span>
-        <div class="name">
 
-        </div>
-        <div class="v472_3946">
-
-        </div>
-        <div class="SpeakerIcon">
-
-        </div>
-        <div class="Backspace">
-
-        </div>
+        <div class="name"></div>
+        <div class="v472_3946"></div>
+        <div class="SpeakerIcon"></div>
+        <div class="Backspace"></div>
         <div class="name">
 
         </div>
@@ -197,15 +130,35 @@
 export default({
   data() {
     return{
-     
+        csrf_token: 'token',
+        errors:[],
+        message: '',
+      
 
     }
   },
   created(){
+    this.getCsrToken(); 
+    this.Typing();
     
 
   },
   methods:{
+     handleClick(keypad){
+
+    },
+    Typing(){
+      let self= this
+      fetch("api/Typing",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+    }
 
   }
 })

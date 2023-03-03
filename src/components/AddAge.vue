@@ -9,7 +9,7 @@
         <div class="name"></div>
         <span class="v217_2363">Enter Age</span>
         <div class="v217_2365"></div>
-        <span class="v217_2366">Enter Age</span>
+        <!-- <span class="v217_2366" v-model="numpad"></span>  Text Area-->
         <div class="v217_2374"></div>
         <div class="v284_7711">
             <div class="v217_2377"></div>
@@ -18,7 +18,7 @@
             <div class="name"></div>
             <div class="name"></div>
             <div class="name"></div>
-            <span class="v522_4233" @click="pad1">1</span>
+            <span class="v522_4233" @click="handleClick_No(1)">1</span>
             <div class="name"> </div>
             <div class="name"></div>
             <div class="name"></div>
@@ -31,9 +31,9 @@
             <div class="name"></div>
             <div class="name"></div>
             <div class="name"></div>
-            <span class="v522_4241" @click="pad7">7</span>
-            <span class="v522_4242" @click="pad8">8</span>
-            <span class="v522_4243" @click="pad9">9</span>
+            <span class="v522_4241" @click="handleClick_No(7)">7</span>
+            <span class="v522_4242" @click="handleClick_No(8)">8</span>
+            <span class="v522_4243" @click="handleClick_No(9)">9</span>
         </div>
         <div class="v261_18767">
             <div class="v261_18768"></div>
@@ -43,12 +43,12 @@
             <div class="v261_18772"></div>
             <div class="v261_18773"></div>
         </div>
-        <span class="v307_2067" @click="back">Back</span>
-        <span class="v307_2068" @click="next">Next</span>
-        <div class="v472_3642">
+        <span class="v307_2067" @click="handleClick(back)">Back</span>
+        <span class="v307_2068" @click="handleClick(next)">Next</span>
+        <!-- <div class="v472_3642">
             <div class="v472_3643">
                 <div class="v472_3644"></div>
-                <span class="v472_3645" @click="speaking">Speaking</span>
+                <span class="v472_3645" @click="handleClick(speaking)">Speaking</span>
                 <div class="v472_3646">
                     <div class="SpeakingScreen"></div>
                 </div>
@@ -56,27 +56,27 @@
             <div class="v472_3648">
                 <div class="v472_3649"></div>
                 <div class="TypingScreen"></div>
-                <span class="v472_3651" @click="typing">Typing</span>
+                <span class="v472_3651" @click="handleClick(typing)">Typing</span>
             </div>
             <div class="v472_3652">
                 <div class="v472_3653"></div>
                 <div class="ListeningScreen"></div>
-                <span class="v472_3655" @click="listening">Listening</span>
+                <span class="v472_3655" @click="handleClick(listening)">Listening</span>
             </div>
             <div class="v472_3656">
                 <div class="v472_3657"></div>
-                <span class="v472_3658" @click="savedprhases">Saved Phrases </span>
+                <span class="v472_3658" @click="handleClick(savedprhases)">Saved Phrases </span>
                 <div class="SavedPhrasesScreen"></div>
             </div>
             <div class="v472_3660">
               <div class="v472_3661"></div>
-              <span class="v472_3662" @click="categories">Categories</span>
+              <span class="v472_3662" @click="handleClick(categories)">Categories</span>
               <div class="Categories"></div>
             </div>
             <div class="v472_3664">
                 <div class="v472_3665"></div>
                 <div class="LearningScreen"><div>
-                <span class="v472_3667" @click="learning">Learning</span>
+                <span class="v472_3667" @click="handleClick(learning)">Learning</span>
             </div>
             <div class="v472_3668">
                 <div class="v472_3669"></div>
@@ -86,30 +86,30 @@
             <div class="v472_3672">
                 <div class="v472_3673"> </div>
                 <div class="SettingIcon"> </div>
-                <span class="v472_3675" @click="setting">Settings </span>
+                <span class="v472_3675" @click="handleClick(setting)">Settings </span>
             </div>
             <div class="v472_3676">
                 <div class="v472_3677"></div>
                 <div class="HelpIcon"></div>
-                <span class="v472_3679" @click="help">Help</span>
+                <span class="v472_3679" @click="handleClick(help)">Help</span>
             </div>
             <div class="name"></div>
             <div class="v472_3681">
                 <div class="v472_3682"></div>
 
-                <span class="v472_3683" @click="newedit">New/Edit Phrases</span>
+                <span class="v472_3683" @click="handleClick(newedit)">New/Edit Phrases</span>
                 <div class="NewEditScreen"></div>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
         <div class="name"></div>
         <div class="name"></div>
-        <span class="v522_4230" @click="done">Done</span>
-        <span class="v522_4236" @click="pad2">2</span>
-        <span class="v522_4237" @click="pad3">3</span>
-        <span class="v522_4238" @click="pad4">4</span>
-        <span class="v522_4239" @click="pad5">5</span>
-        <span class="v522_4240" @click="pad6">6</span>
-        <span class="v522_4244" @click="pad0">0</span>
+        <span class="v522_4230" @click="handleClick(done)">Done</span>
+        <span class="v522_4236" @click="handleClick_No(2)">2</span>
+        <span class="v522_4237" @click="handleClick_No(3)">3</span>
+        <span class="v522_4238" @click="handleClick_No(4)">4</span>
+        <span class="v522_4239" @click="handleClick_No(5)">5</span>
+        <span class="v522_4240" @click="handleClick_No(6)">6</span>
+        <span class="v522_4244" @click="handleClick_No(0)">0</span>
         <div class="name"></div>
     </div>
 
@@ -117,13 +117,16 @@
 
 <script>
 
-import router from "../router";
+
 export default({
   data() {
     return{
       csrf_token: 'token',
       errors:[],
-      message: ''
+      message: '',
+      numpad: ""
+      keypad: ""
+
      
 
     }
@@ -133,9 +136,25 @@ export default({
 
   },
   methods:{
+    handleClick(keypad){
+
+      
+
+      if (keypad==done){
+
+      }else if
+
+
+
+    },
+    handleClick_No(num){
+      this.numpad= ${num};
+
+    },
+    
     AddAge(){
       let self= this
-      fetch("api/adduser/2",{
+      fetch("api/profile/adduser2",{
         method:'POST',
         body:form_data ,
         errors:[],
