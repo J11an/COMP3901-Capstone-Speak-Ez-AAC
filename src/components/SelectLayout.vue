@@ -1,177 +1,91 @@
 <template>
 
 <div class="v260_1523">
-    <div class="v260_1524">
+    <div class="v260_1524"></div>
+    <div class="BWHelpIcon"></div>
 
-    </div>
-    <div class="BWHelpIcon">
-
-    </div>
     <span class="v260_1527">Layout</span>
-    <div class="name">
 
-    </div>
+    <div class="name"></div>
+
     <span class="v260_1561">Select Number of Tiles per a Row</span>
     <span class="v260_1565">Select Tile Size</span>
     <span class="v260_1568">Select Theme</span>
     <span class="v265_1566">custom</span>
-    <div class="v261_18693">
 
-    </div>
-    <div class="v261_18694">
+    <div class="v261_18693"></div>
+    <div class="v261_18694"></div>
+    <div class="v261_18695"></div>
+    <div class="v261_18696"></div>
+    <div class="v261_18697"></div>
 
-    </div>
-    <div class="v261_18695">
+    <span class="v261_18698"@click="handleClick()">Small</span>
+    <span class="v261_18699"@click="handleClick()">Medium</span>
+    <span class="v261_18700"@click="handleClick()">Large</span>
+    <span class="v261_18701"@click="handleClick()">Custom</span>
 
-    </div>
-    <div class="v261_18696">
-
-    </div>
-    <div class="v261_18697">
-
-    </div>
-    <span class="v261_18698">Small</span>
-    <span class="v261_18699">Medium</span>
-    <span class="v261_18700">Large</span>
-    <span class="v261_18701">Custom</span>
-    <div class="v261_18703">
-
-    </div>
-    <div class="v261_18704">
-
-    </div>
-    <div class="v261_18705">
-
-    </div>
-    <div class="v261_18706">
-
-    </div>
-    <div class="v261_18707">
-
-    </div>
-    <div class="v261_18708">
-
-    </div>
-    <div class="v261_18709">
-
-    </div>
-    <div class="v261_18710">
-
-    </div>
-    <div class="v261_18711">
-
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="SettingIcon">
-
-    </div>
-    <span class="v261_18717">*These settings can be customized later</span>
-    <div class="v261_18720">
-
-    </div>
-    <div class="v261_18721">
-
-    </div>
-    <div class="v261_18722">
-
-    </div>
-    <div class="v261_18723">
-
-    </div>
-    <div class="v261_18724">
-
-    </div>
-    <span class="v261_18725">Light</span>
-    <span class="v261_18726">Dark</span>
-    <span class="v261_18727">Colorblind</span>
-    <span class="v261_18728">Custom</span>
-    <div class="name">
-
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="SettingIcon">
-
-    </div>
-    <div class="v261_18734">
-
-    </div>
-    <div class="v261_18735">
-
-    </div>
-    <div class="v261_18737">
-
-    </div>
-    <div class="v261_18738">
-
-    </div>
-    <div class="v261_18739">
-
-    </div>
-    <div class="v261_18740">
-
-    </div>
-    <div class="v261_18741">
-
-    </div>
-    <div class="v261_18742">
-
-    </div>
-    <span class="v261_18743">3</span>
-    <span class="v261_18744">5</span>
-    <span class="v261_18745">10</span>
-    <span class="v261_18746">Custom</span>
-    <div class="name">
-
-    </div>
-    <div class="name">
-
-    </div>
+    <div class="v261_18703"></div>
+    <div class="v261_18704"></div>
+    <div class="v261_18705"></div>
+    <div class="v261_18706"></div>
+    <div class="v261_18707"></div>
+    <div class="v261_18708"></div>
+    <div class="v261_18709"></div>
+    <div class="v261_18710"></div>
+    <div class="v261_18711"></div>
     <div class="name"></div>
-    <div class="SettingIcon">
+    <div class="name"></div>
+    <div class="name"></div>
+    <div class="SettingIcon"></div>
 
-    </div>
+    <span class="v261_18717">*These settings can be customized later</span>
+
+    <div class="v261_18720"></div>
+    <div class="v261_18721"></div>
+    <div class="v261_18722"></div>
+    <div class="v261_18723"></div>
+    <div class="v261_18724"></div>
+
+    <span class="v261_18725"@click="handleClick()">Light</span>
+    <span class="v261_18726"@click="handleClick()">Dark</span>
+    <span class="v261_18727"@click="handleClick()">Colorblind</span>
+    <span class="v261_18728"@click="handleClick()">Custom</span>
+
+    <div class="name"></div>
+    <div class="name"></div>
+    <div class="name"></div>
+    <div class="SettingIcon"></div>
+    <div class="v261_18734"></div>
+    <div class="v261_18735"></div>
+    <div class="v261_18737"></div>
+    <div class="v261_18738"></div>
+    <div class="v261_18739"></div>
+    <div class="v261_18740"></div>
+    <div class="v261_18741"></div>
+    <div class="v261_18742"></div>
+
+    <span class="v261_18743" @click="handleClick()">3</span>
+    <span class="v261_18744" @click="handleClick()">5</span>
+    <span class="v261_18745" @click="handleClick()">10</span>
+    <span class="v261_18746"@click="handleClick()">Custom</span>
+
+    <div class="name"></div>
+    <div class="name"></div>
+    <div class="name"></div>
+    <div class="SettingIcon"></div>
     <div class="v261_18774">
-        <div class="v261_18775">
-
-        </div>
-        <div class="v261_18776">
-
-        </div>
-        <div class="v261_18777">
-            
-        </div>
-        <div class="v261_18778">
-
-        </div>
-        <div class="v261_18779">
-
-        </div>
-        <div class="v261_18780">
-
-        </div>
+        <div class="v261_18775"></div>
+        <div class="v261_18776"></div>
+        <div class="v261_18777"></div>
+        <div class="v261_18778"></div>
+        <div class="v261_18779"></div>
+        <div class="v261_18780"></div>
     </div>
-    <div class="v307_2070">
-
-    </div>
-    <span class="v307_2071">Back</span>
-    <div class="v307_2074">
-
-    </div>
-    <span class="v307_2075">Next</span>
-    <div class="v472_3686">
+    <div class="v307_2070"></div>
+    <span class="v307_2071" @click="handleClick(back)">Back</span>
+    <div class="v307_2074"></div>
+    <span class="v307_2075" @click="handleClick(next)">Next</span>
+    <!-- <div class="v472_3686">
         <div class="v472_3687">
             <div class="v472_3688">
 
@@ -267,22 +181,12 @@
 
             </div>
         </div>
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="name">
-
-    </div>
-    <div class="v522_4496">
-
-    </div>
-    <div class="v522_4497">
-
-    </div>
-    <div class="v522_4498">
-
-    </div>
+    </div> -->
+    <div class="name"></div>
+    <div class="name"></div>
+    <div class="v522_4496"></div>
+    <div class="v522_4497"></div>
+    <div class="v522_4498"></div>
 </div>
 
 </template>
@@ -292,15 +196,35 @@
 export default({
   data() {
     return{
-     
+        csrf_token: 'token',
+        errors:[],
+        message: '',
+      
 
     }
   },
   created(){
+    this.getCsrToken(); 
+    this.Layout();
     
 
   },
   methods:{
+     handleClick(keypad){
+
+    },
+    Layout(){
+      let self= this
+      fetch("api/profile/adduser3",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+    }
 
   }
 })

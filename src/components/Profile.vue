@@ -9,10 +9,10 @@
     <div class="v178_866"></div>
     <div class="v178_867"></div>
     <div class="v178_868"></div>
-    <span class="v178_869">Main User</span>
-    <span class="v178_870">Others</span>
-    <span class="v178_871">Add User</span>
-    <div class="v471_3698">
+    <span class="v178_869" @click=handleClick(main)>Main User</span>
+    <span class="v178_870" @click=handleClick(others)>Others</span>
+    <span class="v178_871" @click=handleClick(add)>Add User</span>
+    <!-- <div class="v471_3698">
       <div class="v471_3699">
         <div class="v471_3700"></div>
         <span class="v471_3701">Speaking</span>
@@ -67,7 +67,7 @@
         <div class="NewEditScreen"></div>
       </div>
       <div class="name"></div>
-    </div>
+    </div> -->
     <span class="v178_849">Profile </span>
     <div class="MainUserIcon"></div>
     <div class="v520_3446"></div>
@@ -90,10 +90,28 @@ export default({
     }
   },
   created(){
+    this.getCsrToken(); 
+    this.Profile();
     
 
   },
   methods:{
+    handleClick(keypad){
+
+    },
+    Profile(){
+      let self= this
+      fetch("api/profile",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+
+    },
 
   }
 })

@@ -1,161 +1,85 @@
 <template>
 
     <div class="v260_1591">
-        <div class="v260_1592">
-
-        </div>
-        <div class="BWHelpIcon">
-
-        </div>
+        <div class="v260_1592"></div>
+        <div class="BWHelpIcon"></div>
         <span class="v260_1595">Categories</span>
-        <div class="name">
-
-        </div>
-        <div class="v260_1630">
-
-        </div>
-        <div class="v260_1631">
-
-        </div>
-        <div class="SchoolIcon">
-
-        </div>
+        <div class="name"></div>
+        <div class="v260_1630"></div>
+        <div class="v260_1631"></div>
+        <div class="SchoolIcon"></div>
         <span class="v265_1813">School (Default)</span>
-        <div class="Add">
-
-        </div>
+        <div class="Add"></div>
         <span class="v267_1815">Add New Category</span>
         <div class="v261_18781">
-            <div class="v261_18782">
-
-            </div>
-            <div class="v261_18783">
-
-            </div>
-            <div class="v261_18784">
-
-            </div>
-            <div class="v261_18785">
-
-            </div>
-            <div class="v261_18786">
-
-            </div>
-            <div class="v261_18787">
-
-            </div>
+            <div class="v261_18782"></div>
+            <div class="v261_18783"></div>
+            <div class="v261_18784"></div>
+            <div class="v261_18785"></div>
+            <div class="v261_18786"></div>
+            <div class="v261_18787"></div>
         </div>
-        <div class="v307_2072">
-
-        </div>
-        <span class="v307_2073">Back</span>
-        <div class="v307_2076">
-
-        </div>
-        <span class="v307_2077">Next</span>
-        <div class="v472_3730">
+        <div class="v307_2072"></div>
+        <span class="v307_2073" @click="handleClick(back)">Back</span>
+        <div class="v307_2076"></div>
+        <span class="v307_2077" @click="handleClick(next)">Next</span>
+        <!-- <div class="v472_3730">
             <div class="v472_3731">
-                <div class="v472_3732">
-
-                </div>
+                <div class="v472_3732"></div>
                 <span class="v472_3733">Speaking</span>
                 <div class="v472_3734">
-                    <div class="SpeakingScreen">
-
-                    </div>
+                    <div class="SpeakingScreen"></div>
                 </div>
             </div>
             <div class="v472_3736">
-                <div class="v472_3737">
-
-                </div>
-                <div class="v472_3738">
-
-                </div>
+                <div class="v472_3737"></div>
+                <div class="v472_3738"></div>
                 <span class="v472_3739">Typing</span>
             </div>
             <div class="v472_3740">
-                <div class="v472_3741">
-
-                </div>
-                <div class="ListeningScreen">
-
-                </div>
+                <div class="v472_3741"></div>
+                <div class="ListeningScreen"></div>
                 <span class="v472_3743">Listening</span>
             </div>
             <div class="v472_3744">
-                <div class="v472_3745">
-
-                </div>
+                <div class="v472_3745"></div>
                 <span class="v472_3746">Saved Phrases </span>
-                <div class="SavedPhrasesScreen">
-
-                </div>
+                <div class="SavedPhrasesScreen"></div>
             </div>
             <div class="v472_3748">
-                <div class="v472_3749">
-
-                </div>
+                <div class="v472_3749"></div>
                 <span class="v472_3750">Categories</span>
-                <div class="Categories">
-
-                </div>
+                <div class="Categories"></div>
             </div>
             <div class="v472_3752">
-                <div class="v472_3753">
-
-                </div>
-                <div class="LearningScreen">
-
-                </div>
+                <div class="v472_3753"></div>
+                <div class="LearningScreen"></div>
                 <span class="v472_3755">Learning</span>
             </div>
             <div class="v472_3756">
-                <div class="v472_3757">
-
-                </div>
-                <div class="ProfileIcon">
-
-                </div>
+                <div class="v472_3757"></div>
+                <div class="ProfileIcon"></div>
                 <span class="v472_3759">Profile </span>
             </div>
             <div class="v472_3760">
-                <div class="v472_3761">
-
-                </div>
-                <div class="SettingIcon">
-
-                </div>
+                <div class="v472_3761"></div>
+                <div class="SettingIcon"></div>
                 <span class="v472_3763">Settings </span>
             </div>
             <div class="v472_3764">
-                <div class="v472_3765">
-
-                </div>
-                <div class="HelpIcon">
-
-                </div>
+                <div class="v472_3765"></div>
+                <div class="HelpIcon"></div>
                 <span class="v472_3767">Help</span>
-            </div>
-            <div class="name">
-
-            </div>
-            <div class="v472_3769">
-                <div class="v472_3770">
-
-                </div>
+            </div> -->
+            <div class="name"></div>
+            <!-- <div class="v472_3769">
+                <div class="v472_3770"></div>
                 <span class="v472_3771">New/Edit Phrases</span>
-                <div class="NewEditScreen">
-
-                </div>
+                <div class="NewEditScreen"></div> -->
             </div>
         </div>
-        <div class="name">
-
-        </div>
-        <div class="name">
-
-        </div>
+        <div class="name"></div>
+        <div class="name"></div>
     </div>
 
 </template>
@@ -165,15 +89,36 @@
 export default({
   data() {
     return{
+
+    csrf_token: 'token',
+    errors:[],
+    message: '',
      
 
     }
   },
   created(){
+    this.getCsrToken(); 
+    this.Categories();
     
 
   },
   methods:{
+    handleClick(keypad){
+
+    },
+    Categories(){
+      let self= this
+      fetch("api/profile/adduser4",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+    }
 
   }
 })

@@ -1,146 +1,84 @@
 <template>
 
 <div class="v267_1816">
-    <div class="v267_1817">
-
-    </div>
-    <div class="BWHelpIcon">
-
-    </div>
+    <div class="v267_1817"></div>
+    <div class="BWHelpIcon"> </div>
     <span class="v267_1820">Finish Profile</span>
     <span class="v267_1838">Are you finished setting up your profile?</span>
     <div class="v267_1840">
 
     </div>
-    <span class="v267_1842">Back</span>
+    <span class="v267_1842"@click=handleClick(back)>Back</span>
     <div class="v267_1841">
 
     </div>
-    <span class="v267_1843">Finish</span>
+    <span class="v267_1843" @click=handleClick(finish)>Finish</span>
     <div class="v261_18788">
-        <div class="v261_18789">
-
-        </div>
-        <div class="v261_18790">
-
-        </div>
-        <div class="v261_18791">
-
-        </div>
-        <div class="v261_18792">
-
-        </div>
-        <div class="v261_18793">
-
-        </div>
-        <div class="v261_18794">
-
-        </div>
+        <div class="v261_18789"></div>
+        <div class="v261_18790"></div>
+        <div class="v261_18791"><div>
+        <div class="v261_18792"></div>
+        <div class="v261_18793"></div>
+        <div class="v261_18794"></div>
     </div>
     <span class="v284_7712">Tap Finish if done, or click Back to go back to the Categories screen.</span>
     <div class="v472_3774">
-        <div class="v472_3775">
-            <div class="v472_3776">
-
-            </div>
+        <!-- <div class="v472_3775">
+            <div class="v472_3776"></div>
             <span class="v472_3777">Speaking</span>
             <div class="v472_3778">
-                <div class="SpeakingScreen">
-
-                </div>
+                <div class="SpeakingScreen"></div>
             </div>
         </div>
         <div class="v472_3780">
-            <div class="v472_3781">
-
-            </div>
-            <div class="TypingScreen">
-
-            </div>
+            <div class="v472_3781"></div>
+            <div class="TypingScreen"></div>
             <span class="v472_3783">Typing</span>
         </div>
         <div class="v472_3784">
-            <div class="v472_3785">
-
-            </div>
-            <div class="ListeningScreen">
-
-            </div>
+            <div class="v472_3785"></div>
+            <div class="ListeningScreen"></div>
             <span class="v472_3787">Listening</span>
         </div>
         <div class="v472_3788">
-            <div class="v472_3789">
-
-            </div>
+            <div class="v472_3789"></div>
             <span class="v472_3790">Saved Phrases </span>
-            <div class="SavedPhrasesScreen">
-
-            </div>
+            <div class="SavedPhrasesScreen"></div>
         </div>
         <div class="v472_3792">
-            <div class="v472_3793">
-
-            </div>
+            <div class="v472_3793"></div>
             <span class="v472_3794">Categories</span>
-            <div class="Categories">
-
-            </div>
+            <div class="Categories"></div>
         </div>
         <div class="v472_3796">
-            <div class="v472_3797">
-
-            </div>
-            <div class="LearningScreen">
-
-            </div>
+            <div class="v472_3797"></div>
+            <div class="LearningScreen"></div>
             <span class="v472_3799">Learning</span>
         </div>
         <div class="v472_3800">
-            <div class="v472_3801">
-
-            </div>
-            <div class="ProfileIcon">
-
-            </div>
+            <div class="v472_3801"></div>
+            <div class="ProfileIcon"></div>
             <span class="v472_3803">Profile </span>
         </div>
         <div class="v472_3804">
-            <div class="v472_3805">
-
-            </div>
-            <div class="SettingIcon">
-
-            </div>
+            <div class="v472_3805"></div>
+            <div class="SettingIcon"></div>
             <span class="v472_3807">Settings </span>
         </div>
         <div class="v472_3808">
-            <div class="v472_3809">
-
-            </div>
-            <div class="HelpIcon">
-
-            </div>
+            <div class="v472_3809"></div>
+            <div class="HelpIcon"></div>
             <span class="v472_3811">Help</span>
         </div>
-        <div class="name">
-
-        </div>
+        <div class="name"></div>
         <div class="v472_3813">
-            <div class="v472_3814">
-
-            </div>
+            <div class="v472_3814"></div>
             <span class="v472_3815">New/Edit Phrases</span>
-            <div class="NewEditScreen">
-
-            </div>
-        </div>
-        <div class="name">
-
-        </div>
+            <div class="NewEditScreen"></div>
+        </div> -->
+        <div class="name"></div>
     </div>
-    <div class="name">
-
-    </div>
+    <div class="name"></div>
 </div>
 
 </template>
@@ -155,10 +93,26 @@ export default({
     }
   },
   created(){
-    
+    this.getCsrToken(); 
+    this.Confirm();
 
   },
   methods:{
+    handleClick(keypad){
+
+    },
+    Confirm(){
+      let self= this
+      fetch("api/profile/adduser5",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+    }
 
   }
 })

@@ -18,16 +18,16 @@
     <span class="v191_2304">Enter Name</span>
     <span class="v211_2308">Choose Display Photo</span>
     <div class="v211_2298"></div>
-    <span class="v211_2301">Enter Name</span>
+    <!-- <span class="v211_2301"  v-model="keypad"></span> Text Area -->
     <div class="v211_2302"></div>
     <span class="v211_2303">New User</span>
     <div class="FProfile"></div>
     <span class="v215_2326">Upload a photo</span>
     <div class="v217_2333"></div>
     <div class="v217_2336"></div>
-    <span class="v217_2337">Next</span>
+    <span class="v217_2337" @click="handleClick(next)">Next</span>
     <div class="v306_2194"></div>
-    <span class="v306_2195">Back</span>
+    <span class="v306_2195" @click="handleClick(back)">Back</span>
     <div class="v261_18760">
       <div class="v261_18761"></div>
       <div class="v261_18762"></div>
@@ -38,10 +38,10 @@
     </div>
     <div class="MProfile"></div>
     <div class="ImageUpload"></div>
-    <div class="v472_3598">
-      <div class="v472_3599">
+    <!-- <div class="v472_3598"> -->
+      <!-- <div class="v472_3599">
         <div class="v472_3600"></div>
-        <span class="v472_3601">Speaking</span>
+        <span class="v472_3601"@click="handleClick(speaking)">Speaking</span>
         <div class="v472_3602">
           <div class="SpeakingScreen"></div>
         </div>
@@ -49,12 +49,12 @@
       <div class="v472_3604">
         <div class="v472_3605"></div>
         <div class="TypingScreen"></div>
-        <span class="v472_3607">Typing</span>
+        <span class="v472_3607" @click="handleClick(typing)">Typing</span>
       </div>
       <div class="v472_3608">
         <div class="v472_3609"></div>
         <div class="ListeningScreen"></div>
-        <span class="v472_3611">Listening</span>
+        <span class="v472_3611" @click="handleClick(listening)>Listening</span>
       </div>
       <div class="v472_3612">
         <div class="v472_3613"></div>
@@ -85,13 +85,13 @@
         <div class="v472_3633"></div>
         <div class="HelpIcon"></div>
         <span class="v472_3635">Help</span>
-      </div>
+      </div> -->
       <div class="name"></div>
-      <div class="v472_3637">
+      <!-- <div class="v472_3637">
         <div class="v472_3638"></div>
         <span class="v472_3639">New/Edit Phrases</span>
         <div class="NewEditScreen"></div>
-      </div>
+      </div> -->
     </div>
     <div class="name"></div>
   </div>
@@ -101,15 +101,36 @@
 export default({
   data() {
     return{
+      csrf_token: 'token',
+      errors:[],
+      message: '',
      
 
     }
   },
   created(){
+    this.getCsrToken();
+    this.AddUser();
     
 
   },
   methods:{
+    handleClick(keypad){
+      
+    },
+    AddUser(){
+      let self= this
+      fetch("api/profile/adduser",{
+        method:'POST',
+        body:form_data ,
+        errors:[],
+        message: '',
+        headers:{
+          'X-CSRFToken': this.csrf_token
+        }
+      })
+    },
+    open()
 
   }
 })
