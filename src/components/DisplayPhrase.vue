@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 export default {
   props: {
     title: ,
@@ -26,4 +26,4 @@ export default {
 .phrase-btn button {
   width: 80%;
 }
-</style>
+</style> -->

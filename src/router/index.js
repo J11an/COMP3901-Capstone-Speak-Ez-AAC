@@ -6,7 +6,6 @@ import HomeView from "../views/HomeView.vue";
 // import ConfirmProfileView from "../views/CategoriesProfileView.vue";
 // import ProfileView from "../views/ProfileView.vue";
 // import SelectLayoutView from "../views/SelectLayoutView.vue";
-import TypingView from "../views/TypingView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,11 +19,6 @@ const router = createRouter({
       path: "/speaking",
       name: "speaking",
       component: () => import("../views/SpeakingView.vue"),
-    },
-    {
-      path: "/typing",
-      name: "typing",
-      component: () => import("../views/TypingView.vue"),
     },
     {
       path: "/listening",
