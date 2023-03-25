@@ -24,17 +24,13 @@ def index():
 ###
 
 
-#Typing Section
-@app.route('api/Typing')
-
-
 #Profile Section
-@app.route('api/profile')
-@app.route('api/profile/adduser')
-@app.route('api//profile/adduser2')
-@app.route('api//profile/adduser3')
-@app.route('api//profile/adduser4')
-@app.route('api//profile/adduser5')
+# @app.route('api/profile')
+# @app.route('api/profile/adduser')
+# @app.route('api//profile/adduser2')
+# @app.route('api//profile/adduser3')
+# @app.route('api//profile/adduser4')
+# @app.route('api//profile/adduser5')
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
