@@ -6,7 +6,7 @@ class Tile(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     word = db.Column(db.String(20))
-    partofspeech = (db.String(20))
+    partofspeech = db.Column(db.String(20))
     category = db.Column(db.String(20))
     time = db.Column(db.String(20))
     place = db.Column(db.String(20))
