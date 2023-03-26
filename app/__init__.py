@@ -3,6 +3,9 @@ from .config import Config
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import pyttsx3
+
+engine = pyttsx3.init()
 
 app = Flask(__name__)
 app.config.from_object(Config)

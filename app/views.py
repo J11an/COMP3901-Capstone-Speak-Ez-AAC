@@ -9,6 +9,9 @@ from app import app
 from flask import render_template, request, jsonify, send_file
 import os
 from app.models import *
+import pyttsx3
+
+engine = pyttsx3.init()
 
 phrases = []
 
@@ -36,6 +39,13 @@ def index():
 # @app.route('api//profile/adduser5')
 
 # Speaking/Listening Screen
+@app.route('/speak', methods=['POST'])
+def speak():
+    engine.say('hello world')
+    engine.runAndWait()
+    return 'OK'
+
+
 
 # Saved Phrases
 
