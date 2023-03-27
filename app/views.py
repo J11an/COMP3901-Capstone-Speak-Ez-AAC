@@ -6,12 +6,11 @@ This file creates your application.
 """
 
 from app import app
-from flask import render_template, request, jsonify, send_file
+from flask import abort, render_template, request, jsonify, send_file, send_from_directory
 import os
 from app.models import *
-import pyttsx3
-
-engine = pyttsx3.init()
+from werkzeug.utils import secure_filename
+from app.Scripts.tts import *
 
 phrases = []
 
@@ -38,13 +37,17 @@ def index():
 # @app.route('api//profile/adduser4')
 # @app.route('api//profile/adduser5')
 
-# Speaking/Listening Screen
-@app.route('/speak', methods=['POST'])
+# Speaking Screen
+@app.route('/api/speak', methods=['POST'])
 def speak():
-    engine.say('hello world')
-    engine.runAndWait()
-    return 'OK'
-
+    if request.method == 'POST':
+        text = request.form['speech']
+        gender = request.form['voices']
+        # rate = request.form['speed']
+        text_to_speech(text, gender)
+        return 200
+    
+#Listening Screen
 
 
 # Saved Phrases
