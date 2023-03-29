@@ -12,11 +12,11 @@ class Tile(db.Model):
     place = db.Column(db.String(20))
     photo = db.Column(db.String(100))
 
-    def __init__(self, word, category, price, time, place, photo):
+    def __init__(self, word, category, partofspeech, time, place, photo):
 
         self.word = word
+        self.partofspeech = partofspeech
         self.category = category
-        self.price = price
         self.time = time
         self.place = place
         self.photo = photo

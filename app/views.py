@@ -48,6 +48,11 @@ def speak():
         return 200
     
 #Listening Screen
+# @app.route('api/listen',methods=['POST'])
+# def listen():
+#     if request.method == 'POST':
+
+        
 
 
 # Saved Phrases
