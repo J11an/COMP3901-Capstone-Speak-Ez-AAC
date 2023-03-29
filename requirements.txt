@@ -17,3 +17,5 @@ psycopg2==2.9.5
 pyttsx3==2.90 
 pyaudio==0.2.13
 vosk==0.3.45
+google-cloud-speech==2.19.0 
+SpeechRecognition==3.10.0

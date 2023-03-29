@@ -11,6 +11,7 @@ import os
 from app.models import *
 from werkzeug.utils import secure_filename
 from app.Scripts.tts import *
+from app.Scripts.vosk_speech_rec import *
 
 phrases = []
 
@@ -45,12 +46,14 @@ def speak():
         gender = request.form['voices']
         # rate = request.form['speed']
         text_to_speech(text, gender)
-        return 200
+        return '200'
     
 #Listening Screen
-# @app.route('api/listen',methods=['POST'])
-# def listen():
-#     if request.method == 'POST':
+@app.route('/api/listen',methods=['POST'])
+def listen():
+    if request.method == 'POST':
+        vosk_speech_reg()
+        return "200"
 
         
 
