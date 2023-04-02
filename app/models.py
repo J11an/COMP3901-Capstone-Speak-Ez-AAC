@@ -10,15 +10,17 @@ class Tile(db.Model):
     category = db.Column(db.String(20))
     time = db.Column(db.String(20))
     place = db.Column(db.String(20))
+    plural = db.Column(db.String(20))
     photo = db.Column(db.String(100))
 
-    def __init__(self, word, category, partofspeech, time, place, photo):
+    def __init__(self, word, category, partofspeech, time, place, plural, photo):
 
         self.word = word
         self.partofspeech = partofspeech
         self.category = category
         self.time = time
         self.place = place
+        self.plural = plural
         self.photo = photo
 
     def __repr__(self):

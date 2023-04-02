@@ -1,6 +1,5 @@
 import pyttsx3
 
-
 def text_to_speech(text, gender):
  
     voice_dict = {'Male': 0, 'Female': 1}
@@ -14,6 +13,6 @@ def text_to_speech(text, gender):
 
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[code].id)
-
-    engine.say(text)
+    
+    engine.save_to_file(text , "message.mp3")
     engine.runAndWait()

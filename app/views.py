@@ -12,8 +12,15 @@ from app.models import *
 from werkzeug.utils import secure_filename
 from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
+from vosk import Model, KaldiRecognizer
+import pandas as pd
 
 phrases = []
+rootdir = os.getcwd()
+model_dir = (os.path.join(rootdir,r"app\model\vosk-model-small-en-us-0.15"))
+model = Model(model_dir)
+rec = KaldiRecognizer(model, 16000)
+
 
 ###
 # Routing for your application.
@@ -46,20 +53,45 @@ def speak():
         gender = request.form['voices']
         # rate = request.form['speed']
         text_to_speech(text, gender)
-        return '200'
+        mp3 = os.path.join(rootdir,r"message.mp3")
+        return send_file(mp3, mimetype='audio/mp3', as_attachment=True)
     
 #Listening Screen
 @app.route('/api/listen',methods=['POST'])
 def listen():
     if request.method == 'POST':
-        vosk_speech_reg()
-        return "200"
-
-        
+        data = request.data
+        rec.AcceptWaveform(data)
+        result = rec.Result()
+        result_json = jsonify({"text": result})
+        return result_json
 
 
 # Saved Phrases
 
+
+#Seed Vocab List
+@app.route('/seed_database')
+def seed_database():
+
+    df = pd.read_excel('vocab_list.xlsx', sheet_name=None)
+
+    for sheet_name, sheet_data in df.items():
+        for index, row in sheet_data.iterrows():
+            tile = Tile(
+
+                word = ['word'],
+                partofspeech = ['partofspeech'],
+                category = ['category'],
+                time = ['time'],
+                place = ['place'],
+                plural = ['plural'],
+                photo = ['photo']
+            )
+            db.session.add(tile)
+            db.session.commit()
+
+    return "Database seeded successfully"
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
