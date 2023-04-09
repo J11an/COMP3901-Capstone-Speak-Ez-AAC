@@ -1,11 +1,10 @@
 <script>
-import AACTile from "../components/AACTile.vue";
+import MenuTile from "../components/MenuTile.vue";
 
 export default {
-  components: { AACTile },
+  components: { AACTile: MenuTile },
   data() {
     return {
-      message: "Group 1",
     };
   },
 };
@@ -24,31 +23,27 @@ export default {
           <AACTile title="SPEAKING" image-url="/SpeakingScreen.png" />
         </RouterLink>
 
-        <RouterLink to="/typing">
+        <!--<RouterLink to="/typing">
           <AACTile title="TYPING" image-url="/TypingScreen.png" />
-        </RouterLink>
+        </RouterLink>-->
 
         <RouterLink to="/listening">
           <AACTile title="LISTENING" image-url="/ListeningScreen.png" />
         </RouterLink>
 
-        <RouterLink to="/neweditword">
+        <!--<RouterLink to="/neweditword">
           <AACTile
             title="NEW/EDIT WORD"
             image-url="/NewEditScreen.png"
           ></AACTile>
-        </RouterLink>
+        </RouterLink>-->
 
-        <RouterLink to="/savedphrases">
+        <!--<RouterLink to="/savedphrases">
           <AACTile
             title="SAVED PHRASES"
             image-url="/SavedPhrasesScreen.png"
           ></AACTile>
-        </RouterLink>
-
-        <RouterLink to="/learning">
-          <AACTile title="LEARNING" image-url="/LearningScreen.png" />
-        </RouterLink>
+        </RouterLink>-->
       </div>
     </div>
   </div>

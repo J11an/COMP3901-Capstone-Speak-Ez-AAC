@@ -19,12 +19,14 @@ export default {
 
 <style>
 .img-orientation {
-  position: relative;
-  width: 164.19px;
-  height: 165.32px;
+  /*position: relative;*/
+  width: 100px;
+  height: 100px;
   top: 10px;
-  left: 60px;
+  left: 90px;
+  justify-content: center;
 }
+
 .tile-text {
   font-family: "Thabit";
   font-style: normal;
@@ -44,8 +46,9 @@ export default {
   border: 5px solid #000000;
   box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
   border-radius: 48px;
-  width: 291.54px;
+  width: 150px;
   height: 272.67px;
+  margin: 10px;
 }
 
 .aac-card:hover {

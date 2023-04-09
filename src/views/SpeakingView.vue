@@ -23,8 +23,7 @@ export default {
       <WordPictureTile image-url="/HelpIcon.png" word="I" />
       <WordPictureTile image-url="/HelpIcon.png" word="I" />
       <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
+      
     </div>
     <hr />
     <div class="pinned section">
@@ -44,6 +43,7 @@ export default {
     </div>
   </div>
 </template>
+
 <style>
 .pinned-words-text {
   font-size: 32px;

@@ -1,5 +1,5 @@
 <script setup>
-import SelectLayout from '../components/SelectLayout.vue'
+import SelectLayout from '../components/Legacy/SelectLayout.vue'
 
 </script>
 <template>

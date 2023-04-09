@@ -25,7 +25,7 @@ const router = createRouter({
       name: "listening",
       component: () => import("../views/ListeningView.vue"),
     },
-    {
+    /*{
       path: "/neweditword",
       name: "neweditword",
       component: () => import("../views/NewEditWordView.vue"),
@@ -39,7 +39,7 @@ const router = createRouter({
       path: "/phraseview",
       name: "phraseview",
       component: () => import("../views/PhraseView.vue"),
-    },
+    },*/
   ],
 });
 

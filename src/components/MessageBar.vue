@@ -6,7 +6,7 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div class="msg-container">
     <input type="text" class="mt-4 msg-bar ml-5" />
     <span>
       <img src="/Backspace.png" alt="Backspace Icon" />
