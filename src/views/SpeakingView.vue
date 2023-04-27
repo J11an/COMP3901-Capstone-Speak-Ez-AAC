@@ -6,25 +6,39 @@ export default {
   components: { WordPictureTile, MessageBar },
 
   data() {
-    return {};
+    return {
+      columns: {},
+      currentMessage: "",
+      lastWord: ""
+    };
   },
-  methods: {},
+
+  methods: {
+  },
+
+  mounted() {
+    this.columns = {
+      "noun" : [1,2,3,4],
+      "verb" : [1,2,3,4],
+      "adjective" : [1,2,3,4],
+      "article" : [1,2,3,4]
+    }
+
+    console.log(this.columns);
+  }
+
 };
 </script>
 <template>
   <div>
     <MessageBar />
+
     <div class="d-flex flex-wrap justify-content-between mt-3">
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      
+      <div class="column" v-for="column in columns">
+        <WordPictureTile v-for="word in column" image-url="/HelpIcon.png" word="I"/>
+      </div>
     </div>
+
     <hr />
     <div class="pinned section">
       <div class="d-flex justify-content-center align-items-center">
