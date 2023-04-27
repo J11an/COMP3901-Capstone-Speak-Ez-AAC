@@ -9,19 +9,23 @@ export default {
     return {
       columns: {},
       currentMessage: "",
-      lastWord: ""
+      lastWord: "",
+      toggleVal: false,
     };
   },
 
   methods: {
+    toggleSwitch(){
+      this.toggleVal = !this.toggleVal;
+    }
   },
 
   mounted() {
     this.columns = {
-      "noun" : [1,2,3,4],
-      "verb" : [1,2,3,4],
-      "adjective" : [1,2,3,4],
-      "article" : [1,2,3,4]
+      "noun" : [1,1,1,1],
+      "verb" : [2,2,2,2],
+      "adjective" : [3,3,3,3],
+      "article" : [4,4,4,4]
     }
   }
 
@@ -31,9 +35,27 @@ export default {
   <div>
     <MessageBar />
 
-    <div class="d-flex flex-wrap justify-content-between mt-3">
+    <!--Toggle-->
+    <div class="toggle-wrapper">
+      <div class="toggle-container" @click="toggleSwitch">
+        <h1>Dynamic</h1>
+        <h1>|</h1>
+        <h1>Linear</h1>
+      </div>
+    </div>
+
+
+    <!--Linear-->
+    <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+      <h1>Linear Search Active</h1>
+    </div>
+
+    <!--Dynamic-->
+    <div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
       <div class="column" v-for="column in columns">
-        <WordPictureTile v-for="word in column" image-url="/HelpIcon.png" word="I"/>
+        <div v-for="word in column">
+          <WordPictureTile image-url="/HelpIcon.png" :word="word"/>
+        </div>
       </div>
     </div>
 
@@ -60,5 +82,13 @@ export default {
 .pinned-words-text {
   font-size: 32px;
   font-weight: bold;
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  justify-content: center;
+  align-content: center;
 }
 </style>
