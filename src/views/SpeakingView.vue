@@ -23,8 +23,6 @@ export default {
       "adjective" : [1,2,3,4],
       "article" : [1,2,3,4]
     }
-
-    console.log(this.columns);
   }
 
 };
