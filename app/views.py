@@ -14,6 +14,7 @@ from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
+import spacy
 
 phrases = []
 rootdir = os.getcwd()
@@ -55,6 +56,22 @@ def speak():
         text_to_speech(text, gender)
         mp3 = os.path.join(rootdir,r"message.mp3")
         return send_file(mp3, mimetype='audio/mp3', as_attachment=True)
+ 
+#takes a word and returns a list of next parts of speech and the associated
+#list of words for each
+
+@app.route('',methods=["POST")    
+def word_associated():
+   data=request.get_json()
+   word = data["word"]
+   doc=nlp(word)
+   pos_list=[]
+   for token in doc:
+       pos_list.append((token.text,token.pos_,[child.text for child in token.chicken]))
+   return jsonify(pos_list)
+                       
+                      
+    
     
 #Listening Screen
 @app.route('/api/listen',methods=['POST'])
