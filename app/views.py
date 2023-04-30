@@ -14,7 +14,8 @@ from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
-import spacy
+
+
 
 phrases = []
 rootdir = os.getcwd()
@@ -57,20 +58,59 @@ def speak():
         mp3 = os.path.join(rootdir,r"message.mp3")
         return send_file(mp3, mimetype='audio/mp3', as_attachment=True)
  
-#takes a word and returns a list of next parts of speech and the associated
-#list of words for each
 
-@app.route('',methods=["POST")    
+@app.route('/',methods=["GET"])    
 def word_associated():
-   data=request.get_json()
-   word = data["word"]
-   doc=nlp(word)
-   pos_list=[]
-   for token in doc:
-       pos_list.append((token.text,token.pos_,[child.text for child in token.chicken]))
-   return jsonify(pos_list)
-                       
-                      
+# takes a word and returns a list of next parts of speech and the associated
+# list of words for each
+
+
+    title=Title.query.filter_by(word=word).first()
+    if tile is None:
+        return jsonify({'error':'Word not found.'}),404
+
+    next_partsofspeech={
+        'noun':[],
+        'verb':[],
+        'adjective':[],
+        'article':[]
+    }
+
+    if tile.partofspeech=='noun':
+        next_partsofspeech['adjective']=[t.word for t in Tile.query.filter_by(partofspeech='adjective').all()]
+        next_partsofspeech['verb']=[t.word for t in Tile.query.filter_by(partofspeech='verb').all()]
+
+    elif tile.partofspeech=='verb':
+        next_partsofspeech['noun']=[t.word for t in Tile.query.filter_by(partofspeech='noun').all()]
+        
+    if tile.partofspeech=='adjective'':
+        next_partsofspeech['noun']=[t.word for t in Tile.query.filter_by(partofspeech='noun').all()]
+        
+
+
+
+    return jsonify(next_partsofspeech)
+   
+@app.route('/inital_tree_setting')     
+def inital_tree_setting():
+    columns={
+        "noun":[],
+        "verb":[],
+        "adjective":[],
+        "article":[]
+    }       
+    #Retieve all the title from the database and group them by theier part of speech
+    tiles=Tile.query.all()
+    for tile in tiles:
+        part_of_speech=tile.partofspeech.lower()
+        if part_of_speech in columns:
+            columns[part_of_speech].append(tile.word)
+    # Fill in any missing words up to maximum of 4 per part of speech
+    for coluumn in columns.values():
+        while len(coluumn)<4:
+            coluumn.append ("")
+
+    return jsonify(columns)
     
     
 #Listening Screen
