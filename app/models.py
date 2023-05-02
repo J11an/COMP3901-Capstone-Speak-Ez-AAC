@@ -64,7 +64,7 @@ class Adjectives(db.Model):
 
     def __repr__(self):
        return '<Adjectives %r>' % (self.word)
-d
+
     def get_id(self):
         try:
             return unicode(self.word_id)  # python 2 support
