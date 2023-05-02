@@ -123,7 +123,11 @@ def listen():
         result_json = jsonify({"text": result})
         return result_json
 
-
+@socketio.on('audio_data')
+def handle_audio_data(data):
+    print('received audio data:', data)
+    socketio.emit('my_response', data)
+    
 # Saved Phrases
 
 
@@ -192,4 +196,4 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port="8080")
+    socketio.run(app)
