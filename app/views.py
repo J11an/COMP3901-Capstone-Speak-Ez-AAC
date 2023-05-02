@@ -5,7 +5,7 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app
+from app import app,socketio
 from flask import abort, render_template, request, jsonify, send_file, send_from_directory
 import os
 from app.models import *

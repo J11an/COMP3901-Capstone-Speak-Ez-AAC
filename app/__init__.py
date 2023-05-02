@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import pyttsx3
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -13,5 +14,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+socketio = SocketIO(app)
+
 
 from app import views
