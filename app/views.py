@@ -19,14 +19,14 @@ import pandas as pd
 
 phrases = []
 rootdir = os.getcwd()
-model_dir = (os.path.join(rootdir,r"app\model\vosk-model-small-en-us-0.15"))
+model_dir = (os.path.join(rootdir + r"\model\vosk-model-small-en-us-0.15"))
 model = Model(model_dir)
 rec = KaldiRecognizer(model, 16000)
 
 
 ###
 # Routing for your application.
-###
+###g
 
 
 @app.route('/')
@@ -65,7 +65,7 @@ def word_associated():
 # list of words for each
 
 
-    title=Title.query.filter_by(word=word).first()
+    tile=Tile.query.filter_by(word=Tile.word).first()
     if tile is None:
         return jsonify({'error':'Word not found.'}),404
 
@@ -83,7 +83,7 @@ def word_associated():
     elif tile.partofspeech=='verb':
         next_partsofspeech['noun']=[t.word for t in Tile.query.filter_by(partofspeech='noun').all()]
         
-    if tile.partofspeech=='adjective'':
+    if tile.partofspeech=='adjective':
         next_partsofspeech['noun']=[t.word for t in Tile.query.filter_by(partofspeech='noun').all()]
         
 
