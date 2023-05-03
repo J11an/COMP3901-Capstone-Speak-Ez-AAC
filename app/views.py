@@ -136,7 +136,7 @@ def handle_audio_data(data):
 
 def seed_database():
     #Change file path to the one on your computer (Temp Maybe)
-    df = pd.read_excel(r'\COMP3901-Capstone\app\Vocab_list .xlsx', sheet_name=None)
+    df = pd.read_excel(r'\COMP3901-Capstone\app\Vocab_list.xlsx', sheet_name=None)
 
     for sheet_name, sheet_data in df.items():
         if sheet_name == "Words":

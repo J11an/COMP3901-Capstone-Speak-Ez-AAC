@@ -1,19 +1,27 @@
-<script>
-export default {
-  data() {
-    return {};
-  },
-};
+<script setup>
+//import { ref } from 'vue';
+
+function handleBackspace(){
+  var message = document.getElementById('input').value;
+  document.getElementById('input').value = message.substring(0,message.length -1);
+}  
+
+function handleClear(){
+  //var message = document.getElementById('input').value;
+  document.getElementById('input').value = "";
+}  
+
 </script>
 
 
 <template>
   <div class="container-fluid msg-container">
-    <div class="msg-display"></div>
+    <!--<div class="msg-display"></div>-->
+    <input id="input" class="msg-display"/>
       <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
       <div class="btn-group btn-group-md options">
-        <button class="btn "  @click="somefunc"><img src="/Backspace.png" alt="Backspace Icon" /></button>
-        <button class="btn " @click="somefunc"><img src="/clear.png" alt="Clear Icon" /></button>
+        <button class="btn "  @click="handleBackspace"><img src="/Backspace.png" alt="Backspace Icon" /></button>
+        <button class="btn " @click="handleClear"><img src="/clear.png" alt="Clear Icon" /></button>
         <button class="btn " @click="somefunc"><img src="/SpeakerIcon.png" alt="Speaker Icon" /></button>
         <!---<img src="/Backspace.png" alt="Backspace Icon" />
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->
