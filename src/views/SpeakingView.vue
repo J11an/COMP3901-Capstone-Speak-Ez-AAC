@@ -48,18 +48,19 @@ export default {
     <!--Linear-->
     <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
       <h1>Linear Search Active</h1>
+      <WordPictureTile image-url="/HelpIcon.png" :word="word"/>
     </div>
 
     <!--Dynamic-->
-    <div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+    <!--<div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
       <div class="column" v-for="column in columns">
         <div v-for="word in column">
           <WordPictureTile image-url="/HelpIcon.png" :word="word"/>
         </div>
       </div>
-    </div>
+    </div>-->
 
-    <hr />
+    <!--<hr />
     <div class="pinned section">
       <div class="d-flex justify-content-center align-items-center">
         <img
@@ -74,7 +75,7 @@ export default {
         <WordPictureTile image-url="/HelpIcon.png" word="I" />
         <WordPictureTile image-url="/HelpIcon.png" word="I" />
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
