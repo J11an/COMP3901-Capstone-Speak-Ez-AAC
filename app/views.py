@@ -133,26 +133,82 @@ def handle_audio_data(data):
 
 #Seed Vocab List
 @app.route('/seed_database')
-def seed_database():
 
-    df = pd.read_excel('vocab_list.xlsx', sheet_name=None)
+def seed_database():
+    #Change file path to the one on your computer (Temp Maybe)
+    df = pd.read_excel(r'\COMP3901-Capstone\app\Vocab_list .xlsx', sheet_name=None)
 
     for sheet_name, sheet_data in df.items():
-        for index, row in sheet_data.iterrows():
-            tile = Tile(
+        if sheet_name == "Words":
+            for index, row in sheet_data.iterrows():
+                cword = Words(
+                word=(row['word']),
+                partofspeech=(row['part_of_speech']),
+                category=(row['category']),
+                sub_category=(row['sub_category']),
+                time=(row['time']),
+                place=(row['place']),
+                symbol_id=(row['symbol_id']),
+                )
+                db.session.add(cword)
+                db.session.commit()
+                break
+        if sheet_name == "Parts_of_speech":
+            for index, row in sheet_data.iterrows():
+                cpartofspeech=PartsofSpeech(
+                pos_id=(row['pos_id']),
+                pos=(row['pos'])
+                )
+                db.session.add(cpartofspeech)
+                db.session.commit()
+        if sheet_name == "Adjectives":
+            for index, row in sheet_data.iterrows():
+                cAdjectives= Adjectives(
+                word_id=(row['word_id']),
+                word=(row['word']),
+                pos_id=(row['pos_id']),
+                comparative=(row['comparative']),
+                superlative=(row['superlative'])
+                )
+                db.session.add(cAdjectives)
+                db.session.commit()
+        if sheet_name == "Nouns":
+            for index, row in sheet_data.iterrows():
+                cNoun=Nouns(
+                word_id=(row['word_id']),
+                word=(row['word']),
+                pos_id=(row['pos_id']),
+                plural=(row['plural']),
+                possessive=(row['possessive']),
+                male=(row['male']),
+                female=(row['Female'])            
+                )
+                db.session.add(cNoun)
+                db.session.commit()
+        if sheet_name == "Verbs":
+            for index, row in sheet_data.iterrows():
+                cVerb=Verbs(
+                word_id=(row['word_id']),
+                word=(row['word']),
+                pos_id=(row['pos_id']),
+                plural=(row['plural']),
+                past=(row['past']),
+                present_cont=(row['present_cont']),
+                future=(row['future']),
+                perfect=(row['perfect'])               
+                )
+                db.session.add(cVerb)
+                db.session.commit()
+        if sheet_name == "Symbols":
+            for index, row in sheet_data.iterrows():
+                cSymbol=Symbols(
+                symbol_id=(row['symbol_id']),
+                symbol=(row['symbol'])
+                )
+                db.session.add(cSymbol)
+                db.session.commit()
 
-                word = ['word'],
-                partofspeech = ['partofspeech'],
-                category = ['category'],
-                time = ['time'],
-                place = ['place'],
-                plural = ['plural'],
-                photo = ['photo']
-            )
-            db.session.add(tile)
-            db.session.commit()
-
-    return "Database seeded successfully"
+        
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
