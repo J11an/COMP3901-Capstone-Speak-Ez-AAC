@@ -1,13 +1,35 @@
-<script>
-export default {
-  props: {
-    word: String,
-    imageUrl: String,
-  },
-  data() {
-    return {};
-  },
-};
+<script setup>
+
+import {ref} from 'vue'
+
+const props = defineProps({
+  word: ref(''),
+  imageUrl:ref(''),
+});
+
+function addWord(){
+  const textbox = document.getElementById("message")
+  const word = document.createElement('div');
+  word.setAttribute('class', 'card');
+  word.setAttribute('id', 'tile');
+
+  const img = document.createElement('img');
+  img.setAttribute('src', '/HelpIcon.png');
+  img.setAttribute('alt', 'Image');
+  word.appendChild(img);
+
+  const cardContent = document.createElement('div');
+  cardContent.setAttribute('class', 'card-content');
+
+  const p = document.createElement('p');
+  p.textContent = 'word';
+  cardContent.appendChild(p);
+
+  word.appendChild(cardContent);
+  
+  textbox.appendChild(word)
+}
+
 </script>
 
 <template>
@@ -16,12 +38,12 @@ export default {
     <p class="card-text tile-text">{{ word }}</p>
   </div>-->
   <div class="container">
-    <div class="card">
+    <button class="card" @click="addWord">
       <img src="/HelpIcon.png" alt="Image">
       <div class="card-content">
         <p>word</p>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
