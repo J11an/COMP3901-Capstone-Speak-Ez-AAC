@@ -1,7 +1,8 @@
 from vosk import Model,KaldiRecognizer
 import pyaudio
+import os
 
-model = Model(r"C:\Users\0\Desktop\COMP3901-Capstone\public\vosk-model-small-en-us-0.15")
+model = Model(f"{os.path.abspath(os.getcwd())}\\public\\vosk-model-small-en-us-0.15")
 recogniszer = KaldiRecognizer(model,16000)
 
 def vosk_speech_reg():

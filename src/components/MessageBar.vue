@@ -41,7 +41,7 @@ function handleClear(){
 .msg-container {
   width:100vw;
   height: 100px; /*maybe the size of whatver the title is set to here*/
-  margin:10px;
+  margin-top:10px;
   padding: 10px;
   display:flex;
   flex-direction: row;

@@ -4,8 +4,8 @@ from . import db
 class Words(db.Model):
 
     word_id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.String(20))
-    partofspeech = db.Column(db.String(20))
+    word = db.Column(db.String(20), primary_key=True)
+    partofspeech = db.Column(db.String(20), primary_key=True)
     category = db.Column(db.String(20))
     sub_category = db.Column(db.String(20))
     time = db.Column(db.String(20))
