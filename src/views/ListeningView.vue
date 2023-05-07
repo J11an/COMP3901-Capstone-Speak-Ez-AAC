@@ -1,8 +1,8 @@
 <script>
-import MessageBar from "../components/MessageBar.vue";
+import MessageBarListening from "../components/MessageBarListening.vue";
 
 export default {
-  components: { MessageBar },
+  components: { MessageBarListening },
 
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
 
 
     <!-- Message Bar at Bottom -->
-    <MessageBar />
+    <MessageBarListening />
   </div>
 </template>
 
