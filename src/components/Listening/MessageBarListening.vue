@@ -24,7 +24,7 @@ export default {
           id: msgs[msgs.length-1].id+1,
           msg:sentence,
           from: "LISTENER",
-          label: 0
+          label: null
       })
       this.handleClear();
     }

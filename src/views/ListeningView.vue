@@ -1,8 +1,9 @@
 <script>
-import MessageBarListening from "../components/MessageBarListening.vue";
+import MessageBarListening from "../components/Listening/MessageBarListening.vue";
+import Message from "../components/Listening/Message.vue";
 
 export default {
-  components: { MessageBarListening },
+  components: { MessageBarListening, Message },
 
   data() {
     return {
@@ -12,7 +13,7 @@ export default {
       * from - The author of the message, either the listener or speaker
       * */
       messageList: [],
-      speakerList: []
+      speakerLabels: []
     };
   },
 
@@ -26,7 +27,7 @@ export default {
 
   mounted() {
     const testFromArr = ["SPEAKER","LISTENER"];
-    this.speakerList = ["Speaker1", "Speaker2"];
+    this.speakerLabels = ["Speaker1", "Speaker2"];
     for (let i = 0; i < 5; i++) {
         const from = testFromArr[Math.round(Math.random())];
         this.messageList.push({
@@ -52,17 +53,7 @@ export default {
 
       <!-- Go through all messages -->
       <div class="msg-body-container" v-for="message in messageList" v-bind:key="message.id">
-
-        <!-- Section for messages -->
-        <section v-if="message.from === 'SPEAKER'" class="speaker-msg">
-          <div class="speaker-label">{{ speakerList[message.label] }}</div>
-          <div class="speaker-msg">{{ message.msg }}</div>
-        </section>
-
-        <section v-else class="listener-msg">
-          {{ message.msg }}
-        </section>
-
+        <Message :msg="message.msg" :from="message.from" :label="message.label" :speaker-labels="speakerLabels" />
       </div>
 
       <div id="anchor"></div>
@@ -112,23 +103,4 @@ export default {
   margin: 1vw;
 }
 
-.speaker-msg, .listener-msg{
-  font-size: 2vw;
-  padding: 1vw;
-  border-radius: 25px;
-}
-
-.speaker-label{
-  margin-left: 20px;
-}
-
-.speaker-msg{
-  margin-right: auto;
-  background-color: #9BB8E3;
-}
-
-.listener-msg{
-  margin-left: auto;
-  background-color: #8EFF9A;
-}
 </style>
