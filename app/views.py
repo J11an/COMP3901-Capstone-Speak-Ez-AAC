@@ -15,8 +15,6 @@ from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
 
-
-
 phrases = []
 rootdir = os.getcwd()
 model_dir = (os.path.join(rootdir + r"\model\vosk-model-small-en-us-0.15"))
@@ -32,7 +30,6 @@ rec = KaldiRecognizer(model, 16000)
 @app.route('/')
 def index():
     return jsonify(message="This is the beginning of our API")
-
 
 ###
 # The functions below should be applicable to all Flask apps.
@@ -88,11 +85,9 @@ def word_associated():
         next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
         
 
-
-
     return jsonify(next_partsofspeech)
    
-@app.route('/inital_tree_setting')     
+@app.route('/api/inital_tree_setting',methods = ['GET'])    
 def inital_tree_setting():
     columns={
         "noun":[],
@@ -100,7 +95,7 @@ def inital_tree_setting():
         "adjectives":[],
         "article":[]
     }       
-    #Retieve all the title from the database and group them by theier part of speech
+    #Retrieve all the title from the database and group them by theier part of speech
     tiles=Words.query.all()
     for tile in tiles:
         part_of_speech=tile.partofspeech.lower()
@@ -109,10 +104,10 @@ def inital_tree_setting():
             columns[part_of_speech].append(tile.word)
     # Fill in any missing words up to maximum of 4 per part of speech
     for coluumn in columns.values():
-        while len(coluumn)<4:
+        while len(coluumn) < 4:
             coluumn.append ("")
 
-    return jsonify(columns)
+    return jsonify(columns),201
     
     
 #Listening Screen
@@ -134,11 +129,10 @@ def handle_audio_data(data):
 
 
 #Seed Vocab List
-@app.route('/seed_database')
-
+@app.route('/api/seed_database')
 def seed_database():
     #Change file path to the one on your computer (Temp Maybe)
-    df = pd.read_excel(r'C:\Users\\Desktop\COMP3901-Capstone\app\Vocab_list .xlsx', sheet_name=None)
+    df = pd.read_excel(r'C:\Users\Gabbz\COMP3901-Capstone\app\Vocab_list .xlsx', sheet_name=None)
 
     for sheet_name, sheet_data in df.items():
         if sheet_name == "Words":
@@ -154,60 +148,61 @@ def seed_database():
                 )
                 db.session.add(cword)
                 db.session.commit()
-        # if sheet_name == "Parts_of_speech":
-        #     for index, row in sheet_data.iterrows():
-        #         cpartofspeech=PartsofSpeech(
-        #         pos_id=(row['pos_id']),
-        #         pos=(row['pos'])
-        #         )
-        #         db.session.add(cpartofspeech)
-        #         db.session.commit()
-        # if sheet_name == "Adjectives":
-        #     for index, row in sheet_data.iterrows():
-        #         cAdjectives= Adjectives(
-        #         word_id=(row['word_id']),
-        #         word=(row['word']),
-        #         pos_id=(row['pos_id']),
-        #         comparative=(row['comparative']),
-        #         superlative=(row['superlative'])
-        #         )
-        #         db.session.add(cAdjectives)
-        #         db.session.commit()
-        # if sheet_name == "Nouns":
-        #     for index, row in sheet_data.iterrows():
-        #         cNoun=Nouns(
-        #         word_id=(row['word_id']),
-        #         word=(row['word']),
-        #         pos_id=(row['pos_id']),
-        #         plural=(row['plural']),
-        #         possessive=(row['possessive']),
-        #         male=(row['male']),
-        #         female=(row['Female'])            
-        #         )
-        #         db.session.add(cNoun)
-        #         db.session.commit()
-        # if sheet_name == "Verbs":
-        #     for index, row in sheet_data.iterrows():
-        #         cVerb=Verbs(
-        #         word_id=(row['word_id']),
-        #         word=(row['word']),
-        #         pos_id=(row['pos_id']),
-        #         plural=(row['plural']),
-        #         past=(row['past']),
-        #         present_cont=(row['present_cont']),
-        #         future=(row['future']),
-        #         perfect=(row['perfect'])               
-        #         )
-        #         db.session.add(cVerb)
-        #         db.session.commit()
-        # if sheet_name == "Symbols":
-        #     for index, row in sheet_data.iterrows():
-        #         cSymbol=Symbols(
-        #         symbol_id=(row['symbol_id']),
-        #         symbol=(row['symbol'])
-        #         )
-        #         db.session.add(cSymbol)
-        #         db.session.commit()
+                
+        if sheet_name == "Parts_of_speech":
+            for index, row in sheet_data.iterrows():
+                cpartofspeech=PartsofSpeech(
+                pos_id=(row['pos_id']),
+                pos=(row['pos'])
+                )
+                db.session.add(cpartofspeech)
+                db.session.commit()
+        if sheet_name == "Adjectives":
+            for index, row in sheet_data.iterrows():
+                cAdjectives= Adjectives(
+                word_id=(row['word_id']),
+                word=(row['word']),
+                pos_id=(row['pos_id']),
+                comparative=(row['comparative']),
+                superlative=(row['superlative'])
+                )
+                db.session.add(cAdjectives)
+                db.session.commit()
+        if sheet_name == "Nouns":
+            for index, row in sheet_data.iterrows():
+                cNoun=Nouns(
+                word_id=(row['word_id']),
+                word=(row['word']),
+                pos_id=(row['pos_id']),
+                plural=(row['plural']),
+                possessive=(row['possessive']),
+                male=(row['male']),
+                female=(row['Female'])            
+                )
+                db.session.add(cNoun)
+                db.session.commit()
+        if sheet_name == "Verbs":
+            for index, row in sheet_data.iterrows():
+                cVerb=Verbs(
+                word_id=(row['word_id']),
+                word=(row['word']),
+                pos_id=(row['pos_id']),
+                plural=(row['plural']),
+                past=(row['past']),
+                present_cont=(row['present_cont']),
+                future=(row['future']),
+                perfect=(row['perfect'])               
+                )
+                db.session.add(cVerb)
+                db.session.commit()
+        if sheet_name == "Symbols":
+            for index, row in sheet_data.iterrows():
+                cSymbol=Symbols(
+                symbol_id=(row['symbol_id']),
+                symbol=(row['symbol'])
+                )
+                db.session.add(cSymbol)
+                db.session.commit()
 
         
 

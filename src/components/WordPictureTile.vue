@@ -1,35 +1,39 @@
 <script setup>
+import { ref } from "vue";
+let tts = window.speechSynthesis;
 
-import {ref} from 'vue'
+//let voice = tts.getVoices().filter(function (voice) {return voice.lang === 'en';})[0];
+//const word = ref(document.querySelector(".card-content > p"))
 
 const props = defineProps({
-  word: ref(''),
-  imageUrl:ref(''),
+  word: ref(""),
+  imageUrl: ref(""),
 });
 
-function addWord(){
-  const textbox = document.getElementById("message")
-  const word = document.createElement('div');
-  word.setAttribute('class', 'card');
-  word.setAttribute('id', 'tile');
+function addWord() {
+  const textbox = document.getElementById("message");
+  const tile = document.createElement("div");
+  tile.setAttribute("class", "card");
+  tile.setAttribute("id", "tile");
 
-  const img = document.createElement('img');
-  img.setAttribute('src', '/HelpIcon.png');
-  img.setAttribute('alt', 'Image');
-  word.appendChild(img);
+  const img = document.createElement("img");
+  img.setAttribute("src", "/HelpIcon.png");
+  img.setAttribute("alt", "Image");
+  tile.appendChild(img);
 
-  const cardContent = document.createElement('div');
-  cardContent.setAttribute('class', 'card-content');
+  const cardContent = document.createElement("div");
+  cardContent.setAttribute("id", "word");
 
-  const p = document.createElement('p');
-  p.textContent = 'word';
+  const p = document.createElement("p");
+  p.textContent = props.word;
   cardContent.appendChild(p);
 
-  word.appendChild(cardContent);
-  
-  textbox.appendChild(word)
-}
+  tile.appendChild(cardContent);
 
+  textbox.appendChild(tile);
+  var utterance = new SpeechSynthesisUtterance(p.textContent);
+  tts.speak(utterance);
+}
 </script>
 
 <template>
@@ -39,16 +43,15 @@ function addWord(){
   </div>-->
   <div class="container">
     <button class="card" @click="addWord">
-      <img src="/HelpIcon.png" alt="Image">
+      <img src="/HelpIcon.png" alt="Image" />
       <div class="card-content">
-        <p>word</p>
+        <p>{{ props.word }}</p>
       </div>
     </button>
   </div>
 </template>
 
 <style>
-
 /*.img-orientation {
   width: 50px;
   height: 50px;
@@ -113,5 +116,4 @@ function addWord(){
   padding: 10px;
   text-align: center;
 }
-
 </style>

@@ -1,13 +1,13 @@
 <script setup>
-//import { ref } from 'vue';
+import { ref } from 'vue';
 
-var tts = window.speechSynthesis;
+let tts = window.speechSynthesis;
+/*let voice = tts.getVoices().filter(function (voice) {return voice.lang === 'en';})[0];*/
 
 
 function handleBackspace(){
-  const word = document.getElementById('tile');
-  word.remove()
-  
+  const message = document.getElementById('message');
+  message.lastChild.remove()
 }  
 
 function handleClear(){
@@ -15,12 +15,23 @@ function handleClear(){
   message.innerHTML = '';
 }  
 
+function handleSpeaker(){
+  const sentence = ref(document.querySelectorAll("div#word p"))
+  var utterance
+  sentence.value.forEach(word => {
+    console.log("word:", word.textContent) 
+    utterance = new SpeechSynthesisUtterance(word.textContent);
+    // Speak the utterance
+    tts.speak(utterance);
+  });
+}
+
 </script>
 
 
 <template>
   <div class="container msg-container">
-    <div id="message" class="msg-display">
+    <div id="message" class="msg-display" @input="handleSpeaker">
     </div>
     <!--<input id="input" class="msg-display"/>-->
       <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
@@ -29,7 +40,7 @@ function handleClear(){
           <img src="/Backspace.png" alt="Backspace Icon" />
         </button>
         <button class="btn" @click="handleClear"><img src="/clear.png" alt="Clear Icon" /></button>
-        <button class="btn" @click="somefunc"><img src="/SpeakerIcon.png" alt="Speaker Icon" /></button>
+        <button class="btn" @click="handleSpeaker"><img src="/SpeakerIcon.png" alt="Speaker Icon" /></button>
         <!---<img src="/Backspace.png" alt="Backspace Icon" />
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->
       </div>

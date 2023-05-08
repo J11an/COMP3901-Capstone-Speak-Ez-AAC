@@ -1,9 +1,10 @@
 <script>
 import MessageBar from "../components/MessageBar.vue";
 import WordPictureTile from "../components/WordPictureTile.vue";
+import AACBoard from '../components/AACBoard.vue'
 
 export default {
-  components: { WordPictureTile, MessageBar },
+  components: { WordPictureTile, MessageBar, AACBoard},
 
   data() {
     return {
@@ -14,12 +15,6 @@ export default {
     };
   },
 
-  methods: {
-    toggleSwitch(){
-      this.toggleVal = !this.toggleVal;
-    }
-  },
-
   mounted() {
     this.columns = {
       "noun" : [1,1,1,1],
@@ -27,29 +22,35 @@ export default {
       "adjective" : [3,3,3,3],
       "article" : [4,4,4,4]
     }
-  }
+  },
 
+  methods: {
+    toggleSwitch(){
+      this.toggleVal = !this.toggleVal;
+    }
+  },
 };
 </script>
 <template>
   <div>
-    <MessageBar />
+    <MessageBar/>
 
     <!--Toggle-->
     <div class="toggle-wrapper">
-      <div class="toggle-container" @click="toggleSwitch">
+      <button class="toggle-container" @click="toggleSwitch">
         <h1>Dynamic</h1>
         <h1>|</h1>
         <h1>Linear</h1>
-      </div>
+      </button>
     </div>
-
 
     <!--Linear-->
     <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
       <h1>Linear Search Active</h1>
-      <WordPictureTile image-url="/HelpIcon.png" :word="word"/>
+      <!--<WordPictureTile image-url="/HelpIcon.png" :word="word"/>-->
     </div>
+
+    <div><AACBoard /></div>
 
     <!--Dynamic-->
     <!--<div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
