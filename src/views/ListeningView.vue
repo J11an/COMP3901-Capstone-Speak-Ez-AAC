@@ -6,7 +6,6 @@ export default {
 
   data() {
     return {
-      currentMessage: "",
       /*
       * Message Format
       * msg - The contents of the message
@@ -28,8 +27,7 @@ export default {
   mounted() {
     const testFromArr = ["SPEAKER","LISTENER"];
     this.speakerList = ["Speaker1", "Speaker2"];
-    for (let i = 0; i < 100; i++) {
-      if(Math.round(Math.random())){
+    for (let i = 0; i < 5; i++) {
         const from = testFromArr[Math.round(Math.random())];
         this.messageList.push({
           id: i,
@@ -37,7 +35,6 @@ export default {
           from: from,
           label: Math.round(Math.random())
         })
-      }
     }
   }
 
@@ -74,7 +71,7 @@ export default {
 
 
     <!-- Message Bar at Bottom -->
-    <MessageBarListening />
+    <MessageBarListening :msg-list="messageList" />
   </div>
 </template>
 

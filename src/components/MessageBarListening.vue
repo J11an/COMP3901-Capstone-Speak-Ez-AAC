@@ -1,15 +1,37 @@
-<script setup>
+<script>
 //import { ref } from 'vue';
+export default {
+  props: {
+    msgList: Array,
+  },
+  data() {
+    return {
+      currentSentence:"",
+    };
+  },
+  methods:{
+    handleBackspace(){
+      const sentence = this.currentSentence;
+      this.currentSentence = sentence.substring(0,sentence.length-1);
+    },
+    handleClear(){
+      this.currentSentence = "";
+    },
+    sendMessage(){
+      const msgs = this.msgList;
+      const sentence = this.currentSentence;
+      msgs.push({
+          id: msgs[msgs.length-1].id+1,
+          msg:sentence,
+          from: "LISTENER",
+          label: 0
+      })
+      this.handleClear();
+    }
 
-function handleBackspace(){
-  var message = document.getElementById('input').value;
-  document.getElementById('input').value = message.substring(0,message.length -1);
-}  
 
-function handleClear(){
-  //var message = document.getElementById('input').value;
-  document.getElementById('input').value = "";
-}  
+  }
+};
 
 </script>
 
@@ -17,7 +39,7 @@ function handleClear(){
 <template>
   <div class="container-fluid msg-container">
     <!--<div class="msg-display"></div>-->
-    <input id="input" class="msg-display"/>
+    <input id="input" class="msg-display" v-on:keyup.enter="sendMessage" v-model="currentSentence"/>
       <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
       <div class="btn-group btn-group-md options">
         <button class="btn "  @click="handleBackspace"><img src="/Backspace.png" alt="Backspace Icon" /></button>
@@ -47,6 +69,7 @@ function handleClear(){
   background: #ffffff;
   border: 2px solid black;
   border-radius: 20px;
+  font-size: 2vw;
 }
 
 .options{
