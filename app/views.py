@@ -131,8 +131,8 @@ def handle_audio_data(data):
 #Seed Vocab List
 @app.route('/api/seed_database')
 def seed_database():
-    #Change file path to the one on your computer (Temp Maybe)
-    df = pd.read_excel(r'C:\Users\Gabbz\COMP3901-Capstone\app\Vocab_list .xlsx', sheet_name=None)
+    #Change file path to the one on your computer (Temp Maybe). Lol use os.path
+    df = pd.read_excel(f"{os.path.abspath(os.getcwd())}\\app\\Vocab list.xlsx", sheet_name=None)
 
     for sheet_name, sheet_data in df.items():
         if sheet_name == "Words":
