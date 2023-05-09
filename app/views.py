@@ -15,6 +15,7 @@ from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
 import numpy as np
+import random
 
 phrases = []
 rootdir = os.getcwd()
