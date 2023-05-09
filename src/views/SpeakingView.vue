@@ -4,7 +4,7 @@ import WordPictureTile from "../components/WordPictureTile.vue";
 import AACBoard from '../components/AACBoard.vue'
 
 export default {
-  components: { WordPictureTile, MessageBar, AACBoard},
+  components: {MessageBar, AACBoard},
 
   data() {
     return {

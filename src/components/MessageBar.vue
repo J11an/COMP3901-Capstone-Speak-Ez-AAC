@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue';
+import SearchBar from "./SearchBar.vue"
+import WordPictureTile from './WordPictureTile.vue';
 
 let tts = window.speechSynthesis;
 /*let voice = tts.getVoices().filter(function (voice) {return voice.lang === 'en';})[0];*/
@@ -27,11 +29,10 @@ function handleSpeaker(){
 }
 
 </script>
-
-
 <template>
   <div class="container msg-container">
     <div id="message" class="msg-display" @input="handleSpeaker">
+      <!--<WordPictureTile v-model:word="word" v-model:image-url="imageUrl"/>-->
     </div>
     <!--<input id="input" class="msg-display"/>-->
       <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
@@ -41,9 +42,12 @@ function handleSpeaker(){
         </button>
         <button class="btn" @click="handleClear"><img src="/clear.png" alt="Clear Icon" /></button>
         <button class="btn" @click="handleSpeaker"><img src="/SpeakerIcon.png" alt="Speaker Icon" /></button>
+        <button class="btn" @click="handleSpeaker"><img src="/pinned_folder.png" alt="Speaker Icon" /></button>
+        <!--<button class="btn" @click="handleSpeaker"><img src="/search.png" alt="Speaker Icon" /></button>-->
         <!---<img src="/Backspace.png" alt="Backspace Icon" />
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->
       </div>
+      <SearchBar/>
   </div>
 </template>
 
@@ -70,10 +74,12 @@ function handleSpeaker(){
  .btn-group .options{
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  margin:auto;
 }
 
-button img {
-  width: 100%;
+.btn img {
+  max-width: 100%;
   height: 100%;
 }
 </style>

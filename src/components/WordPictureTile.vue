@@ -12,6 +12,8 @@ const props = defineProps({
 
 function addWord() {
   const textbox = document.getElementById("message");
+  let child = ref.wordTitle;
+
   const tile = document.createElement("div");
   tile.setAttribute("class", "card");
   tile.setAttribute("id", "tile");
@@ -42,12 +44,14 @@ function addWord() {
     <p class="card-text tile-text">{{ word }}</p>
   </div>-->
   <div class="container">
-    <button class="card" @click="addWord">
+  <div id="tile" >
+    <button :word="word" :image-url="imageUrl" class="card" @click="addWord">
       <img src="/HelpIcon.png" alt="Image" />
       <div class="card-content">
         <p>{{ props.word }}</p>
       </div>
     </button>
+  </div>
   </div>
 </template>
 
@@ -90,18 +94,19 @@ function addWord() {
 .card {
   width: 100px;
   height: 100px;
-  background: linear-gradient(
+  /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
       rgba(103, 80, 164, 0.08)
     ),
-    #fffbfe;
-  border: 3px solid #000000;
+    #fffbfe;*/
+  border: 1px solid #000000;
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   overflow: hidden;
   justify-self: center;
   align-items: center;
+  margin-bottom: 15px;
 }
 
 .card img {
