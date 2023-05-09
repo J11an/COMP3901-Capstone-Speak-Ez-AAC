@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/speaking" class="nav-link">Speaking <img src="/SpeakingScreen.png" alt="Speaking Screen Image" class="nav-img"/></RouterLink>
+              <RouterLink to="/speaking" class="nav-link"><p>Speaking</p> <img src="/SpeakingScreen.png" alt="Speaking Screen Image" class="nav-img"/></RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink  to="/listening" class="nav-link">Listening <img src="/ListeningScreen.png" alt="Listening Screen Image" class="nav-img"/> </RouterLink>
+              <RouterLink  to="/listening" class="nav-link"><p>Listening</p> <img src="/ListeningScreen.png" alt="Listening Screen Image" class="nav-img"/> </RouterLink>
             </li>
           </ul>
         </div>
@@ -36,7 +36,20 @@ import { RouterLink } from "vue-router";
 <style scoped>
 /* Add any component specific styles here */
 .nav-img{
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
+}
+
+.nav-link{
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
 }
 </style>
