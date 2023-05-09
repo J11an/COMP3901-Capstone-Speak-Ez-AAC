@@ -1,7 +1,6 @@
 <script>
 import MessageBarListening from "../components/Listening/MessageBarListening.vue";
 import Message from "../components/Listening/Message.vue";
-import { state, socket } from "../socketio";
 
 export default {
   components: { MessageBarListening, Message },
@@ -14,18 +13,9 @@ export default {
   },
 
   methods: {
-    connect() {
-      socket.connect();
-    },
-    disconnect() {
-      socket.disconnect();
-    }
   },
 
   computed : {
-    connected() {
-      return state.connected;
-    }
   },
 
   mounted() {
