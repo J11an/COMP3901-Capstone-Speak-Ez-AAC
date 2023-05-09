@@ -7,6 +7,8 @@ let adjectives = ref([]);
 let nouns = ref([]);
 let articles = ref([]);
 let verbs = ref([]);
+let columns = ref([]);
+let toggleVal = ref(false);
 
 function fetchGrid() {
   fetch("api/inital_tree_setting", {
@@ -16,13 +18,14 @@ function fetchGrid() {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
-      //words.value = data;
-      adjectives.value = data.adjectives;
-      articles.value = data.articles;
-      nouns.value = data.noun;
-      verbs.value = data.verb;
-      //console.log(nouns);
+      //console.log(data);
+      columns.value = {
+        pronoun: data.pronoun,
+        noun: data.noun,
+        verb: data.verb,
+        adjective: data.adjectives,
+        article: data.article,
+      };
     })
     .catch(function (error) {
       console.log(error);
@@ -30,20 +33,35 @@ function fetchGrid() {
     });
 }
 
+/*function toggleSwitch(){
+      let toggleValue;
+      toggleValue.value = !toggleVal.value;
+    }*/
+
 onMounted(() => {
   fetchGrid();
+  /*columns.value = {
+      "noun" : [1,1,1,1],
+      "verb" : [2,2,2,2],
+      "adjective" : [3,3,3,3],
+      "article" : [4,4,4,4]
+    }*/
 });
 </script>
 
 <template>
-  <div class="container">
+  <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+    <div v-for="(value, key) in columns" :class="key">
+      <div v-for="word in value">
+        <WordPictureTile image-url="/HelpIcon.png" :word="word" />
+      </div>
+    </div>
+  </div>
+  <!--<div class="container board">
     <div class="row align-items-start">
     <div class="col-sm">
-      <!--<div v-for="article in articles" class="col" >
+    <div v-for="article in articles" class="col" >
         <WordPictureTile :word=article />
-      </div>-->
-      <div v-for="noun in nouns.slice(0,4)" class="col-sm">
-        <WordPictureTile :word=noun />
       </div>
     </div>
     
@@ -63,9 +81,27 @@ onMounted(() => {
       </div>
     </div>
   </div>
-</div>
-
-
+</div>-->
 </template>
 
-<style></style>
+<style>
+div .pronoun button {
+  background: blue;
+}
+
+div .noun button {
+  background: rgb(216, 102, 102);
+}
+
+div .article button {
+  background: rgb(173, 180, 40);
+}
+
+div .adjective button {
+  background: rgb(167, 136, 12);
+}
+
+div .verb button {
+  background: rgb(11, 115, 27);
+}
+</style>

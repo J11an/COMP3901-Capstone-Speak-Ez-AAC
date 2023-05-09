@@ -147,3 +147,40 @@ class Symbols(db.Model):
             return unicode(self.symbol_id)  # python 2 support
         except NameError:
             return str(self.symbol_id)  # python 3 support
+
+class Pronouns(db.Model):
+
+    word_id= db.Column(db.Integer,primary_key=True)
+    word=db.Column(db.String(20))
+
+    def __init__(self,word_id,word):
+        self.word_id=word_id
+        self.word=word
+
+    def __repr__(self):
+       return '<Pronoun%r>' % (self.word)
+
+    def get_id(self):
+        try:
+            return unicode(self.word_id)  # python 2 support
+        except NameError:
+            return str(self.word_id)  # python 3 support
+
+class Articles (db.Model):
+
+    word_id= db.Column(db.Integer,primary_key=True)
+    word=db.Column(db.String(20))
+
+    def __init__(self,word_id,word):
+        self.word_id=word_id
+        self.word=word
+
+    def __repr__(self):
+       return '<Article%r>' % (self.word)
+
+    def get_id(self):
+        try:
+            return unicode(self.word_id)  # python 2 support
+        except NameError:
+            return str(self.word_id)  # python 3 support
+

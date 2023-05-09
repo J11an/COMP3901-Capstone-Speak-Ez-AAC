@@ -14,6 +14,9 @@ from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
+import random
+from sqlalchemy import func
+from difflib import get_close_matches
 
 phrases = []
 rootdir = os.getcwd()
@@ -55,37 +58,123 @@ def speak():
         mp3 = os.path.join(rootdir,r"message.mp3")
         return send_file(mp3, mimetype='audio/mp3', as_attachment=True)
  
+@app.route('/api/word_associated',methods=['POST','GET'])    
+def word_associated(word_id):
+    next_partsofspeech={}
+    tile=Words.query.filter_by(word_id=Words.word_id).first()
+    # next_partsofspeech["conjunction"] = [{"id": conjunction.word_id, "word": conjunction.word} for conjunction in Words.query.filter_by(partofspeech='Conjunction').order_by(func.random()).limit(4).all()]
 
-@app.route('/api/test',methods=["GET"])    
-def word_associated():
-# takes a word and returns a list of next parts of speech and the associated
-# list of words for each
+
+    if tile.partofspeech=='Noun':
+        next_partsofspeech["adjectives"] = [adjective.word for adjective in Words.query.filter_by(partofspeech='Adjectives').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["preposition"] = [preposition.word for preposition in Words.query.filter_by(partofspeech='Preposition').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["conjunction"] = [conjunction.word for conjunction in Words.query.filter_by(partofspeech='Conjunction').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["verb"] = [verb.word for verb in Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["noun"] = [noun.word for noun in Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+
+    if tile.partofspeech=='Article':
+        next_partsofspeech["adjectives"] = [adjective.word for adjective in Words.query.filter_by(partofspeech='Adjectives').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["noun"] = [noun.word for noun in Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+
+    if tile.partofspeech=='Pronoun':
+
+        next_partsofspeech["preposition"] = [preposition.word for preposition in Words.query.filter_by(partofspeech='Preposition').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["verb"] = [verb.word for verb in Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["noun"] = [noun.word for noun in Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+
+    if tile.partofspeech=='Preposition':
+        next_partsofspeech["articles"] = [articles.word for articles in Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["noun"] = [noun.word for noun in Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["pronoun"] = [pronoun.word for pronoun in Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(4).all()]
+
+    if tile.partofspeech=='Conjunction':
+        next_partsofspeech["verb"] = [verb.word for verb in Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["articles"] = [articles.word for articles in Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["pronoun"] = [pronoun.word for pronoun in Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(4).all()]
+
+    if tile.partofspeech=='Adjectives':
+        next_partsofspeech["adjectives"] = [adjective.word for adjective in Words.query.filter_by(partofspeech='Adjectives').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["conjunction"] = [conjunction.word for conjunction in Words.query.filter_by(partofspeech='Conjunction').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["noun"] = [noun.word for noun in Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+
+    if tile.partofspeech=='Verb':
+        next_partsofspeech["adjectives"] = [adjective.word for adjective in Words.query.filter_by(partofspeech='Adjectives').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["preposition"] = [preposition.word for preposition in Words.query.filter_by(partofspeech='Preposition').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["articles"] = [articles.word for articles in Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["verb"] = [verb.word for verb in Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["noun"] = [noun.word for noun in Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+        next_partsofspeech["pronoun"] = [pronoun.word for pronoun in Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(4).all()]
+
+    return jsonify(next_partsofspeech),200
 
 
-    tile=Words.query.filter_by(word=Words.word).first()
-    print(tile)
-    if tile is None:
-        return jsonify({'error':'Word not found.'}),404
+@app.route('/api/search',methods=['POST'])
+def search_word(word):
+    if request.method == 'POST':
+        search_result = Words.query.filter(Words.word.ilike(f'%{word}%')).all()
+        #n specifies the maximum number of closest matches to return and 
+        # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
+        matches = get_close_matches(word, [w.word for w in search_result], n=10, cutoff=0.6)
+        return (jsonify(matches))
+            
 
-    next_partsofspeech={
-        'noun':[],
-        'verb':[],
-        'adjective':[],
-        'article':[]
-    }
 
-    if tile.partofspeech=='noun':
-        next_partsofspeech['adjective']=[t.word for t in Words.query.filter_by(partofspeech='Adjectives').all()]
-        next_partsofspeech['verb']=[t.word for t in Words.query.filter_by(partofspeech='verb').all()]
 
-    elif tile.partofspeech=='verb':
-        next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
+
+# @app.route('/api/word_associated',methods=['POST'])    
+# def word_associated(word):
+# # takes a word and returns a list of next parts of speech and the associated
+# # list of words for each
+#     if request.method == "POST":
+
+
+
+#     tile=Words.query.filter_by(word=Words.word).first()
+#     print(tile)
+#     if tile is None:
+#         return jsonify({'error':'Word not found.'}),404
+
+#     next_partsofspeech={
+#         'noun':[],
+#         'verb':[],
+#         'adjective':[],
+#         'article':[],
+#         'pronoun':[]
+#     }
+
+#     if tile.partofspeech=='noun':
+#         next_partsofspeech['adjective']=[t.word for t in Words.query.filter_by(partofspeech='Adjectives').all()]
+#         next_partsofspeech['verb']=[t.word for t in Words.query.filter_by(partofspeech='verb').all()]
+
+#     elif tile.partofspeech=='verb':
+#         next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
         
-    if tile.partofspeech=='adjective':
-        next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
+#     elif tile.partofspeech=='adjective':
+#         next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
+
+#     elif tile.partofspeech=='pronoun':
+#         next_partsofspeech['pronoun']=[t.word for t in Words.query.filter_by(partofspeech='pronoun').all()]
+        
+#     elif tile.partofspeech=='article':
+#         next_partsofspeech['article']=[t.word for t in Words.query.filter_by(partofspeech='article').all()]
         
 
-    return jsonify(next_partsofspeech)
+#     return jsonify(next_partsofspeech)
+
+
+# @app.route('/',methods=['GET'])
+# def get_categories():
+
+#     categories=Words.query.filter_by(category=Words.category).first()
+#     print(categories)
+#     if categories is None:
+#         return jsonify({'error':'Word not found'}),404
+
+#     groups={
+#         'Family':[],
+#         'Colours':[],
+#     }
+
    
 @app.route('/api/inital_tree_setting',methods = ['GET'])    
 def inital_tree_setting():
@@ -93,20 +182,26 @@ def inital_tree_setting():
         "noun":[],
         "verb":[],
         "adjectives":[],
-        "article":[]
+        "articles":[],
+        "pronoun":[]
     }       
-    #Retrieve all the title from the database and group them by theier part of speech
+    #Retrieve all the title from the database and group them by their part of speech
     tiles=Words.query.all()
     for tile in tiles:
         part_of_speech=tile.partofspeech.lower()
         print(part_of_speech)
         if part_of_speech in columns:
             columns[part_of_speech].append(tile.word)
-    # Fill in any missing words up to maximum of 4 per part of speech
-    for coluumn in columns.values():
-        while len(coluumn) < 4:
-            coluumn.append ("")
+            # columns[part_of_speech].append(tile.word_id)
+            # columns[part_of_speech].append(tile.symbol_id)
 
+
+            
+    # Shuffle the words in each column and take the first 4
+    for column in columns:  
+        random.shuffle(columns[column])
+        columns[column]=tuple(columns[column][:4])
+    
     return jsonify(columns),201
     
     
@@ -203,7 +298,22 @@ def seed_database():
                 )
                 db.session.add(cSymbol)
                 db.session.commit()
-
+        if sheet_name == "Pronouns":
+            for index, row in sheet_data.iterrows():
+                cPronoun=Pronouns(
+                word_id=(row['word_id']),
+                word=(row['word'])
+                )
+                db.session.add(cPronoun)
+                db.session.commit()
+        if sheet_name == "Articles":
+            for index, row in sheet_data.iterrows():
+                cArticle=Articles(
+                word_id=(row['word_id']),
+                word=(row['word'])
+                )
+                db.session.add(cArticle)
+                db.session.commit()
         
 
 # Here we define a function to collect form errors from Flask-WTF
