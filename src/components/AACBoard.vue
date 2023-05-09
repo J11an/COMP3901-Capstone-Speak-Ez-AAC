@@ -6,6 +6,10 @@ import WordPictureTile from "./WordPictureTile.vue";
 let columns = ref([]);
 let toggleVal = ref(false);
 
+let props = defineProps({
+  currentSentence: ref([]),    
+})
+
 function fetchGrid() {
   fetch("api/inital_tree_setting", {
     method: "GET",
@@ -27,7 +31,23 @@ function fetchGrid() {
       console.log(error);
       //console.log("test");
     });
-}
+  }
+  function fetchAscWord(){
+    fetch("/api/word_associated/${word_id}",{
+      method: "GET",
+    })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch(function (error) {
+      console.log(error);
+      //console.log("test");
+    });
+  }
+
 
 /*function toggleSwitch(){
       let toggleValue;
@@ -36,6 +56,7 @@ function fetchGrid() {
 
 onMounted(() => {
   fetchGrid();
+  fetchAscWord();
   /*columns.value = {
       "noun" : [1,1,1,1],
       "verb" : [2,2,2,2],
@@ -47,6 +68,14 @@ onMounted(() => {
 
 <template>
   <div id="board" class="container">
+    <!--<div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+      <div v-for="(value, key) in columns" :class="key" :value="value">
+        <div v-for="word in value">
+          <WordPictureTile image-url="/HelpIcon.png" :word="word" />
+        </div>
+      </div>
+    </div>-->
+    <!--Dynamic-->
     <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
       <div v-for="(value, key) in columns" :class="key" :value="value">
         <div v-for="word in value">
@@ -55,31 +84,6 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <!--<div class="container board">
-    <div class="row align-items-start">
-    <div class="col-sm">
-    <div v-for="article in articles" class="col" >
-        <WordPictureTile :word=article />
-      </div>
-    </div>
-    
-    <div class="col-sm">
-      <div v-for="noun in nouns.slice(0,4)" class="col-sm">
-        <WordPictureTile :word=noun />
-      </div>
-    </div>
-    <div class="col-sm">
-      <div v-for="verb in verbs.slice(0,4)"  class="col-sm" >
-        <WordPictureTile :word=verb />
-      </div>
-    </div>
-    <div class="col-sm">
-      <div v-for="adjective in adjectives.slice(0,4)" class="col-sm" >
-        <WordPictureTile :word=adjective />
-      </div>
-    </div>
-  </div>
-</div>-->
 </template>
 
 <style>

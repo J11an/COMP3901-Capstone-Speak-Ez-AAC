@@ -41,7 +41,6 @@ function handleClear(){
     <div class="search-results">
       <WordPictureTile :word="result" v-for="result in results" :key="result.id">{{ result }}</WordPictureTile>
     </div>
-   
   </div>
 </template>
 

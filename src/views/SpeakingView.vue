@@ -1,7 +1,7 @@
 <script>
 import MessageBar from "../components/MessageBar.vue";
 import WordPictureTile from "../components/WordPictureTile.vue";
-import AACBoard from '../components/AACBoard.vue';
+import AACBoard from "../components/AACBoard.vue";
 import SearchBar from "../components/SearchBar.vue";
 
 export default {
@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       columns: {},
-      currentMessage: "",
+      currentSetence: [],
       lastWord: "",
       toggleVal: false,
     };
@@ -18,75 +18,55 @@ export default {
 
   mounted() {
     this.columns = {
-      "noun" : [1,1,1,1],
-      "verb" : [2,2,2,2],
-      "adjective" : [3,3,3,3],
-      "article" : [4,4,4,4]
-    }
+      noun: [1, 1, 1, 1],
+      verb: [2, 2, 2, 2],
+      adjective: [3, 3, 3, 3],
+      article: [4, 4, 4, 4],
+    };
+    this.currentSetence = ["I", "eat"];
   },
 
   methods: {
-    toggleSwitch(){
+    toggleSwitch() {
       this.toggleVal = !this.toggleVal;
-    }
+    },
   },
 };
 </script>
+
 <template>
   <div class="container">
     <MessageBar/>
-    <div class="search-section">
-      <SearchBar/>
-      <!--Toggle-->
-      
-      <div class="toggle-wrapper">
-        <button class="toggle-container" @click="toggleSwitch">
-          <h5>Dynamic</h5>
-          <h5>|</h5>
-          <h5>Linear</h5>
-        </button>
-      </div>
 
+    <!--Toggle-->
+    <div class="toggle-wrapper">
+      <button class="toggle-container" @click="toggleSwitch">
+        <h5>Dynamic</h5>
+        <h5>|</h5>
+        <h5>Linear</h5>
+      </button>
     </div>
-      <!--Linear-->
-      <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
-        <h5>Linear Search Active</h5>
-        <!--<WordPictureTile image-url="/HelpIcon.png" :word="word"/>-->
-    
-    <!--suggestions section-->
+
+    <!--Linear-->
+    <div v-if="!toggleVal" class="">
+      <h5>Linear Search Active</h5>
+
+      <div class="search-section">
+        <SearchBar />
+      </div>
+      <!--<AACBoard />-->
     </div>
-    <hr/>
-    <p>See suggested words here</p>
-    <hr/>
-    <div>
-    </div>
-    <AACBoard />
 
     <!--Dynamic-->
-    <!--<div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
-      <div class="column" v-for="column in columns">
-        <div v-for="word in column">
-          <WordPictureTile image-url="/HelpIcon.png" :word="word"/>
-        </div>
+    <div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+      <!--suggestions section-->
+      <div>
+        <hr />
+        <p>See suggested words here</p>
+        <hr />
       </div>
-    </div>-->
-
-    <!--<hr />
-    <div class="pinned section">
-      <div class="d-flex justify-content-center align-items-center">
-        <img
-          class="pinned-icon-section"
-          src="/PinnedIcon.png"
-          alt="Pinned Icon"
-        />
-        <p class="text-center pinned-words-text">Pinned Words</p>
-      </div>
-      <div class="d-flex justify-content-center align-items-center">
-        <WordPictureTile image-url="/HelpIcon.png" word="I" />
-        <WordPictureTile image-url="/HelpIcon.png" word="I" />
-        <WordPictureTile image-url="/HelpIcon.png" word="I" />
-      </div>
-    </div>-->
+      <AACBoard props.currentSentence="currentSentence" />
+    </div>
   </div>
 </template>
 
@@ -96,8 +76,8 @@ export default {
   font-weight: bold;
 }
 
-.search-section{
-  display:inline-flex;
+.search-section {
+  display: flex;
   flex-direction: row;
 }
 
