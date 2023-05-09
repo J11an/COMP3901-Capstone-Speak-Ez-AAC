@@ -10,6 +10,8 @@ const props = defineProps({
   imageUrl: ref(""),
 });
 
+/*defineEmits(['button-clicked:word', 'update:imageUrl'])*/
+
 function addWord() {
   const textbox = document.getElementById("message");
   let child = ref.wordTitle;
@@ -45,7 +47,8 @@ function addWord() {
   </div>-->
   <div class="container">
   <div id="tile" >
-    <button :word="word" :image-url="imageUrl" class="card" @click="addWord">
+    <!--<button :word="word" :image-url="imageUrl" class="card" :value="word" @click="$emit('update:word', $event.target.value),$emit('update:imageUrl', $event.target.value)" >-->
+      <button :word="word" :image-url="imageUrl" class="card" :value="word" @click="addWord">
       <img src="/HelpIcon.png" alt="Image" />
       <div class="card-content">
         <p>{{ props.word }}</p>
