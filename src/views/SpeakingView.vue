@@ -1,10 +1,11 @@
 <script>
 import MessageBar from "../components/MessageBar.vue";
 import WordPictureTile from "../components/WordPictureTile.vue";
-import AACBoard from '../components/AACBoard.vue'
+import AACBoard from '../components/AACBoard.vue';
+import SearchBar from "../components/SearchBar.vue";
 
 export default {
-  components: {MessageBar, AACBoard},
+  components: { MessageBar, AACBoard, SearchBar },
 
   data() {
     return {
@@ -32,25 +33,34 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div class="container">
     <MessageBar/>
+    <div class="search-section">
+      <SearchBar/>
+      <!--Toggle-->
+      
+      <div class="toggle-wrapper">
+        <button class="toggle-container" @click="toggleSwitch">
+          <h5>Dynamic</h5>
+          <h5>|</h5>
+          <h5>Linear</h5>
+        </button>
+      </div>
 
-    <!--Toggle-->
-    <div class="toggle-wrapper">
-      <button class="toggle-container" @click="toggleSwitch">
-        <h1>Dynamic</h1>
-        <h1>|</h1>
-        <h1>Linear</h1>
-      </button>
     </div>
-
-    <!--Linear-->
-    <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
-      <h1>Linear Search Active</h1>
-      <!--<WordPictureTile image-url="/HelpIcon.png" :word="word"/>-->
+      <!--Linear-->
+      <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+        <h5>Linear Search Active</h5>
+        <!--<WordPictureTile image-url="/HelpIcon.png" :word="word"/>-->
+    
+    <!--suggestions section-->
     </div>
-
-    <div><AACBoard /></div>
+    <hr/>
+    <p>See suggested words here</p>
+    <hr/>
+    <div>
+    </div>
+    <AACBoard />
 
     <!--Dynamic-->
     <!--<div v-if="toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
@@ -86,10 +96,15 @@ export default {
   font-weight: bold;
 }
 
+.search-section{
+  display:inline-flex;
+  flex-direction: row;
+}
+
 .toggle-container {
   display: flex;
   flex-direction: row;
-  margin: auto;
+  margin-top: 10px;
   justify-content: center;
   align-content: center;
 }

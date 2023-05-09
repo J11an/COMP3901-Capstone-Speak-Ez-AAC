@@ -3,10 +3,6 @@ import { ref, onMounted } from "vue";
 import WordPictureTile from "./WordPictureTile.vue";
 
 //let words = ref([]);
-let adjectives = ref([]);
-let nouns = ref([]);
-let articles = ref([]);
-let verbs = ref([]);
 let columns = ref([]);
 let toggleVal = ref(false);
 
@@ -50,10 +46,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
-    <div v-for="(value, key) in columns" :class="key">
-      <div v-for="word in value">
-        <WordPictureTile image-url="/HelpIcon.png" :word="word" />
+  <div id="board" class="container">
+    <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+      <div v-for="(value, key) in columns" :class="key" :value="value">
+        <div v-for="word in value">
+          <WordPictureTile image-url="/HelpIcon.png" :word="word" />
+        </div>
       </div>
     </div>
   </div>

@@ -47,7 +47,6 @@ function handleSpeaker(){
         <!---<img src="/Backspace.png" alt="Backspace Icon" />
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->
       </div>
-      <SearchBar/>
   </div>
 </template>
 
