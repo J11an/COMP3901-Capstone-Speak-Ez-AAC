@@ -218,19 +218,6 @@ def search_word(word):
 #     return jsonify(next_partsofspeech)
 
 
-# @app.route('/',methods=['GET'])
-# def get_categories():
-
-#     categories=Words.query.filter_by(category=Words.category).first()
-#     print(categories)
-#     if categories is None:
-#         return jsonify({'error':'Word not found'}),404
-
-#     groups={
-#         'Family':[],
-#         'Colours':[],
-#     }
-
 
 @app.route('/api/inital_tree_setting', methods=['GET'])
 def inital_tree_setting():
