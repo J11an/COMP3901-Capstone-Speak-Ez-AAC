@@ -14,9 +14,7 @@ from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
-import random
-from sqlalchemy import func
-from difflib import get_close_matches
+
 
 phrases = []
 rootdir = os.getcwd()
@@ -192,7 +190,8 @@ def inital_tree_setting():
         print(part_of_speech)
         if part_of_speech in columns:
             columns[part_of_speech].append(tile.word)
-            # columns[part_of_speech].append(tile.word_id)
+        
+    # columns[part_of_speech].append(tile.word_id)
             # columns[part_of_speech].append(tile.symbol_id)
 
 
@@ -203,6 +202,29 @@ def inital_tree_setting():
         columns[column]=tuple(columns[column][:4])
     
     return jsonify(columns),201
+
+@app.route('/api/get_categories',methods=['GET'])
+def get_catergories():
+    categories=db.session.query(Words.category).distinct().all()
+    categories=[c[0] for c in categories]
+    return jsonify(categories)
+
+@app.route('/api/get_word_symbol',methods=['GET'])
+def get_word_sybmol(): 
+    word=request.args.get('word')
+    word_obj=Words.query.filter_by(word=Words.word).first()
+    if word_obj:
+        symbol_id=word_obj.symbol_id
+        symbol_obj=Symbols.query.get(symbol_id)
+        symbol=symbol_obj.symbol
+        result={
+            'word':word_obj.word,
+            'id': word_obj.word_id,
+            'symbol':symbol
+        }
+        return jsonify(result)
+    else:
+        return jsonify({'error':'Word not found'})
     
     
 #Listening Screen
@@ -219,6 +241,7 @@ def listen():
 def handle_audio_data(data):
     print('received audio data:', data)
     socketio.emit('my_response', data)
+
     
 # Saved Phrases
 
@@ -226,8 +249,8 @@ def handle_audio_data(data):
 #Seed Vocab List
 @app.route('/api/seed_database')
 def seed_database():
-    #Change file path to the one on your computer (Temp Maybe)
-    df = pd.read_excel(r'C:\Users\Gabbz\COMP3901-Capstone\app\Vocab_list .xlsx', sheet_name=None)
+    #Change file path to the one on your computer (Temp Maybe). Lol use os.path
+    df = pd.read_excel(f"{os.path.abspath(os.getcwd())}\\app\\Vocab list.xlsx", sheet_name=None)
 
     for sheet_name, sheet_data in df.items():
         if sheet_name == "Words":
@@ -355,7 +378,3 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return jsonify(error="Page Not Found"), 404
-
-
-if __name__ == '__main__':
-    socketio.run(app)

@@ -1,35 +1,37 @@
 <script>
-import MessageBarListening from "../components/MessageBarListening.vue";
+import MessageBarListening from "../components/Listening/MessageBarListening.vue";
+import Message from "../components/Listening/Message.vue";
+import { state, socket } from "../socket";
 
 export default {
-  components: { MessageBarListening },
+  components: { MessageBarListening, Message },
 
   data() {
     return {
-      currentMessage: "",
-      /*
-      * Message Format
-      * msg - The contents of the message
-      * from - The author of the message, either the listener or speaker
-      * */
       messageList: [],
-      speakerList: []
+      speakerLabels: []
     };
   },
 
   methods: {
-    /**
-     * Function to scroll to the bottom of the page on a new message added
-     */
-    scrollToEnd() {
+    connect() {
+      socket.connect();
     },
+    disconnect() {
+      socket.disconnect();
+    }
+  },
+
+  computed : {
+    connected() {
+      return state.connected;
+    }
   },
 
   mounted() {
     const testFromArr = ["SPEAKER","LISTENER"];
-    this.speakerList = ["Speaker1", "Speaker2"];
-    for (let i = 0; i < 100; i++) {
-      if(Math.round(Math.random())){
+    this.speakerLabels = ["Speaker1", "Speaker2"];
+    for (let i = 0; i < 5; i++) {
         const from = testFromArr[Math.round(Math.random())];
         this.messageList.push({
           id: i,
@@ -37,7 +39,6 @@ export default {
           from: from,
           label: Math.round(Math.random())
         })
-      }
     }
   }
 
@@ -48,24 +49,17 @@ export default {
 </script>
 
 <template>
+  <p>State: {{ connected }}</p>
+  <button @click="connect()">Connect</button>
+  <button @click="disconnect()">Disconnect</button>
   <div class="listening-container">
 
     <!-- Messages container at top -->
-    <div class="conversation-container">
+    <div class="conversation-container" id="con-container">
 
       <!-- Go through all messages -->
       <div class="msg-body-container" v-for="message in messageList" v-bind:key="message.id">
-
-        <!-- Section for messages -->
-        <section v-if="message.from === 'SPEAKER'" class="speaker-msg">
-          <div class="speaker-label">{{ speakerList[message.label] }}</div>
-          <div class="speaker-msg">{{ message.msg }}</div>
-        </section>
-
-        <section v-else class="listener-msg">
-          {{ message.msg }}
-        </section>
-
+        <Message :msg="message.msg" :from="message.from" :label="message.label" :speaker-labels="speakerLabels" />
       </div>
 
       <div id="anchor"></div>
@@ -74,7 +68,7 @@ export default {
 
 
     <!-- Message Bar at Bottom -->
-    <MessageBarListening />
+    <MessageBarListening :msg-list="messageList" />
   </div>
 </template>
 
@@ -83,8 +77,7 @@ export default {
   /*border: solid red 1px;*/
   margin: 10px;
   padding: 10px;
-  overflow-anchor: none;
-  overflow: scroll;
+  overflow: auto;
   min-height: 80vh;
   max-height: 80vh;
 
@@ -105,33 +98,8 @@ export default {
 
 }
 
-#anchor{
-  overflow-anchor: auto;
-  height: 1px;
-}
-
 .msg-body-container{
   display: flex;
   margin: 1vw;
-}
-
-.speaker-msg, .listener-msg{
-  font-size: 2vw;
-  padding: 1vw;
-  border-radius: 25px;
-}
-
-.speaker-label{
-  margin-left: 20px;
-}
-
-.speaker-msg{
-  margin-right: auto;
-  background-color: #9BB8E3;
-}
-
-.listener-msg{
-  margin-left: auto;
-  background-color: #8EFF9A;
 }
 </style>

@@ -8,7 +8,9 @@ import AppFooter from "@/components/AppFooter.vue";
   <AppHeader />
 
   <main>
+    <KeepAlive>
     <RouterView />
+    </KeepAlive>
   </main>
 
   <!-- <AppFooter /> -->
