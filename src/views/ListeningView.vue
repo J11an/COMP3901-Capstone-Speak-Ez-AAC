@@ -50,10 +50,12 @@ export default {
 
 <template>
 
+  <!--
   <p>State: {{ connected }}</p>
   <p>Server Msg : {{ serverMsg }} at {{ new Date() }}</p>
   <button @click="connect()">Connect</button>
   <button @click="disconnect()">Disconnect</button>
+  -->
 
   <div class="listening-container">
 
