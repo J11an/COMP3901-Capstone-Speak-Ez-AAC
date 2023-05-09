@@ -103,12 +103,36 @@ def inital_tree_setting():
         print(part_of_speech)
         if part_of_speech in columns:
             columns[part_of_speech].append(tile.word)
+
     # Fill in any missing words up to maximum of 4 per part of speech
     for coluumn in columns.values():
         while len(coluumn) < 4:
             coluumn.append ("")
 
     return jsonify(columns),201
+
+@app.route('/get_catergories',methods=['GET'])
+def get_catergories():
+    categories=db.session.query(Words.category).distnct().all()
+    categories=[c[0] for c in categories]
+    return jsonify(categories)
+
+@app.route('/get_word_sybmol',methods=['GET'])
+def get_word_sybmol(): 
+    word=request.args.get('word')
+    word_obj=Words.query.filter_by(word=word).first()
+    if word_obj:
+        symbol_id=word_obj.symbol_id
+        symbol_obj=Symbols.querty.get(symbol_id)
+        symbol=symbol_obj.symbol
+        result={
+            'word':word,
+            'id': word_obj.word_id,
+            'symbol':symbol
+        }
+        return jsonify(result)
+    else:
+        return jsonify({error:'Word not found'})
     
     
 #Listening Screen
