@@ -403,8 +403,8 @@ def seed_database():
                     )
                     db.session.add(cArticle)
                     db.session.commit()
-        except Exception:
-            print("DB Exception")
+        except Exception as e:
+            print(f"DB Exception {e}")
     return {"success" : "database seeded"}, 202
 
 
