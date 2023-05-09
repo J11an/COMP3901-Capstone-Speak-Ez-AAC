@@ -51,7 +51,6 @@ def index():
 from pydub import AudioSegment
 from scipy.io import wavfile
 from webrtcvad import Vad
-from diarization import diarize
 
 
 @socketio.on('diarize')
