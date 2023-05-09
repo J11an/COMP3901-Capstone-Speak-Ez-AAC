@@ -332,76 +332,80 @@ def seed_database():
                 db.session.add(cword)
                 db.session.commit()
 
-        if sheet_name == "Parts_of_speech":
-            for index, row in sheet_data.iterrows():
-                cpartofspeech = PartsofSpeech(
-                    pos_id=(row['pos_id']),
-                    pos=(row['pos'])
-                )
-                db.session.add(cpartofspeech)
-                db.session.commit()
-        if sheet_name == "Adjectives":
-            for index, row in sheet_data.iterrows():
-                cAdjectives = Adjectives(
-                    word_id=(row['word_id']),
-                    word=(row['word']),
-                    pos_id=(row['pos_id']),
-                    comparative=(row['comparative']),
-                    superlative=(row['superlative'])
-                )
-                db.session.add(cAdjectives)
-                db.session.commit()
-        if sheet_name == "Nouns":
-            for index, row in sheet_data.iterrows():
-                cNoun = Nouns(
-                    word_id=(row['word_id']),
-                    word=(row['word']),
-                    pos_id=(row['pos_id']),
-                    plural=(row['plural']),
-                    possessive=(row['possessive']),
-                    male=(row['male']),
-                    female=(row['Female'])
-                )
-                db.session.add(cNoun)
-                db.session.commit()
-        if sheet_name == "Verbs":
-            for index, row in sheet_data.iterrows():
-                cVerb = Verbs(
-                    word_id=(row['word_id']),
-                    word=(row['word']),
-                    pos_id=(row['pos_id']),
-                    plural=(row['plural']),
-                    past=(row['past']),
-                    present_cont=(row['present_cont']),
-                    future=(row['future']),
-                    perfect=(row['perfect'])
-                )
-                db.session.add(cVerb)
-                db.session.commit()
-        if sheet_name == "Symbols":
-            for index, row in sheet_data.iterrows():
-                cSymbol = Symbols(
-                    symbol_id=(row['symbol_id']),
-                    symbol=(row['symbol'])
-                )
-                db.session.add(cSymbol)
-                db.session.commit()
-        if sheet_name == "Pronouns":
-            for index, row in sheet_data.iterrows():
-                cPronoun = Pronouns(
-                    word_id=(row['word_id']),
-                    word=(row['word'])
-                )
-                db.session.add(cPronoun)
-                db.session.commit()
-        if sheet_name == "Articles":
-            for index, row in sheet_data.iterrows():
-                cArticle = Articles(
-                    word_id=(row['word_id']),
-                    word=(row['word'])
-                )
-                db.session.add(cArticle)
-                db.session.commit()
+        try:
+            if sheet_name == "Parts_of_speech":
+                for index, row in sheet_data.iterrows():
+                    cpartofspeech = PartsofSpeech(
+                        pos_id=(row['pos_id']),
+                        pos=(row['pos'])
+                    )
+                    db.session.add(cpartofspeech)
+                    db.session.commit()
+            if sheet_name == "Adjectives":
+                for index, row in sheet_data.iterrows():
+                    cAdjectives = Adjectives(
+                        word_id=(row['word_id']),
+                        word=(row['word']),
+                        pos_id=(row['pos_id']),
+                        comparative=(row['comparative']),
+                        superlative=(row['superlative'])
+                    )
+                    db.session.add(cAdjectives)
+                    db.session.commit()
+            if sheet_name == "Nouns":
+                for index, row in sheet_data.iterrows():
+                    cNoun = Nouns(
+                        word_id=(row['word_id']),
+                        word=(row['word']),
+                        pos_id=(row['pos_id']),
+                        plural=(row['plural']),
+                        possessive=(row['possessive']),
+                        male=(row['male']),
+                        female=(row['Female'])
+                    )
+                    db.session.add(cNoun)
+                    db.session.commit()
+            if sheet_name == "Verbs":
+                for index, row in sheet_data.iterrows():
+                    cVerb = Verbs(
+                        word_id=(row['word_id']),
+                        word=(row['word']),
+                        pos_id=(row['pos_id']),
+                        plural=(row['plural']),
+                        past=(row['past']),
+                        present_cont=(row['present_cont']),
+                        future=(row['future']),
+                        perfect=(row['perfect'])
+                    )
+                    db.session.add(cVerb)
+                    db.session.commit()
+            if sheet_name == "Symbols":
+                for index, row in sheet_data.iterrows():
+                    cSymbol = Symbols(
+                        symbol_id=(row['symbol_id']),
+                        symbol=(row['symbol'])
+                    )
+                    db.session.add(cSymbol)
+                    db.session.commit()
+            if sheet_name == "Pronouns":
+                for index, row in sheet_data.iterrows():
+                    cPronoun = Pronouns(
+                        word_id=(row['word_id']),
+                        word=(row['word'])
+                    )
+                    db.session.add(cPronoun)
+                    db.session.commit()
+            if sheet_name == "Articles":
+                for index, row in sheet_data.iterrows():
+                    cArticle = Articles(
+                        word_id=(row['word_id']),
+                        word=(row['word'])
+                    )
+                    db.session.add(cArticle)
+                    db.session.commit()
+        except Exception:
+            print("DB Exception")
+    return {"success" : "database seeded"}, 202
 
 
 # Here we define a function to collect form errors from Flask-WTF
