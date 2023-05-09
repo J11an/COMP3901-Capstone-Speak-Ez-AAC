@@ -5,7 +5,7 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app,
+from app import app
 from flask import abort, render_template, request, jsonify, send_file, send_from_directory
 import os
 from app.models import *
@@ -281,12 +281,6 @@ def listen():
         result = rec.Result()
         result_json = jsonify({"text": result})
         return result_json
-
-
-@socketio.on('audio_data')
-def handle_audio_data(data):
-    print('received audio data:', data)
-    socketio.emit('my_response', data)
 
 
 # Saved Phrases
