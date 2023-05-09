@@ -21,8 +21,6 @@ export default {
     /**
      * Function to scroll to the bottom of the page on a new message added
      */
-    scrollToEnd() {
-    },
   },
 
   mounted() {
@@ -49,7 +47,7 @@ export default {
   <div class="listening-container">
 
     <!-- Messages container at top -->
-    <div class="conversation-container">
+    <div class="conversation-container" id="con-container">
 
       <!-- Go through all messages -->
       <div class="msg-body-container" v-for="message in messageList" v-bind:key="message.id">
@@ -71,8 +69,7 @@ export default {
   /*border: solid red 1px;*/
   margin: 10px;
   padding: 10px;
-  overflow-anchor: none;
-  overflow: scroll;
+  overflow: auto;
   min-height: 80vh;
   max-height: 80vh;
 
@@ -93,14 +90,8 @@ export default {
 
 }
 
-#anchor{
-  overflow-anchor: auto;
-  height: 1px;
-}
-
 .msg-body-container{
   display: flex;
   margin: 1vw;
 }
-
 </style>

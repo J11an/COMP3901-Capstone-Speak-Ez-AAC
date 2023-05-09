@@ -18,15 +18,22 @@ export default {
       this.currentSentence = "";
     },
     sendMessage(){
-      const msgs = this.msgList;
-      const sentence = this.currentSentence;
-      msgs.push({
-          id: msgs[msgs.length-1].id+1,
-          msg:sentence,
-          from: "LISTENER",
-          label: null
-      })
-      this.handleClear();
+        if (this.currentSentence){
+          const msgs = this.msgList;
+          const sentence = this.currentSentence;
+          msgs.push({
+              id: msgs[msgs.length-1].id+1,
+              msg:sentence,
+              from: "LISTENER",
+              label: null
+          })
+          this.handleClear();
+          this.scrollToElement();
+      }
+    },
+    scrollToElement() {
+      const el = document.getElementById("con-container");
+      el.scrollTop = el.scrollHeight;
     }
 
 
@@ -55,7 +62,7 @@ export default {
 <style>
 .msg-container {
   width:100%;
-  height: 100px; /*maybe the size of whatver the title is set to here*/
+  height: 100px;
   margin-top:10px;
   padding: 10px;
   display:flex;
