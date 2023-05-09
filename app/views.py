@@ -57,7 +57,7 @@ from diarization import diarize
 @socketio.on('diarize')
 def dia_handler(data):
     file=data['file']
-    audio= AudioSegment.from file_file(file)
+    audio= AudioSegment.from_file(file)
     rate,samples=wavfile.read(file)
     vad=Vad(3)
     results=diarize(audio,samples,rate,vad)
