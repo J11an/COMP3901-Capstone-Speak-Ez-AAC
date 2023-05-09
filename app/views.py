@@ -111,28 +111,28 @@ def inital_tree_setting():
 
     return jsonify(columns),201
 
-@app.route('/get_catergories',methods=['GET'])
+@app.route('/api/get_categories',methods=['GET'])
 def get_catergories():
-    categories=db.session.query(Words.category).distnct().all()
+    categories=db.session.query(Words.category).distinct().all()
     categories=[c[0] for c in categories]
     return jsonify(categories)
 
-@app.route('/get_word_sybmol',methods=['GET'])
+@app.route('/api/get_word_symbol',methods=['GET'])
 def get_word_sybmol(): 
     word=request.args.get('word')
-    word_obj=Words.query.filter_by(word=word).first()
+    word_obj=Words.query.filter_by(word=Words.word).first()
     if word_obj:
         symbol_id=word_obj.symbol_id
-        symbol_obj=Symbols.querty.get(symbol_id)
+        symbol_obj=Symbols.query.get(symbol_id)
         symbol=symbol_obj.symbol
         result={
-            'word':word,
+            'word':word_obj.word,
             'id': word_obj.word_id,
             'symbol':symbol
         }
         return jsonify(result)
     else:
-        return jsonify({error:'Word not found'})
+        return jsonify({'error':'Word not found'})
     
     
 #Listening Screen
