@@ -245,7 +245,3 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return jsonify(error="Page Not Found"), 404
-
-
-if __name__ == '__main__':
-    socketio.run(app)
