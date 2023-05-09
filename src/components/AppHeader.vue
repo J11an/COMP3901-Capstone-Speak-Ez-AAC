@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Lab 7</a>
+        <a class="navbar-brand" href="/">AAC</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              <RouterLink to="/speaking" class="nav-link">Speaking</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
+              <RouterLink  to="/listening" class="nav-link">Listening</RouterLink>
             </li>
           </ul>
         </div>
