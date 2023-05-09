@@ -41,6 +41,8 @@ const router = createRouter({
       component: () => import("../views/PhraseView.vue"),
     },*/
   ],
+  linkActiveClass: "active",
+  linkExactActiveClass: "exact-active"
 });
 
 export default router;

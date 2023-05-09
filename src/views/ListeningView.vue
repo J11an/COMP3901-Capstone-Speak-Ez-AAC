@@ -1,7 +1,7 @@
 <script>
 import MessageBarListening from "../components/Listening/MessageBarListening.vue";
 import Message from "../components/Listening/Message.vue";
-import { state, socket } from "../socket";
+import { state, socket } from "../socketio";
 
 export default {
   components: { MessageBarListening, Message },
@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       messageList: [],
-      speakerLabels: []
+      speakerLabels: [],
     };
   },
 
@@ -49,9 +49,14 @@ export default {
 </script>
 
 <template>
+
+  <!--
   <p>State: {{ connected }}</p>
+  <p>Server Msg : {{ serverMsg }} at {{ new Date() }}</p>
   <button @click="connect()">Connect</button>
   <button @click="disconnect()">Disconnect</button>
+  -->
+
   <div class="listening-container">
 
     <!-- Messages container at top -->
