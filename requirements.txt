@@ -46,7 +46,6 @@ pyasn1==0.5.0
 pyasn1-modules==0.3.0
 PyAudio==0.2.13
 pycparser==2.21
-pydub==0.25.1
 PyJWT==2.3.0
 pypiwin32==223
 python-dateutil==2.8.2
@@ -58,7 +57,6 @@ pytz==2023.3
 pywin32==306
 requests==2.29.0
 rsa==4.9
-scipy==1.10.1
 six==1.16.0
 SpeechRecognition==3.10.0
 SQLAlchemy==2.0.11
@@ -69,7 +67,6 @@ urllib3==1.26.15
 vosk==0.3.45
 waitress==2.1.2
 webargs==8.2.0
-webrtcvad-wheels==2.0.11.post1
 websockets==11.0.2
 Werkzeug==2.2.2
 WTForms==3.0.1

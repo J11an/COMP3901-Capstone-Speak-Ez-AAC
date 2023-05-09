@@ -5,7 +5,7 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app, socketio
+from app import app,
 from flask import abort, render_template, request, jsonify, send_file, send_from_directory
 import os
 from app.models import *
@@ -48,33 +48,6 @@ def index():
 # @app.route('api//profile/adduser3')
 # @app.route('api//profile/adduser4')
 # @app.route('api//profile/adduser5')
-
-
-# speaker dia
-from pydub import AudioSegment
-from scipy.io import wavfile
-from webrtcvad import Vad
-
-
-@socketio.on('diarize')
-def dia_handler(data):
-    file = data['file']
-    audio = AudioSegment.from_file(file)
-    rate, samples = wavfile.read(file)
-    vad = Vad(3)
-    results = diarize(audio, samples, rate, vad)
-    socketio.emit('results', {'results': result})
-
-
-def diarize(audio, samples, rate, vad):
-    segment_length_ms = 30
-    num_channels = audio.channels
-    bytes_per_sample = audio.sample_width
-    samples_per_segment = int(segment_length_ms * rate / 1000)
-    bytes_per_segment = samples_per_segment * bytes_per_sample
-    segment_stride_ms = 10
-    samples_per_stride = int(segment_stride_ms * rate / 1000)
-    bytes_per_stride = samples
 
 
 # Speaking Screen
