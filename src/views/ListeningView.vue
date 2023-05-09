@@ -1,26 +1,31 @@
 <script>
 import MessageBarListening from "../components/Listening/MessageBarListening.vue";
 import Message from "../components/Listening/Message.vue";
+import { state, socket } from "../socket";
 
 export default {
   components: { MessageBarListening, Message },
 
   data() {
     return {
-      /*
-      * Message Format
-      * msg - The contents of the message
-      * from - The author of the message, either the listener or speaker
-      * */
       messageList: [],
       speakerLabels: []
     };
   },
 
   methods: {
-    /**
-     * Function to scroll to the bottom of the page on a new message added
-     */
+    connect() {
+      socket.connect();
+    },
+    disconnect() {
+      socket.disconnect();
+    }
+  },
+
+  computed : {
+    connected() {
+      return state.connected;
+    }
   },
 
   mounted() {
@@ -44,6 +49,9 @@ export default {
 </script>
 
 <template>
+  <p>State: {{ connected }}</p>
+  <button @click="connect()">Connect</button>
+  <button @click="disconnect()">Disconnect</button>
   <div class="listening-container">
 
     <!-- Messages container at top -->
