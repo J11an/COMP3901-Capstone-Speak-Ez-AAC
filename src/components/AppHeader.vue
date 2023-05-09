@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/speaking" class="nav-link">Speaking</RouterLink>
+              <RouterLink to="/speaking" class="nav-link">Speaking <img src="/SpeakingScreen.png" alt="Speaking Screen Image" class="nav-img"/></RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink  to="/listening" class="nav-link">Listening</RouterLink>
+              <RouterLink  to="/listening" class="nav-link">Listening <img src="/ListeningScreen.png" alt="Listening Screen Image" class="nav-img"/> </RouterLink>
             </li>
           </ul>
         </div>
@@ -33,6 +33,10 @@
 import { RouterLink } from "vue-router";
 </script>
 
-<style>
+<style scoped>
 /* Add any component specific styles here */
+.nav-img{
+  width: 35px;
+  height: 35px;
+}
 </style>
