@@ -31,7 +31,6 @@ export default {
       const requestBody = request[1];
       if (requestType==='add'){
         this.currentMessage.push(requestBody);
-        console.log(this.currentMessage);
       }
       if (requestType==='backspace' && this.currentMessage){
         this.currentMessage.pop();
@@ -39,19 +38,19 @@ export default {
       if (requestType==='clear'){
         this.currentMessage = [];
       }
+    },
+    updateMessageList(request) {
+      const from = request[0];
+      const msg = request[1];
+      this.messageList.push({
+        id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
+        msg: msg,
+        from: from
+      })
+      console.log(this.messageList);
     }
   },
   mounted() {
-
-    const fromArr = ["SPEAKER", "LISTENER"];
-    for (let i = 0; i < 15; i++) {
-      const from = fromArr[Math.round(Math.random())];
-      this.messageList.push({
-        id: i,
-        msg: `This is a test message from the ${from}`,
-        from: from,
-      });
-    }
   },
 };
 </script>
@@ -69,6 +68,7 @@ export default {
         :current-sentence="currentMessage"
         @updateScreen="updateBody"
         @updateSentence="updateMessage"
+        @updateMessages="updateMessageList"
         v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||

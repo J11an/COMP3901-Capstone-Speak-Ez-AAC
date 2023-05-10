@@ -1,5 +1,8 @@
 <script>
+import WordPictureTileMessage from "../WordPictureTileMessage.vue";
 export default {
+  components: {WordPictureTileMessage},
+
   props: {
     msg: String,
     from: String,
@@ -10,11 +13,17 @@ export default {
 <template>
   <!-- Section for messages -->
   <section v-if="from === 'SPEAKER'" class="speaker-msg">
-    <div class="speaker-msg">{{ msg }}</div>
+    <div class="speaker-msg">
+      <div v-for="word in msg" v-bind:key="word.id">
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol"/>
+      </div>
+    </div>
   </section>
 
   <section v-else class="listener-msg">
-    {{ msg }}
+      <div v-for="word in msg" v-bind:key="word.id">
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol"/>
+      </div>
   </section>
 </template>
 
@@ -38,5 +47,8 @@ export default {
 .listener-msg {
   margin-left: auto;
   background-color: #8eff9a;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>

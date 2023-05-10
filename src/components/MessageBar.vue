@@ -13,16 +13,17 @@ export default {
   },
   methods:{
     handleBackspace() {
-      this.$emit("updateSentence", ['backspace',{}])
+      this.$emit("updateSentence", ['backspace',{}]);
     },
     handleClear() {
-      this.$emit("updateSentence", ['clear',{}])
+      this.$emit("updateSentence", ['clear',{}]);
     },
     handleSpeaker() {
-      this.tts.speak(new SpeechSynthesisUtterance(this.currentSentence.map((wordObj)=>wordObj.word).join(" ")))
+      this.tts.speak(new SpeechSynthesisUtterance(this.currentSentence.map((wordObj)=>wordObj.word).join(" ")));
+      this.$emit("updateMessages",["LISTENER",this.currentSentence]);
     },
     updateScreen(screen) {
-      emit("updateScreen", screen);
+      this.$emit("updateScreen",screen);
     }
   }
 }
