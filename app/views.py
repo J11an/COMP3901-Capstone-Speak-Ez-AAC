@@ -216,7 +216,6 @@ def inital_tree_setting():
     tiles = Words.query.all()
     for tile in tiles:
         part_of_speech = tile.partofspeech
-        print(part_of_speech)
         if part_of_speech in columns:
             columns[part_of_speech] = [{"id": word.word_id, "word": word.word, "symbol": word.symbol,} for word in
                                                 Words.query.filter_by(partofspeech=part_of_speech).order_by(func.random()).limit(
