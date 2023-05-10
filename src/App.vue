@@ -1,5 +1,5 @@
 <script>
-import AppHeader from "@/components/AppHeader.vue";
+import AppHeader from "./components/AppHeader.vue";
 import MessageBar from "./components/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
@@ -17,8 +17,6 @@ export default {
   },
   data() {
     return {
-      currentMessage: [],
-      messageList: [],
       currentScreen: "SPEAKING",
     };
   },
@@ -26,10 +24,25 @@ export default {
     updateBody(screen) {
       this.currentScreen = screen;
     },
+    updateMessage(request) {
+      const requestType = request[0];
+      const requestBody = request[1];
+      if (requestType==='add'){
+        this.activeMessage.push(requestBody);
+        console.log(this.activeMessage);
+      }
+    }
+  },
+  computed:{
+    activeMessage(){
+      return [];
+    },
+    messageList(){
+      return [];
+    }
   },
   mounted() {
 
-    this.currentSetence = ["I", "eat"];
     const fromArr = ["SPEAKER", "LISTENER"];
     for (let i = 0; i < 15; i++) {
       const from = fromArr[Math.round(Math.random())];
@@ -63,7 +76,7 @@ export default {
 
     <PinnedWordsContainer v-if="currentScreen === 'PINNED'" />
 
-    <SpeakingBoardContainer v-if="currentScreen === 'SPEAKING'" />
+    <SpeakingBoardContainer @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING'" />
 
     <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
   </main>

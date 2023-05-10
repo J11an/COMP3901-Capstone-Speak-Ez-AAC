@@ -4,7 +4,9 @@ import WordPictureTile from "./WordPictureTile.vue";
 
 export default {
   components: {WordPictureTile, SearchBar},
-
+  props:{
+    currentMessage:Array
+  },
   data() {
     return {
       searchOn: false,
@@ -30,6 +32,15 @@ export default {
           console.log(error);
           return error
         });
+    },
+    addWord(id, word, symbol, partOfSpeech){
+      console.log(id, word, symbol, partOfSpeech);
+      this.$emit("updateSentence", ['add',{
+        id: id,
+        word: word,
+        symbol: symbol,
+        partOfSpeech: partOfSpeech
+      }])
     }
   },
   mounted() {
@@ -51,7 +62,7 @@ export default {
 
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
-      <div class="search-section"></div>
+      <div class="search-section d-flex flex-wrap"></div>
     </div>
 
     <!--Dynamic-->
@@ -62,7 +73,8 @@ export default {
           <div v-for="(words,partOfSpeech) in columns">
             <div v-for="word in words">
               <WordPictureTile :word="word.word.toUpperCase()"
-                               :symbol="word.symbol"/>
+                               :symbol="word.symbol"
+                                @click="addWord(word.id, word.word, word.symbol, partOfSpeech)"/>
             </div>
           </div>
         </div>
