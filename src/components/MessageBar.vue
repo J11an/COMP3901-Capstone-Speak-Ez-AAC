@@ -57,7 +57,13 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
+#message{
+  cursor: pointer;
+}
+#message:hover{
+  background-color: lightblue;
+}
 
 .msg-container {
   width: 100vw;
@@ -85,7 +91,7 @@ export default {
 }
 
 .btn img {
-  max-width: 100%;
-  height: 100%;
+  width: 70px;
+  height: 70px;
 }
 </style>

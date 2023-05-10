@@ -26,10 +26,10 @@ export default {
   methods: {
     updateBody(screen) {
       console.log(screen, this.currentScreen, this.previousScreen);
-      if (screen==='SPEAKLISTEN' && this.currentScreen==='SPEAKLISTEN'){
+      if ((screen==='SPEAKLISTEN' || screen==='PINNED') && (this.currentScreen==='SPEAKLISTEN' || this.currentScreen==='PINNED')){
         this.currentScreen = this.previousScreen;
         this.previousScreen = "";
-      } else if (screen==='SPEAKLISTEN') {
+      } else if (screen==='SPEAKLISTEN' || screen==='PINNED') {
         this.previousScreen = this.currentScreen;
         this.currentScreen = screen;
       } else {
@@ -99,4 +99,8 @@ export default {
   </main>
 </template>
 
-<style></style>
+<style>
+*{
+  transition: 200ms;
+}
+</style>
