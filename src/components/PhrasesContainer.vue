@@ -43,7 +43,11 @@ export default {
   <button class="toggle-container btn" @click="showForm = true">
     <img class="search-icon" src="/search.png" />
   </button>
-  <addPhrase v-show="showForm" @close-modal="showForm = false" />
+  <addPhrase
+    v-show="showForm"
+    @close-modal="showForm = false"
+    @phrase-added="getPhrases"
+  />
   <div v-for="(phrase, category) in phrases" :key="category">
     <PhraseCategory :category="category" :phrase="phrase" />
     <!-- <ul>

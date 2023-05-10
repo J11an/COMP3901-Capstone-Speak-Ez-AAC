@@ -11,6 +11,7 @@ export default {
   },
   methods: {
     savePhrase() {
+      let self = this;
       let uploadForm = document.getElementById("registrationform");
       let form_data = new FormData(uploadForm);
       fetch("/api/saved_phrases", {
@@ -24,6 +25,7 @@ export default {
           return response.json();
         })
         .then(function (data) {
+          self.$emit("phrase-added");
           console.log(data);
         })
         .catch(function (error) {
