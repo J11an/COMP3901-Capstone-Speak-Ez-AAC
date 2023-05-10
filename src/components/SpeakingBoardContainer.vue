@@ -5,13 +5,22 @@ export default {
   components: { SearchBar },
   data() {
     return {
-      toggleVal: true,
+      searchOn: false,
+      columns: [],
     };
   },
   methods: {
     toggleSwitch() {
       this.searchOn = !this.searchOn;
     },
+  },
+  mounted() {
+    this.columns = {
+      noun: [1, 1, 1, 1],
+      verb: [2, 2, 2, 2],
+      adjective: [3, 3, 3, 3],
+      article: [4, 4, 4, 4],
+    };
   },
 };
 </script>
@@ -23,11 +32,11 @@ export default {
       <button class="toggle-container btn" @click="toggleSwitch">
         <img class="search-icon" src="/search.png" />
       </button>
-      <SearchBar v-if="!toggleVal" />
+      <SearchBar v-if="searchOn" />
     </div>
 
     <!--Linear-->
-    <div v-if="!toggleVal" class="linear-container">
+    <div v-if="searchOn" class="linear-container">
       <div class="search-section"></div>
     </div>
 
@@ -45,7 +54,9 @@ export default {
 </template>
 
 <style scoped>
-.speaking-container {
+.toggle-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 .search-icon {
   width: 50px;
