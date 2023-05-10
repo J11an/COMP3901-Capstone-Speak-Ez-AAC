@@ -1,10 +1,10 @@
 <script>
 export default {
-  props:{
+  props: {
     msg: String,
     from: String,
-  }
-}
+  },
+};
 </script>
 
 <template>
@@ -19,24 +19,24 @@ export default {
 </template>
 
 <style scoped>
-.speaker-msg, .listener-msg{
+.speaker-msg,
+.listener-msg {
   font-size: 2vw;
   padding: 1vw;
   border-radius: 25px;
 }
 
-.speaker-label{
+.speaker-label {
   margin-left: 20px;
 }
 
-.speaker-msg{
+.speaker-msg {
   margin-right: auto;
-  background-color: #9BB8E3;
+  background-color: #9bb8e3;
 }
 
-.listener-msg{
+.listener-msg {
   margin-left: auto;
-  background-color: #8EFF9A;
+  background-color: #8eff9a;
 }
-
 </style>

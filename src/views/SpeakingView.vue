@@ -36,7 +36,7 @@ export default {
 
 <template>
   <div class="container">
-    <MessageBar/>
+    <MessageBar />
 
     <!--Toggle-->
     <div class="toggle-wrapper">

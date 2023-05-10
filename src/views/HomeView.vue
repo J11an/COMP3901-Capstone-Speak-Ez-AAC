@@ -1,10 +1,9 @@
 <script>
-
 export default {
-  components: { },
+  components: {},
   data() {
     return {
-      isSpeaking: true
+      isSpeaking: true,
     };
   },
 };

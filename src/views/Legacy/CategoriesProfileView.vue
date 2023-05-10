@@ -1,11 +1,7 @@
 <script setup>
-import CategoriesProfile from '../components/CategoriesProfile.vue'
-
+import CategoriesProfile from "../components/CategoriesProfile.vue";
 </script>
 <template>
-  <CategoriesProfile/>
- 
+  <CategoriesProfile />
 </template>
-<style>
-
-</style>
+<style></style>

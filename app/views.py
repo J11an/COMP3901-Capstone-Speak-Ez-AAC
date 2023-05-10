@@ -7,6 +7,7 @@ This file creates your application.
 
 from app import app, socketio
 from flask import abort, render_template, request, jsonify, send_file, send_from_directory
+from flask_wtf.csrf import generate_csrf
 import os
 from app.models import *
 from .forms import *
@@ -195,28 +196,21 @@ def search_word(word):
 @app.route('/api/inital_tree_setting', methods=['GET'])
 def inital_tree_setting():
     columns = {
-        "noun": [],
-        "verb": [],
-        "adjectives": [],
-        "articles": [],
-        "pronoun": []
+        "Noun": [],
+        "Verb": [],
+        "Adjectives": [],
+        "Articles": [],
+        "Pronoun": []
     }
     # Retrieve all the title from the database and group them by their part of speech
     tiles = Words.query.all()
     for tile in tiles:
-        part_of_speech = tile.partofspeech.lower()
+        part_of_speech = tile.partofspeech
         print(part_of_speech)
         if part_of_speech in columns:
-            columns[part_of_speech].append(tile.word)
-
-    # columns[part_of_speech].append(tile.word_id)
-    # columns[part_of_speech].append(tile.symbol_id)
-
-    # Shuffle the words in each column and take the first 4
-    for column in columns:
-        random.shuffle(columns[column])
-        columns[column] = tuple(columns[column][:4])
-
+            columns[part_of_speech] = [{"id": word.word_id, "word": word.word, "symbol": word.symbol,} for word in
+                                                Words.query.filter_by(partofspeech=part_of_speech).order_by(func.random()).limit(
+                                                    4).all()]
     return jsonify(columns), 201
 
 
@@ -260,7 +254,7 @@ def listen():
 @app.route('/api/saved_phrases',methods=['POST','GET'])
 def phrase():
         if request.method == 'POST':
-            form = SavedPhraseForm()
+            form = SavedPhraseForm()    
             if form.validate_on_submit():
                 saved_phrases = request.form['saved_phrases']
                 category = request.form['category']
@@ -268,7 +262,7 @@ def phrase():
                 db.session.add(savedphrase)
                 db.session.commit()
                 return jsonify({"message": 'Saved Phrase Added'}), 201  
-            return('test')
+            return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
             phrases_by_category = {category: [phrase.saved_phrases for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
@@ -291,6 +285,8 @@ def seed_database():
                     time=(row['time']),
                     place=(row['place']),
                     symbol_id=(row['symbol_id']),
+                    symbol=(row['symbol']),
+
                 )
                 db.session.add(cword)
                 db.session.commit()
@@ -370,6 +366,9 @@ def seed_database():
             print(f"DB Exception {e}")
     return {"success" : "database seeded"}, 202
 
+@app.route('/api/csrf-token',methods=["GET"])
+def get_csrf():
+    return jsonify({'csrf_token' : generate_csrf()})
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use

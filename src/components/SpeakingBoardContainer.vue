@@ -4,11 +4,12 @@ import WordPictureTile from "./WordPictureTile.vue";
 
 export default {
   components: {WordPictureTile, SearchBar},
+
   data() {
     return {
       searchOn: false,
       columns: [],
-    }
+    };
   },
   methods: {
     toggleSwitch() {
@@ -43,16 +44,14 @@ export default {
 
     <div class="toggle-wrapper">
       <button class="toggle-container btn" @click="toggleSwitch">
-        <img class="search-icon" src="/search.png"/>
+        <img class="search-icon" src="/search.png" />
       </button>
-      <SearchBar v-if="searchOn"/>
+      <SearchBar v-if="searchOn" />
     </div>
 
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
-      <div class="search-section">
-
-      </div>
+      <div class="search-section"></div>
     </div>
 
     <!--Dynamic-->
@@ -69,7 +68,6 @@ export default {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
@@ -82,7 +80,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.search-icon{
+.search-icon {
   width: 50px;
 }
 </style>

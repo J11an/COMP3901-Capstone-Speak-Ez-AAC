@@ -1,63 +1,72 @@
 <script>
 import AppHeader from "@/components/AppHeader.vue";
-import MessageBar from "./components/MessageBar.vue"
+import MessageBar from "./components/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
 import PinnedWordsContainer from "./components/PinnedWordsContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
 
 export default {
-  components : {
+  components: {
     PhrasesContainer,
-    PinnedWordsContainer, SpeakingBoardContainer, AppHeader, ListeningMessageContainer, MessageBar},
+    PinnedWordsContainer,
+    SpeakingBoardContainer,
+    AppHeader,
+    ListeningMessageContainer,
+    MessageBar,
+  },
   data() {
     return {
       currentMessage: [],
       messageList: [],
-      currentScreen:"SPEAKING"
-    }
+      currentScreen: "SPEAKING",
+    };
   },
-  methods : {
-    updateBody(screen){
-      this.currentScreen = screen
-    }
+  methods: {
+    updateBody(screen) {
+      this.currentScreen = screen;
+    },
   },
   mounted() {
 
     this.currentSetence = ["I", "eat"];
-    const fromArr = ["SPEAKER","LISTENER"];
+    const fromArr = ["SPEAKER", "LISTENER"];
     for (let i = 0; i < 15; i++) {
-        const from = fromArr[Math.round(Math.random())];
-        this.messageList.push({
-          id: i,
-          msg:`This is a test message from the ${from}`,
-          from: from,
-        })
+      const from = fromArr[Math.round(Math.random())];
+      this.messageList.push({
+        id: i,
+        msg: `This is a test message from the ${from}`,
+        from: from,
+      });
     }
-  }
-}
+  },
+};
 </script>
 
 <template>
-
-  <AppHeader @updateScreen="updateBody"/>
+  <AppHeader @updateScreen="updateBody" />
 
   <main>
+    <ListeningMessageContainer
+      :message-list="messageList"
+      v-if="currentScreen === 'LISTENING'"
+    />
 
-    <ListeningMessageContainer :message-list="messageList" v-if="currentScreen==='LISTENING'"/>
+    <MessageBar
+      @updateScreen="updateBody"
+      v-if="
+        currentScreen === 'SPEAKING' ||
+        currentScreen === 'LISTENING' ||
+        currentScreen === 'PINNED'
+      "
+    />
 
-    <MessageBar @updateScreen="updateBody" v-if="currentScreen==='SPEAKING' || currentScreen==='LISTENING' || currentScreen==='PINNED'"/>
+    <PinnedWordsContainer v-if="currentScreen === 'PINNED'" />
 
-    <PinnedWordsContainer v-if="currentScreen==='PINNED'" />
+    <SpeakingBoardContainer v-if="currentScreen === 'SPEAKING'" />
 
-    <SpeakingBoardContainer v-if="currentScreen==='SPEAKING'"/>
-
-    <PhrasesContainer v-if="currentScreen==='PHRASES'"/>
-
+    <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
   </main>
-
 </template>
 
-<style>
-
-</style>
+<style></style>

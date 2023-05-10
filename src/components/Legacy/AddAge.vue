@@ -1,51 +1,50 @@
 <template>
-
-    <div class="v217_2338">
-        <div class="v307_2069"></div>
-        <div class="v217_2339"></div>
-        <div class="BWHelpIcon"></div>
-        <span class="v217_2342">Age</span>
-        <div class="v217_2351"></div>
-        <div class="name"></div>
-        <span class="v217_2363">Enter Age</span>
-        <div class="v217_2365"></div>
-        <!-- <span class="v217_2366" v-model="numpad"></span>  Text Area-->
-        <div class="v217_2374"></div>
-        <div class="v284_7711">
-            <div class="v217_2377"></div>
-            <div class="v217_2378"></div>
-            <div class="v217_2379"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <span class="v522_4233" @click="handleClick_No(1)">1</span>
-            <div class="name"> </div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="Backspace"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <div class="name"></div>
-            <span class="v522_4241" @click="handleClick_No(7)">7</span>
-            <span class="v522_4242" @click="handleClick_No(8)">8</span>
-            <span class="v522_4243" @click="handleClick_No(9)">9</span>
-        </div>
-        <div class="v261_18767">
-            <div class="v261_18768"></div>
-            <div class="v261_18769"></div>
-            <div class="v261_18770"></div>
-            <div class="v261_18771"></div>
-            <div class="v261_18772"></div>
-            <div class="v261_18773"></div>
-        </div>
-        <span class="v307_2067" @click="handleClick(back)">Back</span>
-        <span class="v307_2068" @click="handleClick(next)">Next</span>
-        <!-- <div class="v472_3642">
+  <div class="v217_2338">
+    <div class="v307_2069"></div>
+    <div class="v217_2339"></div>
+    <div class="BWHelpIcon"></div>
+    <span class="v217_2342">Age</span>
+    <div class="v217_2351"></div>
+    <div class="name"></div>
+    <span class="v217_2363">Enter Age</span>
+    <div class="v217_2365"></div>
+    <!-- <span class="v217_2366" v-model="numpad"></span>  Text Area-->
+    <div class="v217_2374"></div>
+    <div class="v284_7711">
+      <div class="v217_2377"></div>
+      <div class="v217_2378"></div>
+      <div class="v217_2379"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <span class="v522_4233" @click="handleClick_No(1)">1</span>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="Backspace"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <div class="name"></div>
+      <span class="v522_4241" @click="handleClick_No(7)">7</span>
+      <span class="v522_4242" @click="handleClick_No(8)">8</span>
+      <span class="v522_4243" @click="handleClick_No(9)">9</span>
+    </div>
+    <div class="v261_18767">
+      <div class="v261_18768"></div>
+      <div class="v261_18769"></div>
+      <div class="v261_18770"></div>
+      <div class="v261_18771"></div>
+      <div class="v261_18772"></div>
+      <div class="v261_18773"></div>
+    </div>
+    <span class="v307_2067" @click="handleClick(back)">Back</span>
+    <span class="v307_2068" @click="handleClick(next)">Next</span>
+    <!-- <div class="v472_3642">
             <div class="v472_3643">
                 <div class="v472_3644"></div>
                 <span class="v472_3645" @click="handleClick(speaking)">Speaking</span>
@@ -100,19 +99,18 @@
                 <span class="v472_3683" @click="handleClick(newedit)">New/Edit Phrases</span>
                 <div class="NewEditScreen"></div>
             </div> -->
-        <!-- </div> -->
-        <div class="name"></div>
-        <div class="name"></div>
-        <span class="v522_4230" @click="handleClick(done)">Done</span>
-        <span class="v522_4236" @click="handleClick_No(2)">2</span>
-        <span class="v522_4237" @click="handleClick_No(3)">3</span>
-        <span class="v522_4238" @click="handleClick_No(4)">4</span>
-        <span class="v522_4239" @click="handleClick_No(5)">5</span>
-        <span class="v522_4240" @click="handleClick_No(6)">6</span>
-        <span class="v522_4244" @click="handleClick_No(0)">0</span>
-        <div class="name"></div>
-    </div>
-
+    <!-- </div> -->
+    <div class="name"></div>
+    <div class="name"></div>
+    <span class="v522_4230" @click="handleClick(done)">Done</span>
+    <span class="v522_4236" @click="handleClick_No(2)">2</span>
+    <span class="v522_4237" @click="handleClick_No(3)">3</span>
+    <span class="v522_4238" @click="handleClick_No(4)">4</span>
+    <span class="v522_4239" @click="handleClick_No(5)">5</span>
+    <span class="v522_4240" @click="handleClick_No(6)">6</span>
+    <span class="v522_4244" @click="handleClick_No(0)">0</span>
+    <div class="name"></div>
+  </div>
 </template>
 
 <script>
@@ -127,18 +125,18 @@ export default({
       numpad: ""
       keypad: ""
 
-     
+
 
     }
   },
   created(){
-    this.getCsrToken();    
+    this.getCsrToken();
 
   },
   methods:{
     handleClick(keypad){
 
-      
+
 
       if (keypad==done){
 
@@ -151,7 +149,7 @@ export default({
       this.numpad= ${num};
 
     },
-    
+
     AddAge(){
       let self= this
       fetch("api/profile/adduser2",{
@@ -167,11 +165,9 @@ export default({
 
   }
 })
-
 </script>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
@@ -181,7 +177,7 @@ body {
 .v217_2338 {
   width: 100%;
   height: 960px;
-  background: rgba(255,255,255,1);
+  background: rgba(255, 255, 255, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -191,7 +187,7 @@ body {
 .v307_2069 {
   width: 216px;
   height: 121px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 862px;
@@ -200,12 +196,18 @@ body {
 .v217_2339 {
   width: 100%;
   height: 91px;
-  background: rgba(255,255,255,0.9100000262260437);
+  background: rgba(255, 255, 255, 0.9100000262260437);
   opacity: 1;
   position: absolute;
   top: 0px;
   left: 14px;
-  box-shadow: 0px 8px 24px rgba(0.5843137502670288, 0.615686297416687, 0.6470588445663452, 0.20000000298023224);
+  box-shadow: 0px 8px 24px
+    rgba(
+      0.5843137502670288,
+      0.615686297416687,
+      0.6470588445663452,
+      0.20000000298023224
+    );
 }
 .BWHelpIcon {
   width: 143px;
@@ -218,7 +220,7 @@ body {
 }
 .v217_2342 {
   width: 64px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 23px;
   left: 70px;
@@ -231,7 +233,7 @@ body {
 .v217_2351 {
   width: 100%;
   height: 172px;
-  background: rgba(103,80,164,0.11999999731779099);
+  background: rgba(103, 80, 164, 0.11999999731779099);
   opacity: 1;
   position: absolute;
   top: 126px;
@@ -247,7 +249,7 @@ body {
 }
 .v217_2363 {
   width: 543px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 139px;
   left: 452px;
@@ -260,7 +262,7 @@ body {
 .v217_2365 {
   width: 687px;
   height: 64px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 206px;
@@ -273,7 +275,7 @@ body {
 }
 .v217_2366 {
   width: 217px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 222px;
   left: 411px;
@@ -286,7 +288,7 @@ body {
 .v217_2374 {
   width: 216px;
   height: 121px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 860px;
@@ -313,7 +315,7 @@ body {
 .v217_2377 {
   width: 736px;
   height: 530px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -327,7 +329,7 @@ body {
 .v217_2378 {
   width: 100px;
   height: 100px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 122px;
@@ -337,7 +339,7 @@ body {
 .v217_2379 {
   width: 100px;
   height: 100px;
-  background: rgba(217,217,217,1);
+  background: rgba(217, 217, 217, 1);
   opacity: 1;
   position: absolute;
   top: 122px;
@@ -347,7 +349,7 @@ body {
 
 .v522_4233 {
   width: 18px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 60px;
   left: 162px;
@@ -374,7 +376,7 @@ body {
 
 .v522_4241 {
   width: 21px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 309px;
   left: 162px;
@@ -387,7 +389,7 @@ body {
 }
 .v522_4242 {
   width: 24px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 320px;
   left: 356px;
@@ -400,7 +402,7 @@ body {
 }
 .v522_4243 {
   width: 23px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 309px;
   left: 557px;
@@ -428,7 +430,7 @@ body {
 .v261_18768 {
   width: 200px;
   height: 20px;
-  background: rgba(71,177,255,1);
+  background: rgba(71, 177, 255, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -442,7 +444,7 @@ body {
 .v261_18769 {
   width: 200px;
   height: 20px;
-  background: rgba(71,177,255,1);
+  background: rgba(71, 177, 255, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -456,7 +458,7 @@ body {
 .v261_18770 {
   width: 200px;
   height: 20px;
-  background: rgba(198,211,234,1);
+  background: rgba(198, 211, 234, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -470,7 +472,7 @@ body {
 .v261_18771 {
   width: 200px;
   height: 20px;
-  background: rgba(199,211,235,1);
+  background: rgba(199, 211, 235, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -484,7 +486,7 @@ body {
 .v261_18772 {
   width: 200px;
   height: 20px;
-  background: rgba(198,211,234,1);
+  background: rgba(198, 211, 234, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -498,7 +500,7 @@ body {
 .v261_18773 {
   width: 200px;
   height: 20px;
-  background: rgba(198,211,234,1);
+  background: rgba(198, 211, 234, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -511,7 +513,7 @@ body {
 }
 .v307_2067 {
   width: 107px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 879px;
   left: 19px;
@@ -524,7 +526,7 @@ body {
 }
 .v307_2068 {
   width: 102px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 879px;
   left: 1314px;
@@ -538,7 +540,7 @@ body {
 .v472_3642 {
   width: 100%;
   height: 92px;
-  background: rgba(255,255,255,1);
+  background: rgba(255, 255, 255, 1);
   opacity: 1;
   position: absolute;
   top: 1px;
@@ -561,7 +563,7 @@ body {
 .v472_3644 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -569,7 +571,7 @@ body {
 }
 .v472_3645 {
   width: 120px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 50px;
   left: 0px;
@@ -618,7 +620,7 @@ body {
 .v472_3649 {
   width: 78px;
   height: 67px;
-  background: linear-gradient(rgba(47,224,248,1), rgba(47,176,248,1));
+  background: linear-gradient(rgba(47, 224, 248, 1), rgba(47, 176, 248, 1));
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -640,7 +642,7 @@ body {
 }
 .v472_3651 {
   width: 69px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 47px;
   left: 4px;
@@ -667,7 +669,7 @@ body {
 .v472_3653 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -684,7 +686,7 @@ body {
 }
 .v472_3655 {
   width: 162px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 48px;
   left: 0px;
@@ -711,7 +713,7 @@ body {
 .v472_3657 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -719,7 +721,7 @@ body {
 }
 .v472_3658 {
   width: 160px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 47px;
   left: 0px;
@@ -755,7 +757,7 @@ body {
 .v472_3661 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -763,7 +765,7 @@ body {
 }
 .v472_3662 {
   width: 298px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 45px;
   left: 0px;
@@ -803,7 +805,7 @@ body {
 .v472_3665 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -820,7 +822,7 @@ body {
 }
 .v472_3667 {
   width: 163px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 42px;
   left: 0px;
@@ -847,7 +849,7 @@ body {
 .v472_3669 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -890,7 +892,7 @@ body {
 .v472_3673 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -934,7 +936,7 @@ body {
 .v472_3677 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -951,7 +953,7 @@ body {
 }
 .v472_3679 {
   width: 163px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 44px;
   left: 0px;
@@ -979,7 +981,7 @@ body {
 .v472_3682 {
   width: 78px;
   height: 68px;
-  background: rgba(151,240,252,1);
+  background: rgba(151, 240, 252, 1);
   opacity: 1;
   position: absolute;
   top: 0px;
@@ -987,7 +989,7 @@ body {
 }
 .v472_3683 {
   width: 160px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 47px;
   left: 0px;
@@ -1010,7 +1012,7 @@ body {
 
 .v522_4230 {
   width: 95px;
-  color: rgba(255,255,255,1);
+  color: rgba(255, 255, 255, 1);
   position: absolute;
   top: 761px;
   left: 886px;
@@ -1023,7 +1025,7 @@ body {
 }
 .v522_4236 {
   width: 23px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 376px;
   left: 730px;
@@ -1036,7 +1038,7 @@ body {
 }
 .v522_4237 {
   width: 23px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 378px;
   left: 925px;
@@ -1049,7 +1051,7 @@ body {
 }
 .v522_4238 {
   width: 23px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 502px;
   left: 530px;
@@ -1062,7 +1064,7 @@ body {
 }
 .v522_4239 {
   width: 22px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 502px;
   left: 725px;
@@ -1075,7 +1077,7 @@ body {
 }
 .v522_4240 {
   width: 23px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 505px;
   left: 925px;
@@ -1088,7 +1090,7 @@ body {
 }
 .v522_4244 {
   width: 25px;
-  color: rgba(0,0,0,1);
+  color: rgba(0, 0, 0, 1);
   position: absolute;
   top: 760px;
   left: 730px;
@@ -1099,5 +1101,4 @@ body {
   text-align: left;
   cursor: pointer;
 }
-
 </style>

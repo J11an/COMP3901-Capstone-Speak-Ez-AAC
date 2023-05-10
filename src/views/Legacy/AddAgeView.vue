@@ -1,11 +1,7 @@
 <script setup>
-import AddAge from '../components/AddAge.vue'
-
+import AddAge from "../components/AddAge.vue";
 </script>
 <template>
-  <AddAge/>
- 
+  <AddAge />
 </template>
-<style>
-
-</style>
+<style></style>
