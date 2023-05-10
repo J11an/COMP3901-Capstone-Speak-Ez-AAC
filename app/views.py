@@ -95,88 +95,91 @@ def speak():
 def word_associated():
     next_partsofspeech = {}
 
-    word = request.args.get('word')
+    # query = request.args.get('word')
+    
+    query = "red"
 
-    tiles = Words.query.filter_by(word=Words.word).all()
+    tiles = Words.query.filter_by(word=query).all()
 
     for tile in tiles:
 
+
         if tile.partofspeech == 'Noun':
-            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": Symbols.query.get(adjectives.symbol_id).symbol,} for adjectives in
+            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
                                                 Words.query.filter_by(partofspeech='Adjectives').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["preposition"] = [{"id": preposition.word_id, "word": preposition.word, "symbol": Symbols.query.get(preposition.symbol_id).symbol,} for preposition in
+            next_partsofspeech["preposition"] = [{"id": preposition.word_id, "word": preposition.word, "symbol": preposition.symbol,} for preposition in
                                                 Words.query.filter_by(partofspeech='Preposition').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["conjunction"] = [{"id": conjunction.word_id, "word": conjunction.word, "symbol": Symbols.query.get(conjunction.symbol_id).symbol,} for conjunction in
+            next_partsofspeech["conjunction"] = [{"id": conjunction.word_id, "word": conjunction.word, "symbol": conjunction.symbol,} for conjunction in
                                                 Words.query.filter_by(partofspeech='Conjunction').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": Symbols.query.get(verb.symbol_id).symbol,} for verb in
+            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": verb.symbol,} for verb in
                                         Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
-            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": Symbols.query.get(noun.symbol_id).symbol,} for noun in
+            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                         Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
 
         if tile.partofspeech == 'Article':
-            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": Symbols.query.get(adjectives.symbol_id).symbol,} for adjectives in
+            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
                                                 Words.query.filter_by(partofspeech='Adjectives').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": Symbols.query.get(noun.symbol_id).symbol,} for noun in
+            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                         Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
 
         if tile.partofspeech == 'Pronoun':
-            next_partsofspeech["preposition"] = [{"id": preposition.word_id, "word": preposition.word, "symbol": Symbols.query.get(preposition.symbol_id).symbol,} for preposition in
+            next_partsofspeech["preposition"] = [{"id": preposition.word_id, "word": preposition.word, "symbol": preposition.symbol,} for preposition in
                                                 Words.query.filter_by(partofspeech='Preposition').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": Symbols.query.get(verb.symbol_id).symbol,} for verb in
+            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": verb.symbol,} for verb in
                                         Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
-            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": Symbols.query.get(noun.symbol_id).symbol,} for noun in
+            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                         Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
 
         if tile.partofspeech == 'Preposition':
-            next_partsofspeech["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": Symbols.query.get(articles.symbol_id).symbol,} for articles in
+            next_partsofspeech["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": articles.symbol,} for articles in
                                             Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(
                                                 4).all()]
-            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": Symbols.query.get(noun.symbol_id).symbol,} for noun in
+            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                         Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
-            next_partsofspeech["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": Symbols.query.get(pronoun.symbol_id).symbol,} for pronoun in
+            next_partsofspeech["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": pronoun.symbol,} for pronoun in
                                             Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(
                                                 4).all()]
 
         if tile.partofspeech == 'Conjunction':
-            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": Symbols.query.get(verb.symbol_id).symbol,} for verb in
+            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": verb.symbol,} for verb in
                                         Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
-            next_partsofspeech["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": Symbols.query.get(articles.symbol_id).symbol,} for articles in
+            next_partsofspeech["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": articles.symbol,} for articles in
                                             Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(
                                                 4).all()]
-            next_partsofspeech["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": Symbols.query.get(pronoun.symbol_id).symbol,} for pronoun in
+            next_partsofspeech["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": pronoun.symbol,} for pronoun in
                                             Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(
                                                 4).all()]
 
         if tile.partofspeech == 'Adjectives':
-            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": Symbols.query.get(adjectives.symbol_id).symbol,} for adjectives in
+            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
                                                 Words.query.filter_by(partofspeech='Adjectives').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["conjunction"] = [{"id": conjunction.word_id, "word": conjunction.word, "symbol": Symbols.query.get(conjunction.symbol_id).symbol,} for conjunction in
+            next_partsofspeech["conjunction"] = [{"id": conjunction.word_id, "word": conjunction.word, "symbol": conjunction.symbol,} for conjunction in
                                                 Words.query.filter_by(partofspeech='Conjunction').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": Symbols.query.get(noun.symbol_id).symbol,} for noun in
+            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                         Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
 
         if tile.partofspeech == 'Verb':
-            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": Symbols.query.get(adjectives.symbol_id).symbol,} for adjectives in
+            next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
                                                 Words.query.filter_by(partofspeech='Adjectives').order_by(
                                                     func.random()).limit(4).all()]
-            next_partsofspeech["preposition"] = [{"id": preposition.word_id, "word": preposition.word, "symbol": Symbols.query.get(preposition.symbol_id).symbol,} for preposition in
+            next_partsofspeech["preposition"] = [{"id": preposition.word_id, "word": preposition.word, "symbol": preposition.symbol,} for preposition in
                                                     Words.query.filter_by(partofspeech='Preposition').order_by(
                                                         func.random()).limit(4).all()]
-            next_partsofspeech["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": Symbols.query.get(articles.symbol_id).symbol,} for articles in
+            next_partsofspeech["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": articles.symbol,} for articles in
                                                 Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(
                                                     4).all()]
-            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": Symbols.query.get(verb.symbol_id).symbol,} for verb in
+            next_partsofspeech["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": verb.symbol,} for verb in
                                             Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
-            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": Symbols.query.get(noun.symbol_id).symbol,} for noun in
+            next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                             Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
-            next_partsofspeech["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": Symbols.query.get(pronoun.symbol_id).symbol,} for pronoun in
+            next_partsofspeech["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": pronoun.symbol,} for pronoun in
                                                 Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(
                                                     4).all()]
 
@@ -190,8 +193,10 @@ def search_word(word):
         search_result = Words.query.filter(Words.word.ilike(f'%{word}%')).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        matches = list(set(get_close_matches(word, [w.word for w in search_result], n=30, cutoff=0.1)))
-        return (jsonify(matches))
+        for word in search_result:
+            print(word.word_id)
+        # matches = list(set(get_close_matches(word, [w.word for w in search_result], n=30, cutoff=0.1)))
+        # return (jsonify(word))
 
 @app.route('/api/inital_tree_setting', methods=['GET'])
 def inital_tree_setting():
