@@ -190,15 +190,19 @@ def word_associated():
 @app.route('/api/search/<word>', methods=['POST'])
 def search_word(word):
     if request.method == 'POST':
+        matched = []
         search_result = Words.query.filter(Words.word.ilike(f'%{word}%')).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        # matches = list(set(get_close_matches(word, [w.word for w in search_result], n=30, cutoff=0.1)))
-        for possibilities in search_result:
-            possible = get_close_matches(word,possibilities,n=30,cutoff=0.1)
-            print(possible.word)
-        # return (jsonify(word))
+        matches = [(w.word_id, w.symbol, w.word) for w in search_result]
+        matches = list(set(get_close_matches(word, [match[2] for match in matches], n=30, cutoff=0.1)))
 
+        for match in matches:
+            for word in search_result:
+                if word.word == match and word.word_id not in [mword['id'] for mword in matched]:
+                    matched.append({"id": word.word_id,"word": word.word,"symbol": word.symbol})
+        return jsonify(matched)
+    
 @app.route('/api/inital_tree_setting', methods=['GET'])
 def inital_tree_setting():
     columns = {
@@ -230,14 +234,14 @@ def get_catergories():
 @app.route('/api/get_word_symbol', methods=['GET'])
 def get_word_sybmol():
     word = request.args.get('word')
-    word_obj = Words.query.filter_by(word=Words.word).first()
-    if word_obj:
-        symbol_id = word_obj.symbol_id
+    word = Words.query.filter_by(word=Words.word).first()
+    if word:
+        symbol_id = word.symbol_id
         symbol_obj = Symbols.query.get(symbol_id)
         symbol = symbol_obj.symbol
         result = {
-            'word': word_obj.word,
-            'id': word_obj.word_id,
+            'word': word.word,
+            'id': word.word_id,
             'symbol': symbol
         }
         return jsonify(result)
