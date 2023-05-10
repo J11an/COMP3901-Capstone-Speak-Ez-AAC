@@ -23,12 +23,7 @@ export default {
     }
   },
   mounted() {
-    this.columns = {
-      noun: [1, 1, 1, 1],
-      verb: [2, 2, 2, 2],
-      adjective: [3, 3, 3, 3],
-      article: [4, 4, 4, 4],
-    };
+
     this.currentSetence = ["I", "eat"];
     const fromArr = ["SPEAKER","LISTENER"];
     for (let i = 0; i < 15; i++) {
