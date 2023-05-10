@@ -58,10 +58,10 @@ export default {
     <div v-if="!searchOn" class="dynamic-container">
       <div>
         <hr /><p>See suggested words here</p><hr />
-        <div v-if="!searchOn" class="d-flex flex-wrap justify-content-between mt-3">
+        <div v-if="!searchOn" class="board-container d-flex justify-content-between mt-3">
           <div v-for="(words,partOfSpeech) in columns">
             <div v-for="word in words">
-              <WordPictureTile :word="word.word"
+              <WordPictureTile :word="word.word.toUpperCase()"
                                :symbol="word.symbol"/>
             </div>
           </div>

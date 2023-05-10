@@ -38,8 +38,8 @@ export default {
 }
 
 .card {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -57,8 +57,8 @@ export default {
 
 .card img {
   display: block;
-  width: 70%;
-  height: 40%;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   margin: 3px;
 }
