@@ -191,61 +191,6 @@ def search_word(word):
         matches = get_close_matches(word, [w.word for w in search_result], n=10, cutoff=0.6)
         return (jsonify(matches))
 
-
-# @app.route('/api/word_associated',methods=['POST'])    
-# def word_associated(word):
-# # takes a word and returns a list of next parts of speech and the associated
-# # list of words for each
-#     if request.method == "POST":
-
-
-#     tile=Words.query.filter_by(word=Words.word).first()
-#     print(tile)
-#     if tile is None:
-#         return jsonify({'error':'Word not found.'}),404
-
-#     next_partsofspeech={
-#         'noun':[],
-#         'verb':[],
-#         'adjective':[],
-#         'article':[],
-#         'pronoun':[]
-#     }
-
-#     if tile.partofspeech=='noun':
-#         next_partsofspeech['adjective']=[t.word for t in Words.query.filter_by(partofspeech='Adjectives').all()]
-#         next_partsofspeech['verb']=[t.word for t in Words.query.filter_by(partofspeech='verb').all()]
-
-#     elif tile.partofspeech=='verb':
-#         next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
-
-#     elif tile.partofspeech=='adjective':
-#         next_partsofspeech['noun']=[t.word for t in Words.query.filter_by(partofspeech='noun').all()]
-
-#     elif tile.partofspeech=='pronoun':
-#         next_partsofspeech['pronoun']=[t.word for t in Words.query.filter_by(partofspeech='pronoun').all()]
-
-#     elif tile.partofspeech=='article':
-#         next_partsofspeech['article']=[t.word for t in Words.query.filter_by(partofspeech='article').all()]
-
-
-#     return jsonify(next_partsofspeech)
-
-
-# @app.route('/',methods=['GET'])
-# def get_categories():
-
-#     categories=Words.query.filter_by(category=Words.category).first()
-#     print(categories)
-#     if categories is None:
-#         return jsonify({'error':'Word not found'}),404
-
-#     groups={
-#         'Family':[],
-#         'Colours':[],
-#     }
-
-
 @app.route('/api/inital_tree_setting', methods=['GET'])
 def inital_tree_setting():
     columns = {
