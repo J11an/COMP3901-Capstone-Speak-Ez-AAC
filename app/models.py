@@ -11,8 +11,9 @@ class Words(db.Model):
     time = db.Column(db.String(20))
     place = db.Column(db.String(20))
     symbol_id= db.Column(db.Integer)
+    symbol= db.Column(db.Text)
 
-    def __init__(self, word, category, sub_category, partofspeech, time, place, symbol_id):
+    def __init__(self, word, category, sub_category, partofspeech, time, place, symbol_id,symbol):
 
         self.word = word
         self.partofspeech = partofspeech
@@ -21,6 +22,7 @@ class Words(db.Model):
         self.time = time
         self.place = place
         self.symbol_id = symbol_id
+        self.symbol = symbol
         
 
     def __repr__(self):
