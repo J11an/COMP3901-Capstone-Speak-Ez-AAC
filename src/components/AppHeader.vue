@@ -1,43 +1,42 @@
+<script>
+export default {
+  methods:{
+    updateScreen(screen){
+      this.$emit('updateScreen', screen);
+    }
+  }
+}
+</script>
+
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">AAC</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <RouterLink to="/speaking" class="nav-link"><p>Speaking</p> <img src="/SpeakingScreen.png" alt="Speaking Screen Image" class="nav-img"/></RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink  to="/listening" class="nav-link"><p>Listening</p> <img src="/ListeningScreen.png" alt="Listening Screen Image" class="nav-img"/> </RouterLink>
-            </li>
-          </ul>
-        </div>
+    <nav class="navbar navbar-expand navbar-light bg-light">
+      <div class="navbar-collapse justify-content-center collapse show" id="navbarsExample08" style="">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" v-on:click="updateScreen('SPEAKING')" >SPEAKING <img src="/SpeakingScreen.png" class="nav-img"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" v-on:click="updateScreen('LISTENING')">LISTENING <img src="/ListeningScreen.png" class="nav-img"></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" v-on:click="updateScreen('PHRASES')">PHRASES <img src="/SavedPhrasesScreen.png" class="nav-img"></a>
+          </li>
+        </ul>
       </div>
     </nav>
   </header>
 </template>
 
-<script>
-import { RouterLink } from "vue-router";
-</script>
-
 <style scoped>
 /* Add any component specific styles here */
+.nav-item{
+  cursor: pointer;
+}
+
 .nav-img{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
 }
 
 .nav-link{

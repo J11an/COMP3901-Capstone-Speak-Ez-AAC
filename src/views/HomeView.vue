@@ -1,10 +1,10 @@
 <script>
-import MenuTile from "../components/MenuTile.vue";
 
 export default {
-  components: { AACTile: MenuTile },
+  components: { },
   data() {
     return {
+      isSpeaking: true
     };
   },
 };
@@ -16,36 +16,21 @@ export default {
     rel="stylesheet"
   />
   <div class="container">
+    <!--
     <div class="text-center">
-      <h1 class="mode-title-text pd-3">Select the Mode you wish to use</h1>
-      <div class="d-flex flex-wrap justify-content-between">
-        <RouterLink to="/speaking">
+      <h1 class="mode-title-text pd-3 mt-4">Select the Mode you wish to use</h1>
+      <div class="d-flex flex-wrap justify-content-center">
+
+        <RouterLink :to="{ name : 'speaking' }">
           <AACTile title="SPEAKING" image-url="/SpeakingScreen.png" />
         </RouterLink>
 
-        <!--<RouterLink to="/typing">
-          <AACTile title="TYPING" image-url="/TypingScreen.png" />
-        </RouterLink>-->
-
-        <RouterLink to="/listening">
+        <RouterLink :to="{ name : 'listening' }">
           <AACTile title="LISTENING" image-url="/ListeningScreen.png" />
         </RouterLink>
 
-        <!--<RouterLink to="/neweditword">
-          <AACTile
-            title="NEW/EDIT WORD"
-            image-url="/NewEditScreen.png"
-          ></AACTile>
-        </RouterLink>-->
-
-        <!--<RouterLink to="/savedphrases">
-          <AACTile
-            title="SAVED PHRASES"
-            image-url="/SavedPhrasesScreen.png"
-          ></AACTile>
-        </RouterLink>-->
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 

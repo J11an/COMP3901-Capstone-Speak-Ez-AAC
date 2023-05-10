@@ -188,7 +188,7 @@ def search_word(word):
         search_result = Words.query.filter(Words.word.ilike(f'%{word}%')).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        matches = get_close_matches(word, [w.word for w in search_result], n=10, cutoff=0.6)
+        matches = list(set(get_close_matches(word, [w.word for w in search_result], n=30, cutoff=0.1)))
         return (jsonify(matches))
 
 @app.route('/api/inital_tree_setting', methods=['GET'])

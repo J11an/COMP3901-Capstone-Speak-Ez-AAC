@@ -13,7 +13,7 @@ function searchWord() {
       return response.json();
     })
     .then(function (data) {
-      //console.log(data);
+      console.log(data);
       results.value = data;
       //console.log(results);
       /*let board = document.getElementById('board');
@@ -35,7 +35,6 @@ function handleClear(){
 
 <template>
   <div class="container">
-    <label for="search">Enter a word to search for here: </label>
     <input name="search" v-model="searchTerm" type="text" placeholder="Search here" @keyup.enter="searchWord"/>
     <span><button id="clear" class="btn" @click="handleClear"><img src="/clear.png" alt="Clear Icon" /> Clear search</button></span>
     <div class="search-results">

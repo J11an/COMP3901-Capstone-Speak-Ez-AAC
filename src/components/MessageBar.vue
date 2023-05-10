@@ -28,6 +28,10 @@ function handleSpeaker(){
   });
 }
 
+function updateScreen(screen){
+  emit('updateScreen', screen);
+}
+
 </script>
 <template>
   <div class="container msg-container">
@@ -42,7 +46,7 @@ function handleSpeaker(){
         </button>
         <button class="btn" @click="handleClear"><img src="/clear.png" alt="Clear Icon" /></button>
         <button class="btn" @click="handleSpeaker"><img src="/SpeakerIcon.png" alt="Speaker Icon" /></button>
-        <button class="btn" @click="handleSpeaker"><img src="/pinned_folder.png" alt="Speaker Icon" /></button>
+        <button class="btn" @click="updateScreen('PINNED')"><img src="/pinned_folder.png" alt="Speaker Icon" /></button>
         <!--<button class="btn" @click="handleSpeaker"><img src="/search.png" alt="Speaker Icon" /></button>-->
         <!---<img src="/Backspace.png" alt="Backspace Icon" />
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->

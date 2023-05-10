@@ -18,7 +18,7 @@ function fetchGrid() {
       return response.json();
     })
     .then(function (data) {
-      //console.log(data);
+      console.log(data);
       columns.value = {
         pronoun: data.pronoun,
         noun: data.noun,

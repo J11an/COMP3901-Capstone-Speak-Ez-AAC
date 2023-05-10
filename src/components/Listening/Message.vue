@@ -3,8 +3,6 @@ export default {
   props:{
     msg: String,
     from: String,
-    label: Number,
-    speakerLabels: Array
   }
 }
 </script>
@@ -12,7 +10,6 @@ export default {
 <template>
   <!-- Section for messages -->
   <section v-if="from === 'SPEAKER'" class="speaker-msg">
-    <div class="speaker-label">{{ speakerLabels[label] }}</div>
     <div class="speaker-msg">{{ msg }}</div>
   </section>
 
