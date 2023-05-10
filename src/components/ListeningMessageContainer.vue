@@ -5,13 +5,19 @@ export default {
   components: { Message },
   props: {
     messageList: Array,
+    currentScreen: String
   },
+  data(){
+    return {
+      currentClass: ''
+    }
+  }
 };
 </script>
 
 <template>
   <!-- Messages container at top -->
-  <div class="conversation-container" id="con-container">
+  <div :class="this.currentScreen!=='SPEAKLISTEN' ? 'conversation-container' : 'mixed-conversation-container'" id="con-container">
     <!-- Go through all messages -->
 
     <div
@@ -47,6 +53,15 @@ export default {
     min-height: 69vh;
     max-height: 69vh;
   }
+}
+
+.mixed-conversation-container {
+  /*border: solid red 1px;*/
+  margin: 10px;
+  padding: 10px;
+  overflow: auto;
+  min-height: 30vh;
+  max-height: 30vh;
 }
 
 .msg-body-container {

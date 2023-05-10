@@ -18,13 +18,23 @@ export default {
   data() {
     return {
       currentScreen: "SPEAKING",
+      previousScreen: "",
       currentMessage: [],
       messageList: []
     };
   },
   methods: {
     updateBody(screen) {
-      this.currentScreen = screen;
+      console.log(screen, this.currentScreen, this.previousScreen);
+      if (screen==='SPEAKLISTEN' && this.currentScreen==='SPEAKLISTEN'){
+        this.currentScreen = this.previousScreen;
+        this.previousScreen = "";
+      } else if (screen==='SPEAKLISTEN') {
+        this.previousScreen = this.currentScreen;
+        this.currentScreen = screen;
+      } else {
+        this.currentScreen = screen;
+      }
     },
     updateMessage(request) {
       const requestType = request[0];
@@ -51,6 +61,9 @@ export default {
     }
   },
   mounted() {
+    this.messageList = [
+      1,2,3,4,5,5,6,7,8,9,10,11,12,123,4,5,6,7,8,9,0,10,11
+    ]
   },
 };
 </script>
@@ -61,7 +74,8 @@ export default {
   <main>
     <ListeningMessageContainer
       :message-list="messageList"
-      v-if="currentScreen === 'LISTENING'"
+      :current-screen="currentScreen"
+      v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
     />
 
     <MessageBar
@@ -72,13 +86,14 @@ export default {
         v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||
-        currentScreen === 'PINNED'
+        currentScreen === 'PINNED' ||
+        currentScreen==='SPEAKLISTEN'
       "
     />
 
     <PinnedWordsContainer v-if="currentScreen === 'PINNED'" />
 
-    <SpeakingBoardContainer @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING'" />
+    <SpeakingBoardContainer @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
 
     <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
   </main>
