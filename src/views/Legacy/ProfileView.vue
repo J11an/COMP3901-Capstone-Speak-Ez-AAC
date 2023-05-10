@@ -1,11 +1,7 @@
 <script setup>
-import Profile from '../components/Profile.vue'
-
+import Profile from "../components/Profile.vue";
 </script>
 <template>
-  <Profile/>
- 
+  <Profile />
 </template>
-<style>
-
-</style>
+<style></style>

@@ -6,70 +6,76 @@ export default {
   },
   data() {
     return {
-      currentSentence:"",
+      currentSentence: "",
     };
   },
-  methods:{
-    handleBackspace(){
+  methods: {
+    handleBackspace() {
       const sentence = this.currentSentence;
-      this.currentSentence = sentence.substring(0,sentence.length-1);
+      this.currentSentence = sentence.substring(0, sentence.length - 1);
     },
-    handleClear(){
+    handleClear() {
       this.currentSentence = "";
     },
-    sendMessage(){
-        if (this.currentSentence){
-          const msgs = this.msgList;
-          const sentence = this.currentSentence;
-          msgs.push({
-              id: msgs[msgs.length-1].id+1,
-              msg:sentence,
-              from: "LISTENER",
-              label: null
-          })
-          this.handleClear();
-          this.scrollToElement();
+    sendMessage() {
+      if (this.currentSentence) {
+        const msgs = this.msgList;
+        const sentence = this.currentSentence;
+        msgs.push({
+          id: msgs[msgs.length - 1].id + 1,
+          msg: sentence,
+          from: "LISTENER",
+          label: null,
+        });
+        this.handleClear();
+        this.scrollToElement();
       }
     },
     scrollToElement() {
       const el = document.getElementById("con-container");
       el.scrollTop = el.scrollHeight;
-    }
-
-
-  }
+    },
+  },
 };
-
 </script>
-
 
 <template>
   <div class="container-fluid msg-container">
     <!--<div class="msg-display"></div>-->
-    <input id="input" class="msg-display" v-on:keyup.enter="sendMessage" v-model="currentSentence"/>
-      <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
-      <div class="btn-group btn-group-md options">
-        <button class="btn "  @click="handleBackspace"><img src="/Backspace.png" alt="Backspace Icon" /></button>
-        <button class="btn " @click="handleClear"><img src="/clear.png" alt="Clear Icon" /></button>
-        <button class="btn " @click="somefunc"><img src="/SpeakerIcon.png" alt="Speaker Icon" /></button>
-        <!---<img src="/Backspace.png" alt="Backspace Icon" />
+    <input
+      id="input"
+      class="msg-display"
+      v-on:keyup.enter="sendMessage"
+      v-model="currentSentence"
+    />
+    <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
+    <div class="btn-group btn-group-md options">
+      <button class="btn" @click="handleBackspace">
+        <img src="/Backspace.png" alt="Backspace Icon" />
+      </button>
+      <button class="btn" @click="handleClear">
+        <img src="/clear.png" alt="Clear Icon" />
+      </button>
+      <button class="btn" @click="somefunc">
+        <img src="/SpeakerIcon.png" alt="Speaker Icon" />
+      </button>
+      <!---<img src="/Backspace.png" alt="Backspace Icon" />
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->
-      </div>
+    </div>
   </div>
 </template>
 
-
 <style>
 .msg-container {
-  width:100%;
+  width: 100%;
   height: 100px;
-  margin-top:10px;
+  margin-top: 10px;
   padding: 10px;
-  display:flex;
+  display: flex;
   flex-direction: row;
 }
 
-.msg-display{
+.msg-display {
   height: 100%;
   width: 90%;
   display: flex;
@@ -79,7 +85,7 @@ export default {
   font-size: 2vw;
 }
 
-.options{
+.options {
   display: flex;
   min-width: fit-content;
 }

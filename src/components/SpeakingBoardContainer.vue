@@ -1,28 +1,19 @@
 <script>
-import SearchBar from "../components/SearchBar.vue"
+import SearchBar from "../components/SearchBar.vue";
 
 export default {
-  components: {SearchBar},
+  components: { SearchBar },
   data() {
     return {
-      searchOn: false,
-      columns: [],
-    }
+      toggleVal: true,
+    };
   },
   methods: {
     toggleSwitch() {
       this.searchOn = !this.searchOn;
     },
   },
-  mounted() {
-    this.columns = {
-      noun: [1, 1, 1, 1],
-      verb: [2, 2, 2, 2],
-      adjective: [3, 3, 3, 3],
-      article: [4, 4, 4, 4],
-    };
-  }
-}
+};
 </script>
 
 <template>
@@ -30,36 +21,33 @@ export default {
   <div class="speaking-container container">
     <div class="toggle-wrapper">
       <button class="toggle-container btn" @click="toggleSwitch">
-        <img class="search-icon" src="/search.png"/>
+        <img class="search-icon" src="/search.png" />
       </button>
-      <SearchBar v-if="searchOn"/>
+      <SearchBar v-if="!toggleVal" />
     </div>
 
     <!--Linear-->
-    <div v-if="searchOn" class="linear-container">
-      <div class="search-section">
-
-      </div>
+    <div v-if="!toggleVal" class="linear-container">
+      <div class="search-section"></div>
     </div>
 
     <!--Dynamic-->
     <div v-if="!searchOn" class="dynamic-container">
       <!--suggestions section-->
       <div>
-        <hr /><p>See suggested words here</p><hr />
+        <hr />
+        <p>See suggested words here</p>
+        <hr />
       </div>
       <AACBoard :currentSentence="currentMessage" />
     </div>
   </div>
-
 </template>
 
 <style scoped>
-.toggle-wrapper{
-  display: flex;
-  flex-direction: row;
+.speaking-container {
 }
-.search-icon{
+.search-icon {
   width: 50px;
 }
 </style>

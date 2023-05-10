@@ -25,33 +25,47 @@ function searchWord() {
     });
 }
 
-function handleClear(){
-      searchTerm.value = "";
-      results.value="";
-      /*let board = document.getElementById('board');
+function handleClear() {
+  searchTerm.value = "";
+  results.value = "";
+  /*let board = document.getElementById('board');
       board.style.display = "flex"*/
 }
 </script>
 
 <template>
   <div class="container">
-    <input name="search" v-model="searchTerm" type="text" placeholder="Search here" @keyup.enter="searchWord"/>
-    <span><button id="clear" class="btn" @click="handleClear"><img src="/clear.png" alt="Clear Icon" /> Clear search</button></span>
+    <input
+      name="search"
+      v-model="searchTerm"
+      type="text"
+      placeholder="Search here"
+      @keyup.enter="searchWord"
+    />
+    <span
+      ><button id="clear" class="btn" @click="handleClear">
+        <img src="/clear.png" alt="Clear Icon" /> Clear search
+      </button></span
+    >
     <div class="search-results">
-      <WordPictureTile :word="result" v-for="result in results" :key="result.id">{{ result }}</WordPictureTile>
+      <WordPictureTile
+        :word="result"
+        v-for="result in results"
+        :key="result.id"
+        >{{ result }}</WordPictureTile
+      >
     </div>
   </div>
 </template>
 
 <style>
-.search-results{
+.search-results {
   display: flex;
   flex-direction: row;
 }
 
-#clear img{
+#clear img {
   max-width: 100%;
-  height:50px;
+  height: 50px;
 }
-
 </style>

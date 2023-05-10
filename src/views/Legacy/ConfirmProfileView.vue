@@ -1,11 +1,7 @@
 <script setup>
-import ConfirmProfile from '../components/ConfirmProfile.vue'
-
+import ConfirmProfile from "../components/ConfirmProfile.vue";
 </script>
 <template>
-  <ConfirmProfile/>
- 
+  <ConfirmProfile />
 </template>
-<style>
-
-</style>
+<style></style>

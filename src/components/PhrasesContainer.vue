@@ -1,14 +1,59 @@
 <script>
+import AddPhrase from "../components/AddPhrase.vue";
+import PhraseCategory from "./PhraseCategory.vue";
+
 export default {
-  name: "PhrasesContainer"
-}
+  name: "PhrasesContainer",
+  components: { AddPhrase, PhraseCategory },
+
+  data() {
+    return {
+      phrases: {},
+      showForm: false,
+    };
+  },
+  mounted() {
+    this.getPhrases();
+  },
+  methods: {
+    getPhrases() {
+      let self = this;
+      fetch("/api/saved_phrases", {
+        method: "GET",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          self.phrases = data;
+          console.log(self.phrases);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <template>
-  <h1>Phrases</h1>
+  <button class="toggle-container btn" @click="showForm = true">
+    <img class="search-icon" src="/search.png" />
+  </button>
+  <addPhrase v-show="showForm" @close-modal="showForm = false" />
+  <div v-for="(phrase, category) in phrases" :key="category">
+    <PhraseCategory :category="category" :phrase="phrase" />
+    <!-- <ul>
+      <li v-for="value in values" :key="value">{{ value }}</li>
+    </ul> -->
+  </div>
 </template>
 
-
 <style scoped>
-
+.search-icon {
+  width: 50px;
+}
 </style>

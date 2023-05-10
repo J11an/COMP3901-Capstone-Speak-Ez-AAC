@@ -9,9 +9,9 @@
     <div class="v178_866"></div>
     <div class="v178_867"></div>
     <div class="v178_868"></div>
-    <span class="v178_869" @click=handleClick(main)>Main User</span>
-    <span class="v178_870" @click=handleClick(others)>Others</span>
-    <span class="v178_871" @click=handleClick(add)>Add User</span>
+    <span class="v178_869" @click="handleClick(main)">Main User</span>
+    <span class="v178_870" @click="handleClick(others)">Others</span>
+    <span class="v178_871" @click="handleClick(add)">Add User</span>
     <!-- <div class="v471_3698">
       <div class="v471_3699">
         <div class="v471_3700"></div>
@@ -81,41 +81,30 @@
 </template>
 
 <script>
-
-export default({
+export default {
   data() {
-    return{
-     
-
-    }
+    return {};
   },
-  created(){
-    this.getCsrToken(); 
+  created() {
+    this.getCsrToken();
     this.Profile();
-    
-
   },
-  methods:{
-    handleClick(keypad){
-
+  methods: {
+    handleClick(keypad) {},
+    Profile() {
+      let self = this;
+      fetch("api/profile", {
+        method: "POST",
+        body: form_data,
+        errors: [],
+        message: "",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      });
     },
-    Profile(){
-      let self= this
-      fetch("api/profile",{
-        method:'POST',
-        body:form_data ,
-        errors:[],
-        message: '',
-        headers:{
-          'X-CSRFToken': this.csrf_token
-        }
-      })
-
-    },
-
-  }
-})
-
+  },
+};
 </script>
 
 <style>

@@ -8,7 +8,7 @@ export default {
     return {};
   },
 };
-</script>     
+</script>
 
 <template>
   <div class="card mode-card mx-auto" style="width: 18rem">

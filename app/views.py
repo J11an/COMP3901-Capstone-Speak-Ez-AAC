@@ -7,6 +7,7 @@ This file creates your application.
 
 from app import app, socketio
 from flask import abort, render_template, request, jsonify, send_file, send_from_directory
+from flask_wtf.csrf import generate_csrf
 import os
 from app.models import *
 from .forms import *
@@ -268,7 +269,7 @@ def phrase():
                 db.session.add(savedphrase)
                 db.session.commit()
                 return jsonify({"message": 'Saved Phrase Added'}), 201  
-            return('test')
+            return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
             phrases_by_category = {category: [phrase.saved_phrases for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
@@ -370,6 +371,9 @@ def seed_database():
             print(f"DB Exception {e}")
     return {"success" : "database seeded"}, 202
 
+@app.route('/api/csrf-token',methods=["GET"])
+def get_csrf():
+    return jsonify({'csrf_token' : generate_csrf()})
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
