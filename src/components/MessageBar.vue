@@ -1,9 +1,8 @@
 <script>
-import SearchBar from "./SearchBar.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 
 export default {
-  components:{WordPictureTileMessage, SearchBar},
+  components:{WordPictureTileMessage},
   props:{
     currentSentence: Array
   },
@@ -14,10 +13,13 @@ export default {
   },
   methods:{
     handleBackspace() {
+      this.$emit("updateSentence", ['backspace',{}])
     },
     handleClear() {
+      this.$emit("updateSentence", ['clear',{}])
     },
     handleSpeaker() {
+      this.tts.speak(new SpeechSynthesisUtterance(this.currentSentence.map((wordObj)=>wordObj.word).join(" ")))
     },
     updateScreen(screen) {
       emit("updateScreen", screen);

@@ -33,6 +33,12 @@ export default {
         this.currentMessage.push(requestBody);
         console.log(this.currentMessage);
       }
+      if (requestType==='backspace' && this.currentMessage){
+        this.currentMessage.pop();
+      }
+      if (requestType==='clear'){
+        this.currentMessage = [];
+      }
     }
   },
   mounted() {
@@ -61,8 +67,9 @@ export default {
 
     <MessageBar
         :current-sentence="currentMessage"
-      @updateScreen="updateBody"
-      v-if="
+        @updateScreen="updateBody"
+        @updateSentence="updateMessage"
+        v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||
         currentScreen === 'PINNED'
