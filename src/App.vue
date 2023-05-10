@@ -18,6 +18,8 @@ export default {
   data() {
     return {
       currentScreen: "SPEAKING",
+      currentMessage: [],
+      messageList: []
     };
   },
   methods: {
@@ -28,30 +30,27 @@ export default {
       const requestType = request[0];
       const requestBody = request[1];
       if (requestType==='add'){
-        this.activeMessage.push(requestBody);
-        console.log(this.activeMessage);
+        this.currentMessage.push(requestBody);
       }
-    }
-  },
-  computed:{
-    activeMessage(){
-      return [];
+      if (requestType==='backspace' && this.currentMessage){
+        this.currentMessage.pop();
+      }
+      if (requestType==='clear'){
+        this.currentMessage = [];
+      }
     },
-    messageList(){
-      return [];
+    updateMessageList(request) {
+      const from = request[0];
+      const msg = request[1];
+      this.messageList.push({
+        id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
+        msg: msg,
+        from: from
+      })
+      console.log(this.messageList);
     }
   },
   mounted() {
-
-    const fromArr = ["SPEAKER", "LISTENER"];
-    for (let i = 0; i < 15; i++) {
-      const from = fromArr[Math.round(Math.random())];
-      this.messageList.push({
-        id: i,
-        msg: `This is a test message from the ${from}`,
-        from: from,
-      });
-    }
   },
 };
 </script>
@@ -66,8 +65,11 @@ export default {
     />
 
     <MessageBar
-      @updateScreen="updateBody"
-      v-if="
+        :current-sentence="currentMessage"
+        @updateScreen="updateBody"
+        @updateSentence="updateMessage"
+        @updateMessages="updateMessageList"
+        v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||
         currentScreen === 'PINNED'
