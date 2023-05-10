@@ -4,9 +4,12 @@ import MessageBar from "./components/MessageBar.vue"
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
 import PinnedWordsContainer from "./components/PinnedWordsContainer.vue";
+import PhrasesContainer from "./components/PhrasesContainer.vue";
 
 export default {
-  components : {PinnedWordsContainer, SpeakingBoardContainer, AppHeader, ListeningMessageContainer, MessageBar},
+  components : {
+    PhrasesContainer,
+    PinnedWordsContainer, SpeakingBoardContainer, AppHeader, ListeningMessageContainer, MessageBar},
   data() {
     return {
       currentMessage: [],
@@ -53,6 +56,8 @@ export default {
     <PinnedWordsContainer v-if="currentScreen==='PINNED'" />
 
     <SpeakingBoardContainer v-if="currentScreen==='SPEAKING'"/>
+
+    <PhrasesContainer v-if="currentScreen==='PHRASES'"/>
 
   </main>
 
