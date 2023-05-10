@@ -95,9 +95,9 @@ def speak():
 def word_associated():
     next_partsofspeech = {}
 
-    # query = request.args.get('word')
+    query = request.args.get('word')
     
-    query = "red"
+    # query = "red"
 
     tiles = Words.query.filter_by(word=query).all()
 
@@ -193,7 +193,10 @@ def search_word(word):
         search_result = Words.query.filter(Words.word.ilike(f'%{word}%')).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        matches = list(set(get_close_matches(word, [w.word for w in search_result], n=30, cutoff=0.1)))
+        # matches = list(set(get_close_matches(word, [w.word for w in search_result], n=30, cutoff=0.1)))
+        for possibilities in search_result:
+            possible = get_close_matches(word,possibilities,n=30,cutoff=0.1)
+            print(possible.word)
         # return (jsonify(word))
 
 @app.route('/api/inital_tree_setting', methods=['GET'])
