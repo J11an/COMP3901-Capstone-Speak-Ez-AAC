@@ -23,7 +23,7 @@ export default {
       <button class="toggle-container btn" @click="toggleSwitch">
         <img class="search-icon" src="/search.png"/>
       </button>
-      <SearchBar />
+      <SearchBar v-if="!toggleVal"/>
     </div>
 
     <!--Linear-->
