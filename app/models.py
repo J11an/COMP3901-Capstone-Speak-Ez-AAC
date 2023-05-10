@@ -1,5 +1,6 @@
 # Add any model classes for Flask-SQLAlchemy here
 from . import db
+from sqlalchemy import Index
 
 class Words(db.Model):
 
@@ -12,6 +13,10 @@ class Words(db.Model):
     place = db.Column(db.String(20))
     symbol_id= db.Column(db.Integer)
     symbol= db.Column(db.Text)
+
+    __table_args__ = (
+        Index('idx', 'word_id'),
+    )
 
     def __init__(self, word, category, sub_category, partofspeech, time, place, symbol_id,symbol):
 
