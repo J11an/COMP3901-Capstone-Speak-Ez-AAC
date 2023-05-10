@@ -3,12 +3,17 @@ export default {
   props:{
     id: Number,
     word: String,
-    symbolURL: String,
+    symbol: String,
     partOfSpeech: String
   },
   data(){
     return{
-
+      img: this.symbol
+    }
+  },
+  methods : {
+    usePlaceholderImg(){
+      this.img = "/HelpIcon.png"
     }
   }
 }
@@ -18,7 +23,7 @@ export default {
   <div class="container">
     <div id="tile">
         <div class="card">
-          <img src="/HelpIcon.png" alt="Image" />
+          <img :src="img" @error="usePlaceholderImg" alt="Image" />
           <div class="card-content">
             <p>{{ word }}</p>
           </div>

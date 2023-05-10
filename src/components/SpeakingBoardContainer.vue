@@ -59,9 +59,10 @@ export default {
       <div>
         <hr /><p>See suggested words here</p><hr />
         <div v-if="!searchOn" class="d-flex flex-wrap justify-content-between mt-3">
-          <div v-for="(words,partOfSpeech) in columns" v-bind:key="column">
+          <div v-for="(words,partOfSpeech) in columns">
             <div v-for="word in words">
-              <WordPictureTile :word="word" symbolURL="/HelpIcon.png" :part-of-speech="partOfSpeech" />
+              <WordPictureTile :word="word.word"
+                               :symbol="word.symbol"/>
             </div>
           </div>
         </div>
