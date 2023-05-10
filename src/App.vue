@@ -18,6 +18,8 @@ export default {
   data() {
     return {
       currentScreen: "SPEAKING",
+      currentMessage: [],
+      messageList: []
     };
   },
   methods: {
@@ -28,17 +30,9 @@ export default {
       const requestType = request[0];
       const requestBody = request[1];
       if (requestType==='add'){
-        this.activeMessage.push(requestBody);
-        console.log(this.activeMessage);
+        this.currentMessage.push(requestBody);
+        console.log(this.currentMessage);
       }
-    }
-  },
-  computed:{
-    activeMessage(){
-      return [];
-    },
-    messageList(){
-      return [];
     }
   },
   mounted() {
@@ -66,6 +60,7 @@ export default {
     />
 
     <MessageBar
+        :current-sentence="currentMessage"
       @updateScreen="updateBody"
       v-if="
         currentScreen === 'SPEAKING' ||

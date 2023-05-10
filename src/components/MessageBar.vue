@@ -1,43 +1,41 @@
-<script setup>
-import { ref } from "vue";
+<script>
 import SearchBar from "./SearchBar.vue";
-import WordPictureTile from "./WordPictureTile.vue";
+import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 
-let tts = window.speechSynthesis;
-/*let voice = tts.getVoices().filter(function (voice) {return voice.lang === 'en';})[0];*/
-
-function handleBackspace() {
-  const message = document.getElementById("message");
-  message.lastChild.remove();
+export default {
+  components:{WordPictureTileMessage, SearchBar},
+  props:{
+    currentSentence: Array
+  },
+  data(){
+    return {
+      tts: window.speechSynthesis
+    }
+  },
+  methods:{
+    handleBackspace() {
+    },
+    handleClear() {
+    },
+    handleSpeaker() {
+    },
+    updateScreen(screen) {
+      emit("updateScreen", screen);
+    }
+  }
 }
 
-function handleClear() {
-  const message = document.getElementById("message");
-  message.innerHTML = "";
-}
 
-function handleSpeaker() {
-  const sentence = ref(document.querySelectorAll("div#word p"));
-  var utterance;
-  sentence.value.forEach((word) => {
-    console.log("word:", word.textContent);
-    utterance = new SpeechSynthesisUtterance(word.textContent);
-    // Speak the utterance
-    tts.speak(utterance);
-  });
-}
-
-function updateScreen(screen) {
-  emit("updateScreen", screen);
-}
 </script>
 <template>
   <div class="container msg-container">
-    <div id="message" class="msg-display" @input="handleSpeaker">
-      <!--<WordPictureTile v-model:word="word" v-model:image-url="imageUrl"/>-->
+    <div id="message" class="msg-display d-flex flex-wrap">
+      <div class="word-tile" v-for="word in currentSentence" v-bind:key="word.id">
+              <WordPictureTileMessage :word="word.word.toUpperCase()"
+                               :symbol="word.symbol"/>
+      </div>
     </div>
-    <!--<input id="input" class="msg-display"/>-->
-    <!--<input type="text" class="mt-4 msg-bar ml-5" />-->
+
     <div class="btn-group btn-group-md options">
       <button class="btn" @click="handleBackspace">
         <img src="/Backspace.png" alt="Backspace Icon" />
@@ -51,14 +49,13 @@ function updateScreen(screen) {
       <button class="btn" @click="updateScreen('PINNED')">
         <img src="/pinned_folder.png" alt="Speaker Icon" />
       </button>
-      <!--<button class="btn" @click="handleSpeaker"><img src="/search.png" alt="Speaker Icon" /></button>-->
-      <!---<img src="/Backspace.png" alt="Backspace Icon" />
-        <img src="/SpeakerIcon.png" alt="Speaker Icon" />-->
     </div>
+
   </div>
 </template>
 
 <style>
+
 .msg-container {
   width: 100vw;
   height: 100px; /*maybe the size of whatver the title is set to here*/
