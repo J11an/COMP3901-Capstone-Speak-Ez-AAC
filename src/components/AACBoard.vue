@@ -7,8 +7,8 @@ let columns = ref([]);
 let toggleVal = ref(false);
 
 let props = defineProps({
-  currentSentence: ref([]),    
-})
+  currentSentence: ref([]),
+});
 
 function fetchGrid() {
   fetch("api/inital_tree_setting", {
@@ -31,11 +31,11 @@ function fetchGrid() {
       console.log(error);
       //console.log("test");
     });
-  }
-  function fetchAscWord(){
-    fetch("/api/word_associated/${word_id}",{
-      method: "GET",
-    })
+}
+function fetchAscWord() {
+  fetch("/api/word_associated/${word_id}", {
+    method: "GET",
+  })
     .then(function (response) {
       return response.json();
     })
@@ -46,8 +46,7 @@ function fetchGrid() {
       console.log(error);
       //console.log("test");
     });
-  }
-
+}
 
 /*function toggleSwitch(){
       let toggleValue;
@@ -76,7 +75,10 @@ onMounted(() => {
       </div>
     </div>-->
     <!--Dynamic-->
-    <div v-if="!toggleVal" class="d-flex flex-wrap justify-content-between mt-3">
+    <div
+      v-if="!toggleVal"
+      class="d-flex flex-wrap justify-content-between mt-3"
+    >
       <div v-for="(value, key) in columns" :class="key" :value="value">
         <div v-for="word in value">
           <WordPictureTile image-url="/HelpIcon.png" :word="word" />

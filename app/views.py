@@ -9,6 +9,7 @@ from app import app, socketio
 from flask import abort, render_template, request, jsonify, send_file, send_from_directory
 import os
 from app.models import *
+from .forms import *
 from werkzeug.utils import secure_filename
 from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
@@ -51,30 +52,30 @@ def index():
 
 
 # speaker dia
-from pydub import AudioSegment
-from scipy.io import wavfile
-from webrtcvad import Vad
+# from pydub import AudioSegment
+# from scipy.io import wavfile
+# from webrtcvad import Vad
 
 
-@socketio.on('diarize')
-def dia_handler(data):
-    file = data['file']
-    audio = AudioSegment.from_file(file)
-    rate, samples = wavfile.read(file)
-    vad = Vad(3)
-    results = diarize(audio, samples, rate, vad)
-    socketio.emit('results', {'results': result})
+# @socketio.on('diarize')
+# def dia_handler(data):
+#     file = data['file']
+#     audio = AudioSegment.from_file(file)
+#     rate, samples = wavfile.read(file)
+#     vad = Vad(3)
+#     results = diarize(audio, samples, rate, vad)
+#     socketio.emit('results', {'results': result})
 
 
-def diarize(audio, samples, rate, vad):
-    segment_length_ms = 30
-    num_channels = audio.channels
-    bytes_per_sample = audio.sample_width
-    samples_per_segment = int(segment_length_ms * rate / 1000)
-    bytes_per_segment = samples_per_segment * bytes_per_sample
-    segment_stride_ms = 10
-    samples_per_stride = int(segment_stride_ms * rate / 1000)
-    bytes_per_stride = samples
+# def diarize(audio, samples, rate, vad):
+#     segment_length_ms = 30
+#     num_channels = audio.channels
+#     bytes_per_sample = audio.sample_width
+#     samples_per_segment = int(segment_length_ms * rate / 1000)
+#     bytes_per_segment = samples_per_segment * bytes_per_sample
+#     segment_stride_ms = 10
+#     samples_per_stride = int(segment_stride_ms * rate / 1000)
+#     bytes_per_stride = samples
 
 
 # Speaking Screen
@@ -255,15 +256,24 @@ def listen():
         return result_json
 
 
-@socketio.on('audio_data')
-def handle_audio_data(data):
-    print('received audio data:', data)
-    socketio.emit('my_response', data)
-
-
 # Saved Phrases
-
-
+@app.route('/api/saved_phrases',methods=['POST','GET'])
+def phrase():
+        if request.method == 'POST':
+            form = SavedPhraseForm()
+            if form.validate_on_submit():
+                saved_phrases = request.form['saved_phrases']
+                category = request.form['category']
+                savedphrase = SavedPhrases(saved_phrases,category)
+                db.session.add(savedphrase)
+                db.session.commit()
+                return jsonify({"message": 'Saved Phrase Added'}), 201  
+            return('test')
+        if request.method == 'GET': 
+            categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
+            phrases_by_category = {category: [phrase.saved_phrases for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
+            return jsonify(phrases_by_category),201
+        
 # Seed Vocab List
 @app.route('/api/seed_database')
 def seed_database():

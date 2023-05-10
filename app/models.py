@@ -184,3 +184,23 @@ class Articles (db.Model):
         except NameError:
             return str(self.word_id)  # python 3 support
 
+class SavedPhrases(db.Model):
+    
+    saved_phrases_id= db.Column(db.Integer,primary_key=True)
+    saved_phrases=db.Column(db.String(20))
+    category = db.Column(db.String(20))
+
+
+    def __init__(self,saved_phrases,category):
+            self.saved_phrases=saved_phrases
+            self.category=category
+
+    def __repr__(self):
+       return '<Saved Phrase%r>' % (self.saved_phrases)
+
+    def get_id(self):
+        try:
+            return unicode(self.saved_phrases_id)  # python 2 support
+        except NameError:
+            return str(self.saved_phrases_id)  # python 3 support
+
