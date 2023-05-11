@@ -16,7 +16,7 @@ migrate = Migrate(app, db)
 socketio = SocketIO(app, cors_allowed_origins='*')
 socketio.run(app)
 CORS(app)
-csrf = CSRFProtect(app)
+# csrf = CSRFProtect(app)
 
 
 from app import views

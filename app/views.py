@@ -184,15 +184,15 @@ def word_associated():
     return jsonify(next_partsofspeech), 200
     
 
-@app.route('/api/search/<word>', methods=['POST'])
+@app.route('/api/search/<word>', methods=['GET'])
 def search_word(word):
-    if request.method == 'POST':
+    if request.method == 'GET':
         matched = []
         search_result = Words.query.filter(Words.word.ilike(f'%{word}%')).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
         matches = [(w.word_id, w.symbol, w.word) for w in search_result]
-        matches = list(set(get_close_matches(word, [match[2] for match in matches], n=5, cutoff=0.1)))
+        matches = list(set(get_close_matches(word, [match[2] for match in matches], n=30, cutoff=0.1)))
 
         for match in matches:
             for word in search_result:
