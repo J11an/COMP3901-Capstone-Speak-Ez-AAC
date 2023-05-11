@@ -380,6 +380,21 @@ def seed_database():
 def get_csrf():
     return jsonify({'csrf_token' : generate_csrf()})
 
+@app.route('/api/pinned_words',methods=["GET","POST"])
+def pinned_words():
+    if request.method == "GET":
+        pwords = db.session.execute(db.select(PinnedWords)).scalars()
+        pwords_list = [{"id": pword.pinnedwords_id} for pword in pwords]
+        return jsonify(pwords_list), 200
+    
+    if request.method == "POST":
+        pinnedword_id = request.args.get('word_id')
+        cPinnedWords = PinnedWords(pinnedword_id)
+        db.session.add(cPinnedWords)
+        db.session.commit()
+
+        return {"success" : "pinned word added"},201
+    
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 def form_errors(form):
