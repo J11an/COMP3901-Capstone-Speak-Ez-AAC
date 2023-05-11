@@ -8,7 +8,17 @@ export default {
   },
   data(){
     return{
-      img: this.symbol
+      img: this.symbol,
+      backgroundColors: {
+        noun:'red',
+        pronoun: 'blue',
+        adjectives: 'green',
+        adverb: 'yellow',
+        preposition: 'purple',
+        conjunction: 'orange',
+        articles: 'violet',
+        verb: 'pink'
+      }
     }
   },
   methods : {
@@ -22,7 +32,7 @@ export default {
 <template>
   <div class="container">
     <div id="tile">
-        <div class="card">
+        <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:red'">
           <img :src="img" @error="usePlaceholderImg" alt="Image" />
           <div class="card-content">
             <p>{{ word }}</p>
