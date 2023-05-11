@@ -204,20 +204,22 @@ def search_word(word):
 @app.route('/api/inital_tree_setting', methods=['GET'])
 def inital_tree_setting():
     columns = {
-        "Noun": [],
-        "Verb": [],
-        "Adjectives": [],
-        "Articles": [],
-        "Pronoun": []
     }
-    # Retrieve all the title from the database and group them by their part of speech
-    tiles = Words.query.all()
-    for tile in tiles:
-        part_of_speech = tile.partofspeech
-        if part_of_speech in columns:
-            columns[part_of_speech] = [{"id": word.word_id, "word": word.word, "symbol": word.symbol,} for word in
-                                                Words.query.filter_by(partofspeech=part_of_speech).order_by(func.random()).limit(
-                                                    4).all()]
+
+    columns["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
+                                Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
+    columns["verb"] = [{"id": verb.word_id, "word": verb.word, "symbol": verb.symbol,} for verb in
+                                    Words.query.filter_by(partofspeech='Verb').order_by(func.random()).limit(4).all()]
+    columns["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
+                                        Words.query.filter_by(partofspeech='Adjectives').order_by(
+                                            func.random()).limit(4).all()]
+    columns["articles"] = [{"id": articles.word_id, "word": articles.word, "symbol": articles.symbol,} for articles in
+                                        Words.query.filter_by(partofspeech='Articles').order_by(func.random()).limit(
+                                            4).all()]
+    columns["pronoun"] = [{"id": pronoun.word_id, "word": pronoun.word, "symbol": pronoun.symbol,} for pronoun in
+                                        Words.query.filter_by(partofspeech='Pronoun').order_by(func.random()).limit(
+                                            4).all()]
+
     return jsonify(columns), 201
 
 
