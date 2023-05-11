@@ -56,16 +56,25 @@ export default {
         symbol: symbol,
         partOfSpeech: partOfSpeech
       }]);
-      this.fetchColumnsFromWord(word).then((columns)=>this.columns=columns);
     }
   },
   mounted() {
     this.fetchInitColumns().then((columns)=>this.columns=columns);
   },
   watch: {
-    currentMessage: function(oldVal,newVal){
-      console.log("Current Message Mutated :",oldVal,newVal);
-    }
+    currentMessage: {
+      handler(oldVal,newVal){
+        console.log("Current Message Mutated :",oldVal,newVal);
+        const nextEvaluatedWord = newVal[newVal.length-1];
+        if (nextEvaluatedWord) {
+          this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns)=>this.columns=columns);
+        } else {
+          this.fetchInitColumns().then((columns)=>this.columns=columns);
+        }
+
+      },
+      deep:true
+    },
   }
 }
 </script>
