@@ -100,9 +100,7 @@ def word_associated():
     # query = "red"
 
     tiles = Words.query.filter_by(word=query).all()
-
     for tile in tiles:
-
 
         if tile.partofspeech == 'Noun':
             next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
@@ -119,7 +117,7 @@ def word_associated():
             next_partsofspeech["noun"] = [{"id": noun.word_id, "word": noun.word, "symbol": noun.symbol,} for noun in
                                         Words.query.filter_by(partofspeech='Noun').order_by(func.random()).limit(4).all()]
 
-        if tile.partofspeech == 'Article':
+        if tile.partofspeech == 'Articles':
             next_partsofspeech["adjectives"] = [{"id": adjectives.word_id, "word": adjectives.word, "symbol": adjectives.symbol,} for adjectives in
                                                 Words.query.filter_by(partofspeech='Adjectives').order_by(
                                                     func.random()).limit(4).all()]
