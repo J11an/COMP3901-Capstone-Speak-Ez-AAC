@@ -16,6 +16,7 @@ class Words(db.Model):
 
     __table_args__ = (
         Index('idx', 'word_id'),
+        Index('posidx','partofspeech')
     )
 
     def __init__(self, word, category, sub_category, partofspeech, time, place, symbol_id,symbol):
