@@ -25,11 +25,6 @@ export default {
 
 <style scoped>
 
-.add-icon{
-  width: 100%;
-  height: 20%;
-}
-
 .btn-container {
   background-color: transparent;
   border: none;

@@ -47,45 +47,53 @@ export default {
 </script>
 
 <template>
-  <div class="container-model" @click="$emit('close-modal')">
-    <div class="modal-cont" @click.stop>
-      <button>
-        <div class="close" @click="$emit('close-modal')">
-          <img class="close-img" src="/search.png" alt="" />
+  <div class="container-model modal" @click="$emit('close-modal')">
+    <div class="modal-dialog d-flex justify-content-center" @click.stop>
+      <div class="modal-content w-100
+      +">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel1">Save a Phrase</h5>
+          <button
+            @click="$emit('close-modal')"
+            type="button"
+            class="btn-close"
+            data-mdb-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
-      </button>
-      <form
-        id="registrationform"
-        enctype="multipart/form-data"
-        @submit.prevent="savePhrase"
-      >
-        <div class="row mb-3">
-          <div class="col-6">
-            <label for="saved_phrases" class="form-label font-weight-bold"
-              >Saved Phrase
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Phrase"
-              name="saved_phrases"
-              class="form-control"
-              id="saved_phrases"
-            />
-          </div>
-          <div class="col-6">
-            <label for="category" class="form-label font-weight-bold"
-              >Category
-            </label>
-            <input
-              type="text"
-              placeholder="Enter category"
-              name="category"
-              class="form-control"
-            />
-          </div>
+
+        <div class="modal-body p-4">
+          <form
+            id="registrationform"
+            enctype="multipart/form-data"
+            @submit.prevent="savePhrase"
+          >
+            <div class="form-outline row-mb-4">
+              <label class="form-label" for="email1">Phrase</label>
+              <input
+                type="email"
+                id="email1"
+                class="form-control"
+                placeholder="Enter your phrase here"
+              />
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="password1">Category</label>
+              <input
+                type="password"
+                id="password1"
+                class="form-control"
+                placeholder="Enter category"
+              />
+            </div>
+
+            <button class="btn btn-success btn-md" type="submit">
+              Add Phrase
+            </button>
+          </form>
         </div>
-        <button class="btn btn-success btn-md" type="submit">Add Phrase</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -106,13 +114,12 @@ export default {
   background-color: #d8d8d8a8;
 }
 
-.modal-cont {
+.modal-content {
   text-align: center;
   background-color: white;
   height: 500px;
   width: 500px;
   margin-top: 10%;
-  padding: 60px 0;
   border-radius: 20px;
 }
 </style>

@@ -13,6 +13,7 @@ export default {
   methods: {
     texttospeech(e) {
       let message = e.target.firstChild.data;
+      console.log(message);
       let utterance = new SpeechSynthesisUtterance(message);
       tts.speak(utterance);
     },
@@ -22,11 +23,15 @@ export default {
 
 <template>
   <div class="container">
-  <h1>{{ category }}</h1>
-    <div class="d-grid gap-3 col-6 mx-auto">
-      <button v-for="(item, index) in phrases" :key="index" 
+    <h1 id="title">{{ category }}</h1>
+    <h3 id="title">Tap the phrase you want them to hear!</h3>
+    <br />
+    <div class="d-grid gap-2 col-6 mx-auto">
+      <button
+        v-for="(item, index) in phrases"
+        :key="index"
         type="button"
-        class="btn btn-primary"
+        class="btn btn-primary btn-lg"
         @click="texttospeech($event)"
       >
         {{ item }}
@@ -36,5 +41,12 @@ export default {
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+}
 
+#title {
+  text-align: center;
+}
 </style>

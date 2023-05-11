@@ -10,9 +10,9 @@ export default {
     return{
       img: this.symbol,
       backgroundColors: {
-        noun:'red',
-        pronoun: 'blue',
-        adjectives: 'green',
+        noun:'#BD2B48',
+        pronoun: '#349BEA',
+        adjectives: '#57C85C',
         adverb: 'yellow',
         preposition: 'purple',
         conjunction: 'orange',

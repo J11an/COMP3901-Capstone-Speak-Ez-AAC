@@ -55,51 +55,61 @@ export default {
 </script>
 
 <template>
-  <div class="container phrase-container">
-  <div class="phrase-header">
-      <h2>ADD PHRASE</h2>
-      <button class="toggle-container btn" @click="showForm = true">
-      <img class="search-icon" src="Add.png" />
-    </button>
-    
-    <addPhrase 
-      v-show="showForm"
-      @close-modal="showForm = false"
-      @update-page="update = true"
-    />
-  </div>
+  <div class="container">
+    <div class="phrase-header">
+      <h2>SELECT FROM OR ADD ONE OF YOUR PHRASES</h2>
+        <button class="toggle-container btn" @click="showForm = true">
+          <img class="add-icon" src="Add.png" />
+          <p>ADD PHRASE</p>
+        </button>
+      
+      <addPhrase
+        v-show="showForm"
+        @close-modal="showForm = false"
+        @update-page="update = true"
+      />
+    </div>
+      <div class="category-container" >
+        <!-- Folders -->
+        <div v-if="!toggleExpandedPhrase" v-for="(phrases, category) in phrases" :key="category">
+          <PhraseCategory :category="category" @click="expandPhrase(category,phrases)"/>
+        </div>
 
-    <div>
-      <!-- Folders -->
-      <div v-if="!toggleExpandedPhrase" v-for="(phrases, category) in phrases" :key="category">
-        <PhraseCategory :category="category" @click="expandPhrase(category,phrases)"/>
-      </div>
-
-      <!-- Expanded Phrases -->
-      <div v-if="toggleExpandedPhrase">
-        <button class="btn btn-dark" @click="hidePhrases">BACK</button>
-        <Phrase :phrases="currentPhrases" :category="currentCategory" />
+        <!-- Expanded Phrases -->
+        <div v-if="toggleExpandedPhrase">
+          <button class="btn btn-dark" @click="hidePhrases">BACK</button>
+          <Phrase :phrases="currentPhrases" :category="currentCategory" />
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-.search-icon {
-  width: 50px;
+.container{
+  height: 100vh;
+  width: 100vw;
+}
+.category-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  width: 80%;
+  height: auto;
   margin:auto;
 }
 
-.phrase-container{
-  display: flex;
-  flex-direction: column;
-}
 
 .phrase-header{
   display: flex;
   align-items: center;
   justify-content: center;
-  width:90%;
+  flex-direction: column;
 }
 
 </style>
