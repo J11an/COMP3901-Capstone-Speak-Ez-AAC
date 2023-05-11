@@ -212,3 +212,18 @@ class SavedPhrases(db.Model):
         except NameError:
             return str(self.saved_phrases_id)  # python 3 support
 
+class PinnedWords(db.Model):
+    
+    pinnedwords_id= db.Column(db.Integer,primary_key=True)
+
+    def __init__(self,pinnedwords_id):
+            self.pinnedwords_id=pinnedwords_id
+
+    def __repr__(self):
+       return '<Pinned Word%r>' % (self.pinnedwords_id)
+
+    def get_id(self):
+        try:
+            return unicode(self.pinnedwords_id)  # python 2 support
+        except NameError:
+            return str(self.pinnedwords_id)  # python 3 support
