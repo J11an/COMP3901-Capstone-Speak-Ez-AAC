@@ -60,18 +60,24 @@ export default {
 <style scoped>
 #message{
   cursor: pointer;
+  width: 100vw;
+  height: 100px;
 }
 #message:hover{
   background-color: lightblue;
 }
 
 .msg-container {
-  width: 100vw;
-  height: 100px; /*maybe the size of whatver the title is set to here*/
+
   margin-top: 10px;
   padding: 10px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: row;
+  @media (max-width: 1200px) {
+    flex-wrap: wrap;
+  }
 }
 
 .msg-display {

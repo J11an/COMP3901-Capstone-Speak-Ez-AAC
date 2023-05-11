@@ -75,6 +75,20 @@ export default {
     },
     handleClear(){
       this.searchTerm = "";
+    },
+    refreshResults(){
+      const lastWord = this.currentMessage[this.currentMessage.length-1];
+      this.columns = [];
+      if (lastWord) {
+        this.fetchColumnsFromWord(lastWord.word).then(
+            (columns)=>{
+              this.columns=columns
+        });
+      } else {
+        this.fetchInitColumns().then(
+            (columns)=>this.columns=columns
+        );
+      }
     }
   },
   mounted() {
@@ -126,11 +140,15 @@ export default {
 
     <div class="toggle-wrapper">
 
+      <div class="refresh-container btn" @click="refreshResults" v-if="!searchOn">
+        <img class="search-icon" src="/refresh-page-option.png" />
+      </div>
+
       <button class="toggle-container btn" @click="toggleSwitch">
         <img class="search-icon" src="/search.png" />
       </button>
 
-      <div v-if="searchOn">
+      <div class="search-btn-container" v-if="searchOn">
         <input name="search" v-model="searchTerm" type="text" placeholder="Search here"/>
           <span>
             <button id="clear" class="btn" @click="handleClear">
@@ -144,11 +162,17 @@ export default {
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
       <div v-if="searchResults && searchTerm" class="search-section d-flex flex-wrap">
-          <div v-for="word in searchResults">
+          <div v-if="searchResults.length" v-for="word in searchResults">
               <WordPictureTile :word="word.word.toUpperCase()"
                                :symbol="word.symbol"
                                 @click="addWord(word.id, word.word, word.symbol)"/>
-            </div>
+          </div>
+          <div v-if="searchResults.length<=0">
+            <p>Couldn't find {{ searchTerm }}. Would you like to add it?</p>
+            <WordPictureTile :word="searchTerm.toUpperCase()"
+                 symbol="/HelpIcon.png"
+                  @click="addWord(null, searchTerm, '/HelpIcon.png')"/>
+          </div>
       </div>
     </div>
 
@@ -172,6 +196,10 @@ export default {
 </template>
 
 <style scoped>
+.search-btn-container{
+  display: flex;
+}
+
 .speaking-container {
   display: flex;
   flex-direction: column;
@@ -180,6 +208,8 @@ export default {
 .toggle-wrapper{
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 .search-icon {
   width: 50px;
