@@ -72,6 +72,9 @@ export default {
         symbol: symbol,
         partOfSpeech: partOfSpeech
       }]);
+    },
+    handleClear(){
+      this.searchTerm = "";
     }
   },
   mounted() {
@@ -140,7 +143,7 @@ export default {
 
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
-      <div class="search-section d-flex flex-wrap">
+      <div v-if="searchResults && searchTerm" class="search-section d-flex flex-wrap">
           <div v-for="word in searchResults">
               <WordPictureTile :word="word.word.toUpperCase()"
                                :symbol="word.symbol"
