@@ -66,10 +66,17 @@ export default {
       handler(oldVal,newVal){
         console.log("Current Message Mutated :",oldVal,newVal);
         const nextEvaluatedWord = newVal[newVal.length-1];
+        this.columns = [];
         if (nextEvaluatedWord) {
-          this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns)=>this.columns=columns);
+          this.fetchColumnsFromWord(nextEvaluatedWord.word).then(
+              (columns)=>{
+                this.columns=columns
+              });
         } else {
-          this.fetchInitColumns().then((columns)=>this.columns=columns);
+          this.fetchInitColumns().then(
+              (columns)=>{
+                this.columns=columns
+              });
         }
 
       },
