@@ -79,6 +79,13 @@ export default {
               });
         }
 
+        if (!this.columns){
+          this.fetchInitColumns().then(
+              (columns)=>{
+                this.columns=columns
+              });
+        }
+
       },
       deep:true
     },
