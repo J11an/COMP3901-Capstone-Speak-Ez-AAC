@@ -61,23 +61,9 @@ export default {
     }
   },
   mounted() {
-<<<<<<< Updated upstream
     this.messageList = [
       1,2,3,4,5,5,6,7,8,9,10,11,12,123,4,5,6,7,8,9,0,10,11
     ]
-=======
-
-    this.currentSentence = ["I", "eat"];
-    const fromArr = ["SPEAKER", "LISTENER"];
-    for (let i = 0; i < 15; i++) {
-      const from = fromArr[Math.round(Math.random())];
-      this.messageList.push({
-        id: i,
-        msg: `This is a test message from the ${from}`,
-        from: from,
-      });
-    }
->>>>>>> Stashed changes
   },
 };
 </script>

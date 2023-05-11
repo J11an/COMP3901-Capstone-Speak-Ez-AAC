@@ -4,7 +4,7 @@ const tts = window.speechSynthesis;
 export default {
   name: "PhraseCategory",
 
-  props: ["phrases"],
+  props: ["phrases", "category"],
 
   data() {
     return {};
@@ -21,15 +21,20 @@ export default {
 </script>
 
 <template>
-  <li v-for="(item, index) in phrases" :key="index">
-    <button
-      type="button"
-      class="btn btn-primary btn-lg"
-      @click="texttospeech($event)"
-    >
-      {{ item }}
-    </button>
-  </li>
+  <div class="container">
+  <h1>{{ category }}</h1>
+    <div class="d-grid gap-3 col-6 mx-auto">
+      <button v-for="(item, index) in phrases" :key="index" 
+        type="button"
+        class="btn btn-primary"
+        @click="texttospeech($event)"
+      >
+        {{ item }}
+      </button>
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

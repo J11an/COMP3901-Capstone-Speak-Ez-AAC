@@ -52,7 +52,7 @@ export default {
         <p class="centered">{{ category.toUpperCase() }}</p>
       </button>
     </div >
-      <Phrase :phrases="phrase" />
+      <Phrase :phrases="phrase" :category="category" />
   </div>
   
 </template>
