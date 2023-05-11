@@ -266,13 +266,13 @@ def phrase():
                 saved_phrases = request.form['saved_phrases']
                 category = request.form['category']
                 exists = db.session.query(SavedPhrases.saved_phrases_id ).filter_by(saved_phrases=saved_phrases).first() is not None
-                if exists == None:
+                if exists == False:
                     savedphrase = SavedPhrases(saved_phrases,category)
                     db.session.add(savedphrase)
                     db.session.commit()
                     return jsonify({"message": 'Saved Phrase Added'}), 201  
                 else:
-                    return jsonify({"message": 'Phrase already exists'})
+                    return jsonify({"error": 'Phrase already exists'})
             return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]

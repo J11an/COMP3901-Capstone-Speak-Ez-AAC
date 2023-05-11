@@ -4,7 +4,7 @@ export default {
   emits: ["close-modal"],
 
   data() {
-    return { csrf_token: "" };
+    return { csrf_token: "", message: "", error: false };
   },
   created() {
     this.getCsrfToken();
@@ -17,6 +17,8 @@ export default {
       fetch("/api/saved_phrases", {
         method: "POST",
         body: form_data,
+        error: false,
+        errors: [],
         headers: {
           "X-CSRFToken": this.csrf_token,
         },
@@ -27,6 +29,14 @@ export default {
         .then(function (data) {
           self.$emit("phrase-added");
           console.log(data);
+          if ("error" in data) {
+            self.errors = data.error;
+            self.error = true;
+            console.log(self.error);
+          } else {
+            self.error = false;
+            document.getElementById("registrationform").reset();
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -49,17 +59,19 @@ export default {
 <template>
   <div class="container-model modal" @click="$emit('close-modal')">
     <div class="modal-dialog d-flex justify-content-center" @click.stop>
-      <div class="modal-content w-100
-      +">
+      <div class="modal-content w-100 +">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel1">Save a Phrase</h5>
+          <h5 id="exampleModalLabel1" class="modal-title">Save a Phrase</h5>
           <button
-            @click="$emit('close-modal')"
             type="button"
             class="btn-close"
             data-mdb-dismiss="modal"
             aria-label="Close"
+            @click="$emit('close-modal')"
           ></button>
+        </div>
+        <div v-if="error" id="alert" class="alert alert-danger" role="alert">
+          {{ errors }}
         </div>
 
         <div class="modal-body p-4">
@@ -69,20 +81,22 @@ export default {
             @submit.prevent="savePhrase"
           >
             <div class="form-outline row-mb-4">
-              <label class="form-label" for="email1">Phrase</label>
+              <label class="form-label" for="saved_phrases">Phrase</label>
               <input
-                type="email"
-                id="email1"
+                id="saved_phrases"
+                type="text"
                 class="form-control"
+                name="saved_phrases"
                 placeholder="Enter your phrase here"
               />
             </div>
 
             <div class="form-outline mb-4">
-              <label class="form-label" for="password1">Category</label>
+              <label class="form-label" for="category">Category</label>
               <input
-                type="password"
-                id="password1"
+                id="category"
+                type="test"
+                name="category"
                 class="form-control"
                 placeholder="Enter category"
               />
