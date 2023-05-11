@@ -158,7 +158,6 @@ export default {
         <hr /><p>See suggested words here</p><hr />
         <div v-if="!searchOn" class="board-container d-flex justify-content-between mt-3">
           <div v-for="(words,partOfSpeech) in columns">
-            {{ partOfSpeech }}
             <div v-for="word in words">
               <WordPictureTile :word="word.word.toUpperCase()"
                                :symbol="word.symbol"
