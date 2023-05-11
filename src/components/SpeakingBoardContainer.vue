@@ -130,7 +130,7 @@ export default {
         <img class="search-icon" src="/search.png" />
       </button>
 
-      <div v-if="searchOn">
+      <div class="search-btn-container" v-if="searchOn">
         <input name="search" v-model="searchTerm" type="text" placeholder="Search here"/>
           <span>
             <button id="clear" class="btn" @click="handleClear">
@@ -172,6 +172,10 @@ export default {
 </template>
 
 <style scoped>
+.search-btn-container{
+  display: flex;
+}
+
 .speaking-container {
   display: flex;
   flex-direction: column;
@@ -180,6 +184,8 @@ export default {
 .toggle-wrapper{
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 .search-icon {
   width: 50px;
