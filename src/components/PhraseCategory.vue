@@ -1,56 +1,26 @@
 <script>
-import Phrase from "./Phrase.vue";
-
 export default {
   name: "PhraseCategory",
 
-  components: { Phrase },
-  props: ["category", "phrase"],
+  props: ["category"],
 
   data() {
     return {
-      currentScreen: "PHRASEVIEW",
+      toggleExpand: false
     };
   },
   mounted() {},
   methods: {
-    getPhrases() {
-      let self = this;
-      fetch("/api/saved_phrases", {
-        method: "GET",
-        headers: {
-          "X-CSRFToken": this.csrf_token,
-        },
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          self.phrases = data;
-          console.log(self.phrases);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    test() {
-      return console.log("click");
-    },
-    updateBody(screen) {
-      this.currentScreen = screen;
-    },
   },
 };
 </script>
 
 <template>
-      <button class="btn-container" @click="test">
+      <button class="btn-container">
         <div class="folder-btn">
           <p class="centered">{{ category.toUpperCase() }}</p>
-          <!--<img class="folder-btn" src="folder.png" alt=""/>-->
         </div>
       </button>
-      <Phrase :phrases="phrase" :category="category" />
 </template>
 
 <style scoped>

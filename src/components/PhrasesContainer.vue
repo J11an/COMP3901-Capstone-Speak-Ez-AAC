@@ -1,14 +1,18 @@
 <script>
 import AddPhrase from "../components/AddPhrase.vue";
 import PhraseCategory from "./PhraseCategory.vue";
+import Phrase from "./Phrase.vue";
 
 export default {
   name: "PhrasesContainer",
-  components: { AddPhrase, PhraseCategory },
+  components: { AddPhrase, PhraseCategory, Phrase },
 
   data() {
     return {
       phrases: {},
+      currentCategory:'',
+      currentPhrases:{},
+      toggleExpandedPhrase: false,
       showForm: false,
       update: false,
     };
@@ -36,6 +40,16 @@ export default {
           console.log(error);
         });
     },
+    expandPhrase(category,phrases){
+      this.toggleExpandedPhrase = true;
+      this.currentCategory = category;
+      this.currentPhrases = phrases;
+    },
+    hidePhrases(){
+      this.toggleExpandedPhrase = false;
+      this.currentCategory = "";
+      this.currentPhrases = {};
+    }
   },
 };
 </script>
@@ -43,7 +57,7 @@ export default {
 <template>
   <div class="container phrase-container">
   <div class="phrase-header">
-      <h2>SELECT FROM YOUR SAVED PHRASES</h2>
+      <h2>ADD PHRASE</h2>
       <button class="toggle-container btn" @click="showForm = true">
       <img class="search-icon" src="Add.png" />
     </button>
@@ -56,12 +70,16 @@ export default {
   </div>
 
     <div>
-    <div v-for="(phrase, category) in phrases" :key="category">
-      <PhraseCategory :category="category" :phrase="phrase" />
-      <!-- <ul>
-        <li v-for="value in values" :key="value">{{ value }}</li>
-      </ul> -->
-    </div>
+      <!-- Folders -->
+      <div v-if="!toggleExpandedPhrase" v-for="(phrases, category) in phrases" :key="category">
+        <PhraseCategory :category="category" @click="expandPhrase(category,phrases)"/>
+      </div>
+
+      <!-- Expanded Phrases -->
+      <div v-if="toggleExpandedPhrase">
+        <button class="btn btn-dark" @click="hidePhrases">BACK</button>
+        <Phrase :phrases="currentPhrases" :category="currentCategory" />
+      </div>
     </div>
   </div>
 </template>
