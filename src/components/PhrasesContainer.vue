@@ -10,8 +10,8 @@ export default {
   data() {
     return {
       phrases: {},
-      currentCategory:'',
-      currentPhrases:{},
+      currentCategory: "",
+      currentPhrases: {},
       toggleExpandedPhrase: false,
       showForm: false,
       update: false,
@@ -40,16 +40,16 @@ export default {
           console.log(error);
         });
     },
-    expandPhrase(category,phrases){
+    expandPhrase(category, phrases) {
       this.toggleExpandedPhrase = true;
       this.currentCategory = category;
       this.currentPhrases = phrases;
     },
-    hidePhrases(){
+    hidePhrases() {
       this.toggleExpandedPhrase = false;
       this.currentCategory = "";
       this.currentPhrases = {};
-    }
+    },
   },
 };
 </script>
@@ -58,38 +58,45 @@ export default {
   <div class="container">
     <div class="phrase-header">
       <h2>SELECT FROM OR ADD ONE OF YOUR PHRASES</h2>
-        <button class="toggle-container btn" @click="showForm = true">
-          <img class="add-icon" src="Add.png" />
-          <p>ADD PHRASE</p>
-        </button>
-      
+      <button class="toggle-container btn" @click="showForm = true">
+        <img class="add-icon" src="Add.png" />
+        <p>ADD PHRASE</p>
+      </button>
+
       <addPhrase
         v-show="showForm"
         @close-modal="showForm = false"
         @update-page="update = true"
       />
     </div>
-      <div class="category-container" >
-        <!-- Folders -->
-        <div v-if="!toggleExpandedPhrase" v-for="(phrases, category) in phrases" :key="category">
-          <PhraseCategory :category="category" @click="expandPhrase(category,phrases)"/>
-        </div>
+    <div class="category-container">
+      <!-- Folders -->
+      <div
+        v-if="!toggleExpandedPhrase"
+        v-for="(phrases, category) in phrases"
+        :key="category"
+      >
+        <PhraseCategory
+          :category="category"
+          @click="expandPhrase(category, phrases)"
+        />
+      </div>
 
-        <!-- Expanded Phrases -->
-        <div v-if="toggleExpandedPhrase">
-          <button class="btn btn-dark" @click="hidePhrases">BACK</button>
-          <Phrase :phrases="currentPhrases" :category="currentCategory" />
-        </div>
+      <!-- Expanded Phrases -->
+      <div v-if="toggleExpandedPhrase">
+        <button class="btn btn-dark" @click="hidePhrases">BACK</button>
+        <Phrase :phrases="currentPhrases" :category="currentCategory" />
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
-.container{
+.container {
   height: 100vh;
   width: 100vw;
 }
-.category-container{
+.category-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -101,15 +108,13 @@ export default {
 .add-icon {
   width: 80%;
   height: auto;
-  margin:auto;
+  margin: auto;
 }
 
-
-.phrase-header{
+.phrase-header {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
-
 </style>
