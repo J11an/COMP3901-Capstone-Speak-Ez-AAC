@@ -1,5 +1,6 @@
 <script>
 import Phrase from "./Phrase.vue";
+
 export default {
   name: "PhraseCategory",
 
@@ -7,7 +8,9 @@ export default {
   props: ["category", "phrase"],
 
   data() {
-    return {};
+    return {
+      currentScreen: "PHRASEVIEW",
+    };
   },
   mounted() {},
   methods: {
@@ -31,17 +34,55 @@ export default {
         });
     },
     test() {
-      console.log("test");
+      return true;
+    },
+    updateBody(screen) {
+      this.currentScreen = screen;
     },
   },
 };
 </script>
 
 <template>
-  <div>
-    <Button @click="test">{{ category }}</Button>
-    <Phrase :phrases="phrase" />
+  <div class="container phrases-con">
+    <h2>SELECT FROM YOUR SAVED PHRASES</h2>
+    <div>
+      <button class="btn-container"  @click="test">
+        <img class="folder-btn" src="folder.png" alt=""/>
+        <p class="centered">{{ category.toUpperCase() }}</p>
+      </button>
+    </div >
+      <Phrase :phrases="phrase" />
   </div>
+  
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.add-icon{
+  width: 100%;
+  height: 20%;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+ .folder-btn{
+  max-width: 50%;
+  max-height:50%;
+}
+.phrases-con {
+    display: flexbox;
+    text-align: center;
+}
+
+</style>

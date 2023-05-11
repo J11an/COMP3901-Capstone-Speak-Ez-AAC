@@ -10,6 +10,7 @@ export default {
     return {
       phrases: {},
       showForm: false,
+      update: false,
     };
   },
   mounted() {
@@ -41,13 +42,22 @@ export default {
 
 <template>
   <button class="toggle-container btn" @click="showForm = true">
-    <img class="search-icon" src="/search.png" />
+    <img class="search-icon" src="Add.png" />
   </button>
+<<<<<<< Updated upstream
   <addPhrase
     v-show="showForm"
     @close-modal="showForm = false"
     @phrase-added="getPhrases"
   />
+=======
+  <addPhrase 
+    v-show="showForm"
+    @close-modal="showForm = false"
+    @update-page="update = true"
+  />
+
+>>>>>>> Stashed changes
   <div v-for="(phrase, category) in phrases" :key="category">
     <PhraseCategory :category="category" :phrase="phrase" />
     <!-- <ul>
@@ -60,4 +70,5 @@ export default {
 .search-icon {
   width: 50px;
 }
+
 </style>
