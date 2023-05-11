@@ -41,26 +41,47 @@ export default {
 </script>
 
 <template>
-  <button class="toggle-container btn" @click="showForm = true">
-    <img class="search-icon" src="Add.png" />
-  </button>
-  <addPhrase 
-    v-show="showForm"
-    @close-modal="showForm = false"
-    @update-page="update = true"
-  />
+  <div class="container phrase-container">
+  <div class="phrase-header">
+      <h2>SELECT FROM YOUR SAVED PHRASES</h2>
+      <button class="toggle-container btn" @click="showForm = true">
+      <img class="search-icon" src="Add.png" />
+    </button>
+    
+    <addPhrase 
+      v-show="showForm"
+      @close-modal="showForm = false"
+      @update-page="update = true"
+    />
+  </div>
 
-  <div v-for="(phrase, category) in phrases" :key="category">
-    <PhraseCategory :category="category" :phrase="phrase" />
-    <!-- <ul>
-      <li v-for="value in values" :key="value">{{ value }}</li>
-    </ul> -->
+    <div>
+    <div v-for="(phrase, category) in phrases" :key="category">
+      <PhraseCategory :category="category" :phrase="phrase" />
+      <!-- <ul>
+        <li v-for="value in values" :key="value">{{ value }}</li>
+      </ul> -->
+    </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .search-icon {
   width: 50px;
+  margin:auto;
+}
+
+.phrase-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.phrase-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:90%;
 }
 
 </style>
