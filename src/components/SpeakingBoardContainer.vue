@@ -11,6 +11,8 @@ export default {
     return {
       searchOn: false,
       columns: [],
+      searchTerm: "",
+      searchResults: []
     };
   },
   methods: {
@@ -25,7 +27,6 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log("Received Initial Columns : ",data);
           return data;
         })
         .catch(function (error) {
@@ -41,8 +42,23 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log("Received Columns : ",data);
           return data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          return error
+        });
+    },
+    fetchSearchedWord(word) {
+      return fetch(`api/search/${word}`, {
+        method: "GET",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+          return data
         })
         .catch(function (error) {
           console.log(error);
@@ -64,7 +80,6 @@ export default {
   watch: {
     currentMessage: {
       handler(oldVal,newVal){
-        console.log("Current Message Mutated :",oldVal,newVal);
         const nextEvaluatedWord = newVal[newVal.length-1];
         this.columns = [];
         if (nextEvaluatedWord) {
@@ -89,6 +104,15 @@ export default {
       },
       deep:true
     },
+    searchTerm: {
+      handler(){
+        this.fetchSearchedWord(this.searchTerm).then((data)=>{
+          this.searchResults = data;
+          console.log(this.searchResults);
+        })
+      },
+      deep:true
+    }
   }
 }
 </script>
@@ -98,15 +122,31 @@ export default {
   <div class="speaking-container container">
 
     <div class="toggle-wrapper">
+
       <button class="toggle-container btn" @click="toggleSwitch">
         <img class="search-icon" src="/search.png" />
       </button>
-      <SearchBar v-if="searchOn" />
+
+      <div v-if="searchOn">
+        <input name="search" v-model="searchTerm" type="text" placeholder="Search here"/>
+          <span>
+            <button id="clear" class="btn" @click="handleClear">
+              <img src="/clear.png" alt="Clear Icon" /> Clear search
+            </button>
+          </span>
+      </div>
+
     </div>
 
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
-      <div class="search-section d-flex flex-wrap"></div>
+      <div class="search-section d-flex flex-wrap">
+          <div v-for="word in searchResults">
+              <WordPictureTile :word="word.word.toUpperCase()"
+                               :symbol="word.symbol"
+                                @click="addWord(word.id, word.word, word.symbol)"/>
+            </div>
+      </div>
     </div>
 
     <!--Dynamic-->
