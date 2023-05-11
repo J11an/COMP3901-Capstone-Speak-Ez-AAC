@@ -14,7 +14,6 @@ export default {
       currentPhrases: {},
       toggleExpandedPhrase: false,
       showForm: false,
-      update: false,
     };
   },
   mounted() {
@@ -66,7 +65,7 @@ export default {
       <addPhrase
         v-show="showForm"
         @close-modal="showForm = false"
-        @update-page="update = true"
+        @phrase-added="getPhrases()"
       />
     </div>
     <div class="category-container">

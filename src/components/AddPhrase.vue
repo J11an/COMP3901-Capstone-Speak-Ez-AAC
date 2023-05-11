@@ -1,7 +1,7 @@
 <script>
 export default {
   name: "AddPhrase",
-  emits: ["close-modal"],
+  emits: ["close-modal", "phrase-added"],
 
   data() {
     return { csrf_token: "", message: "", error: false };
@@ -102,7 +102,11 @@ export default {
               />
             </div>
 
-            <button class="btn btn-success btn-md" type="submit">
+            <button
+              @click="$emit('phrase-added')"
+              class="btn btn-success btn-md"
+              type="submit"
+            >
               Add Phrase
             </button>
           </form>

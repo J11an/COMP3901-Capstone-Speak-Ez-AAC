@@ -195,7 +195,7 @@ class Articles (db.Model):
 class SavedPhrases(db.Model):
     
     saved_phrases_id= db.Column(db.Integer,primary_key=True)
-    saved_phrases=db.Column(db.String(40))
+    saved_phrases=db.Column(db.String(80))
     category = db.Column(db.String(20))
 
 
