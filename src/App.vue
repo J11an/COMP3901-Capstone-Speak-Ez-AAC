@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     updateBody(screen) {
-      console.log(screen, this.currentScreen, this.previousScreen);
       if ((screen==='SPEAKLISTEN' || screen==='PINNED') && (this.currentScreen==='SPEAKLISTEN' || this.currentScreen==='PINNED')){
         this.currentScreen = this.previousScreen;
         this.previousScreen = "";
@@ -57,7 +56,6 @@ export default {
         msg: msg,
         from: from
       })
-      console.log(this.messageList);
     }
   },
   mounted() {
@@ -93,7 +91,7 @@ export default {
 
     <PinnedWordsContainer v-if="currentScreen === 'PINNED'" />
 
-    <SpeakingBoardContainer @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
+    <SpeakingBoardContainer :current-message="currentMessage" @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
 
     <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
   </main>

@@ -33,18 +33,39 @@ export default {
           return error
         });
     },
+    fetchColumnsFromWord(word){
+      return fetch(`/api/word_associated/?word=${word}`, {
+        method: "GET",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log("Received Columns : ",data);
+          return data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          return error
+        });
+    },
     addWord(id, word, symbol, partOfSpeech){
-      console.log(id, word, symbol, partOfSpeech);
       this.$emit("updateSentence", ['add',{
         id: id,
         word: word,
         symbol: symbol,
         partOfSpeech: partOfSpeech
-      }])
+      }]);
+      this.fetchColumnsFromWord(word).then((columns)=>this.columns=columns);
     }
   },
   mounted() {
     this.fetchInitColumns().then((columns)=>this.columns=columns);
+  },
+  watch: {
+    currentMessage: function(oldVal,newVal){
+      console.log("Current Message Mutated :",oldVal,newVal);
+    }
   }
 }
 </script>
