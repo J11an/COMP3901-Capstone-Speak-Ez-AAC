@@ -34,7 +34,7 @@ export default {
         });
     },
     test() {
-      return true;
+      return console.log("click");
     },
     updateBody(screen) {
       this.currentScreen = screen;
@@ -44,17 +44,13 @@ export default {
 </script>
 
 <template>
-  <div class="container phrases-con">
-    <h2>SELECT FROM YOUR SAVED PHRASES</h2>
-    <div>
-      <button class="btn-container"  @click="test">
-        <img class="folder-btn" src="folder.png" alt=""/>
-        <p class="centered">{{ category.toUpperCase() }}</p>
+      <button class="btn-container" @click="test">
+        <div class="folder-btn">
+          <p class="centered">{{ category.toUpperCase() }}</p>
+          <!--<img class="folder-btn" src="folder.png" alt=""/>-->
+        </div>
       </button>
-    </div >
       <Phrase :phrases="phrase" :category="category" />
-  </div>
-  
 </template>
 
 <style scoped>
@@ -65,24 +61,22 @@ export default {
 }
 
 .btn-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  text-align: center;
-  flex-direction: column;
-  height: 100%;
+  margin:auto;
 }
 
- .folder-btn{
-  max-width: 50%;
-  max-height:50%;
+.folder-btn{
+  padding: 70px 0;
+  text-align: center;
+  height: 200px;
+  width:200px;
+  background-image: url("folder.png");
+  background-size: 100% 100%;
 }
-.phrases-con {
-    display: flexbox;
-    text-align: center;
+.centered{
+  margin-top: 50px;
 }
 
 </style>
