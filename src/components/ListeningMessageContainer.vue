@@ -9,8 +9,16 @@ export default {
   },
   data(){
     return {
-      currentClass: ''
+      currentClass: '',
+      mediaRecorder: null
     }
+  },
+  async created() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true }).catch(error => alert(error))
+
+    // Create MediaRecorder
+    if(!MediaRecorder.isTypeSupported('audio/webm')) return alert('Unsupported browser')
+    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' })
   }
 };
 </script>
@@ -19,7 +27,6 @@ export default {
   <!-- Messages container at top -->
   <div :class="this.currentScreen!=='SPEAKLISTEN' ? 'conversation-container' : 'mixed-conversation-container'" id="con-container">
     <!-- Go through all messages -->
-
     <div
       class="msg-body-container"
       v-for="message in messageList"
@@ -27,6 +34,7 @@ export default {
     >
       <Message :msg="message.msg" :from="message.from" />
     </div>
+    <div class="btn btn-dark" @click="begin">TOGGLE LISTENING</div>
   </div>
 </template>
 
@@ -36,22 +44,22 @@ export default {
   margin: 10px;
   padding: 10px;
   overflow: auto;
-  min-height: 80vh;
-  max-height: 80vh;
+  min-height: 73vh;
+  max-height: 73vh;
 
   @media (max-height: 1040px) {
-    min-height: 78vh;
-    max-height: 78vh;
+    min-height: 66vh;
+    max-height: 66vh;
   }
 
   @media (max-height: 876px) {
-    min-height: 73vh;
-    max-height: 73vh;
+    min-height: 60vh;
+    max-height: 60vh;
   }
 
   @media (max-height: 738px) {
-    min-height: 69vh;
-    max-height: 69vh;
+    min-height: 49vh;
+    max-height: 49vh;
   }
 }
 
