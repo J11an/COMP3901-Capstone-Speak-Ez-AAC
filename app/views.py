@@ -481,7 +481,17 @@ def pinned_words():
 
         return {"success" : "pinned word added"},201
     
-    
+@app.route('/api/filter_words',methods=["GET"])
+def filter():
+    cterms = set([row.term for row in CensoredTerms.query.all()])
+    message = request.args.get('message')
+    message = message.lower()
+    words = message.split() 
+    filtered_words = [word for word in words if word not in cterms]
+    return jsonify(filtered_words),201
+        
+
+
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 def form_errors(form):
