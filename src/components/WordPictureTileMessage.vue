@@ -12,8 +12,27 @@ export default {
     }
   },
   methods : {
-    usePlaceholderImg(){
-      this.img = "/HelpIcon.png"
+    fetchSearchedWordSymbol(word) {
+      return fetch(`/api/get_word_symbol?word=${word}`, {
+        method: "GET",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data
+        })
+        .catch(function (error) {
+          return error
+        });
+    },
+    findSymbol(){
+      this.fetchSearchedWordSymbol(this.word).then((data)=>{this.img = data.symbol || '/HelpIcon.png'})
+    },
+  },
+  mounted() {
+    if (!this.img){
+      this.findSymbol()
     }
   }
 }
@@ -23,7 +42,7 @@ export default {
   <div class="container">
     <div id="tile">
         <div class="card">
-          <img :src="img" @error="usePlaceholderImg" alt="Image" />
+          <img :src="img" alt="Image" />
           <div class="card-content">
             <p>{{ word }}</p>
           </div>
@@ -34,7 +53,6 @@ export default {
 
 <style scoped>
 .container{
-  cursor: pointer;
 }
 
 .card {

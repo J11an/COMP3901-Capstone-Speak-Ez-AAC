@@ -20,7 +20,9 @@ export default {
       currentScreen: "SPEAKING",
       previousScreen: "",
       currentMessage: [],
-      messageList: []
+      messageList: [],
+      micActive: false,
+      recognizer: new webkitSpeechRecognition()
     };
   },
   methods: {
@@ -51,15 +53,43 @@ export default {
     updateMessageList(request) {
       const from = request[0];
       const msg = request[1];
-      this.messageList.push({
-        id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
-        msg: msg,
-        from: from
-      })
-    }
+      if (from==='SPEAKER') {
+        this.messageList.push({
+          id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
+          msg: msg,
+          from: from
+        })
+      } else {
+        this.messageList.push({
+          id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
+          msg: msg,
+          from: from
+        })
+      }
+    },
+    updateMicState(newState){
+      this.micActive = newState;
+    },
+    configureRecognizer(){
+      this.recognizer.continuous = true;
+      this.recognizer.lang = "en-US";
+      this.recognizer.interimResults = false;
+      this.recognizer.maxAlternatives = 1;
+      this.recognizer.onresult = (event) => {
+        this.updateMessageList(["SPEAKER",event.results[event.results.length-1][0].transcript.split(" ").map(
+            (val)=>{
+              return {
+                id: -1,
+                word: val,
+              }
+            }
+        )])
+      };
+    },
   },
   mounted() {
-  },
+    this.configureRecognizer();
+  }
 };
 </script>
 
@@ -70,7 +100,10 @@ export default {
     <ListeningMessageContainer
       :message-list="messageList"
       :current-screen="currentScreen"
+      :mic-state="micActive"
+      :recognizer="recognizer"
       v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
+      @updateMessages="updateMessageList"
     />
 
     <MessageBar
@@ -78,6 +111,7 @@ export default {
         @updateScreen="updateBody"
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
+        @updateMicState="updateMicState"
         v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||

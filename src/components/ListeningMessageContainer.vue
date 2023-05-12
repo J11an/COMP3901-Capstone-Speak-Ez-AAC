@@ -5,20 +5,49 @@ export default {
   components: { Message },
   props: {
     messageList: Array,
-    currentScreen: String
+    currentScreen: String,
+    micState: Boolean,
+    recognizer: Object
   },
   data(){
     return {
       currentClass: '',
-      mediaRecorder: null
+      listeningActive: false,
+      cachedRecognizedWord: []
     }
   },
-  async created() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true }).catch(error => alert(error))
-
-    // Create MediaRecorder
-    if(!MediaRecorder.isTypeSupported('audio/webm')) return alert('Unsupported browser')
-    this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' })
+  methods:{
+    toggleListening(){
+      if (!this.listeningActive){
+        this.recognizer.start();
+        console.log("Ready to receive audio");
+      } else {
+        this.recognizer.abort();
+        console.log("Audio Off");
+      }
+      this.listeningActive = !this.listeningActive;
+    },
+    scrollToBottom(){
+        const container = document.querySelector('#con-container');
+        container.scrollTop = container.scrollHeight;
+    },
+  },
+  watch: {
+    micState : {
+      handler(){
+        this.toggleListening();
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.scrollToBottom();
+    if (this.micState){
+      this.toggleListening();
+    }
+  },
+  updated() {
+    this.scrollToBottom();
   }
 };
 </script>
@@ -27,14 +56,12 @@ export default {
   <!-- Messages container at top -->
   <div :class="this.currentScreen!=='SPEAKLISTEN' ? 'conversation-container' : 'mixed-conversation-container'" id="con-container">
     <!-- Go through all messages -->
-    <div
-      class="msg-body-container"
-      v-for="message in messageList"
-      v-bind:key="message.id"
-    >
+    <div class="msg-body-container" v-for="message in messageList" v-bind:key="message.id">
       <Message :msg="message.msg" :from="message.from" />
     </div>
-    <div class="btn btn-dark" @click="begin">TOGGLE LISTENING</div>
+
+
+    <div id="anchor"></div>
   </div>
 </template>
 

@@ -6,16 +6,16 @@ export default {
   props: {
     msg: String,
     from: String,
-  },
+  }
 };
 </script>
 
 <template>
   <!-- Section for messages -->
-  <section v-if="from === 'SPEAKER'" class="speaker-msg">
+  <section v-if="from === 'SPEAKER'">
     <div class="speaker-msg">
       <div v-for="word in msg" v-bind:key="word.id">
-        <WordPictureTileMessage :word="word.word" :symbol="word.symbol"/>
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol"  v-if="word.word"/>
       </div>
     </div>
   </section>
@@ -42,6 +42,9 @@ export default {
 .speaker-msg {
   margin-right: auto;
   background-color: #9bb8e3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .listener-msg {

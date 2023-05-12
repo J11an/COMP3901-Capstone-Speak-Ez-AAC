@@ -8,7 +8,8 @@ export default {
   },
   data(){
     return {
-      tts: window.speechSynthesis
+      tts: window.speechSynthesis,
+      micActive: false
     }
   },
   methods:{
@@ -24,6 +25,10 @@ export default {
     },
     updateScreen(screen) {
       this.$emit("updateScreen",screen);
+    },
+    toggleListening(){
+      this.micActive = !this.micActive;
+      this.$emit("updateMicState",this.micActive);
     }
   }
 }
@@ -48,6 +53,10 @@ export default {
       </button>
       <button class="btn" @click="handleSpeaker">
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />
+      </button>
+      <button class="btn" @click="toggleListening">
+        <img src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
+        <img src="/micOn.png" alt="Mic On" v-else/>
       </button>
       <button class="btn" @click="updateScreen('PINNED')">
         <img src="/pinned_folder.png" alt="Speaker Icon" />

@@ -57,11 +57,9 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
           return data
         })
         .catch(function (error) {
-          console.log(error);
           return error
         });
     },
@@ -179,7 +177,6 @@ export default {
     <!--Dynamic-->
     <div v-if="!searchOn" class="dynamic-container">
       <div>
-        <hr /><p>See suggested words here</p><hr />
         <div v-if="!searchOn" class="board-container d-flex justify-content-between mt-3">
           <div v-for="(words,partOfSpeech) in columns">
             <div v-for="word in words">
