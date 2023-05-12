@@ -210,5 +210,6 @@ export default {
 }
 .search-icon {
   width: 50px;
+  margin: 0 20px;
 }
 </style>
