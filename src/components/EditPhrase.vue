@@ -1,8 +1,10 @@
 <script>
 export default {
-  name: "AddPhrase",
-  emits: ["close-modal", "phrase-added"],
+  name: "EditPhrase",
+  emits: ["close-modal", "phrase-edited"],
 
+  props:["category","saved_phrases"],
+  
   data() {
     return { csrf_token: "", message: "", error: false };
   },
@@ -10,12 +12,12 @@ export default {
     this.getCsrfToken();
   },
   methods: {
-    savePhrase() {
+    editPhrase() {
       let self = this;
-      let uploadForm = document.getElementById("registrationform");
-      let form_data = new FormData(uploadForm);
-      fetch("/api/saved_phrases", {
-        method: "POST",
+      let editForm = document.getElementById("edit-form");
+      let form_data = new FormData(editForm);
+      fetch("/api/edit_phrase", {
+        method: "PUT",
         body: form_data,
         error: false,
         errors: [],
@@ -27,7 +29,7 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          self.$emit("phrase-added");
+          self.$emit("phrase-edited");
           console.log(data);
           if ("error" in data) {
             self.errors = data.error;
@@ -35,7 +37,7 @@ export default {
             console.log(self.error);
           } else {
             self.error = false;
-            document.getElementById("registrationform").reset();
+            document.getElementById("edit-form").reset();
           }
         })
         .catch(function (error) {
@@ -52,6 +54,7 @@ export default {
           self.csrf_token = data.csrf_token;
         });
     },
+
   },
 };
 </script>
@@ -61,7 +64,7 @@ export default {
     <div class="modal-dialog d-flex justify-content-center" @click.stop>
       <div class="modal-content w-100 +">
         <div class="modal-header">
-          <h5 id="exampleModalLabel1" class="modal-title">Save a Phrase</h5>
+          <h5 id="exampleModalLabel1" class="modal-title">Edit a Phrase</h5>
           <button
             type="button"
             class="btn-close"
@@ -76,17 +79,17 @@ export default {
 
         <div class="modal-body p-4">
           <form
-            id="registrationform"
+            id="edit-form"
             enctype="multipart/form-data"
-            @submit.prevent="savePhrase"
+            @submit.prevent="editPhrase"
           >
             <div class="form-outline row-mb-4">
-              <label class="form-label" for="saved_phrases">Phrase</label>
+              <label class="form-label" for="edit_phrase">Phrase</label>
               <input
-                id="saved_phrases"
+                id="edit_phrase"
                 type="text"
                 class="form-control"
-                name="saved_phrases"
+                name="edit_phrase"
                 placeholder="Enter your phrase here"
               />
             </div>
@@ -94,8 +97,8 @@ export default {
 
             <div class="form-outline mb-4">
               <div class="input-group">
-                <select class="form-select" name="category" placeholder="Select category">
-                  <!-- <option selected>Category</option> -->
+                <select class="form-select" name="category">
+                  <option selected>Category</option>
                   <option value="Home">Home</option>
                   <option value="School">School</option>
                   <option value="Basic Info">Basic Info</option>
@@ -105,11 +108,11 @@ export default {
             </div>
 
             <button
-              @click="$emit('phrase-added')"
+              @click="$emit('phrase-edited')"
               class="btn btn-success btn-md"
               type="submit"
             >
-              Add Phrase
+              Save changes
             </button>
           </form>
         </div>

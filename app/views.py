@@ -344,7 +344,17 @@ def words():
             db.session.commit()
             return jsonify({'message': 'Word Deleted'}), 200
 
-        
+@app.route('/api/test_word',methods = ["POST"])
+def test():
+    id = request.args.get('id')
+    if request.method == 'POST':
+        word = Words.query.filter_by(word_id=id).first()
+        if not word:
+            return jsonify({'message': 'Word not found'}), 404
+        db.session.delete(word)
+        db.session.commit()
+        return jsonify({'message': 'Word Deleted'}), 200
+
 # Seed Vocab List
 @app.route('/api/seed_database')
 def seed_database():
