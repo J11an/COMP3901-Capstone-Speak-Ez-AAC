@@ -35,7 +35,8 @@ export default {
     this.scrollToBottom();
   },
   unmounted() {
-    this.$emit('unloadMic',false);
+    this.$emit('sendMicState',this.micState);
+    this.recognizer.abort();
   },
   methods:{
     toggleListening(){

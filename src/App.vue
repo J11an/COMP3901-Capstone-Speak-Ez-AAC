@@ -109,7 +109,7 @@ export default {
       :tts="tts"
       v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
       @updateMessages="updateMessageList"
-      @unloadMic="updateMicState"
+      @sendMicState="updateMicState"
     />
 
     <MessageBar
