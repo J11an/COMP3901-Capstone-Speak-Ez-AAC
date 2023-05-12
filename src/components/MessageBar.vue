@@ -37,7 +37,7 @@ export default {
 </script>
 <template>
   <div class="container msg-container">
-    <div id="message" class="msg-display d-flex flex-wrap">
+    <div id="message" class="msg-display d-flex flex-wrap" @click="updateScreen('SPEAKLISTEN')">
       <div class="word-tile" v-for="word in currentSentence" v-bind:key="word.id">
               <WordPictureTileMessage :word="word.word.toUpperCase()"
                                :symbol="word.symbol" :tts="tts"/>

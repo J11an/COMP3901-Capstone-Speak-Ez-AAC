@@ -28,15 +28,18 @@ export default {
   },
   methods: {
     updateBody(screen) {
-      if ((screen==='SPEAKLISTEN' || screen==='PINNED') && (this.currentScreen==='SPEAKLISTEN' || this.currentScreen==='PINNED')){
-        this.currentScreen = this.previousScreen;
-        this.previousScreen = "";
-      } else if (screen==='SPEAKLISTEN' || screen==='PINNED') {
-        this.previousScreen = this.currentScreen;
-        this.currentScreen = screen;
-      } else {
-        this.currentScreen = screen;
+      if (!(this.currentScreen==='SPEAKING' && screen==='SPEAKLISTEN')){
+        if ((screen==='SPEAKLISTEN' || screen==='PINNED') && (this.currentScreen==='SPEAKLISTEN' || this.currentScreen==='PINNED')){
+          this.currentScreen = this.previousScreen;
+          this.previousScreen = "";
+        } else if (screen==='SPEAKLISTEN' || screen==='PINNED') {
+          this.previousScreen = this.currentScreen;
+          this.currentScreen = screen;
+        } else {
+          this.currentScreen = screen;
+        }
       }
+
     },
     updateMessage(request) {
       const requestType = request[0];
