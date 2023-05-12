@@ -206,24 +206,43 @@ def get_word_symbol():
             }
     return jsonify(result)
 
-# @app.route('/api/get_categories_group/<string:word>',methods=['GET'])
-# def get_categories_group(word):
-#     word=Words.query.filter_by(word=word).all()
-#     result=[]
-#     for w in word:
-#         category=w.category
-#         if category not in result:
-#             result[category]
-#         result[category].append({
-#             'id': w.word_id
-#             'symbol': w.symbol
-#             'word': w.word
-#         })
+@app.route('/api/get_categories_group/<string:word>',methods=['GET'])
+def get_categories_group(word):
+    word=Words.query.filter_by(word=word).all()
+    result={}
+    for w in word:
+        category=w.category
+        if category not in result:
+            result[category]=[]
+        result[category].append({
+            
+            'word': w.word,
+            'id': w.word_id,
+            'symbol': w.symbol
+            
+        })
    
-#     return jsonify({word:result})
+    return jsonify({word:result})
     
+@app.route('/api/get_grade_level',methods=['GET'])
+def get_grade_level():
+    grade_level=request.args.get('grade_level')
+    
+    if grade_level=="upper":
+        words=Words.query.filter(Words.grade_level.in_(["upper","lower"])).all()
+    else:
+        words=Words.query.filter_by(grade_level="lower").all()
+
+    results=[{
         
-    
+        'word': g.word,
+        'id':g.word_id,
+        'symbol': g.symbol
+        
+    } for g in words]
+
+    return jsonify(results)
+
 
 
 
