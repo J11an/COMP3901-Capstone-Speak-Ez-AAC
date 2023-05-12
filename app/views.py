@@ -258,10 +258,11 @@ def listen():
 
 
 # Saved Phrases
-@app.route('/api/saved_phrases',methods=['POST','GET'])
-def phrase():
+@app.route('/api/saved_phrases',methods=['POST','GET','PUT','DELETE'])
+def word():
+        id = request.args.get('id')
+        form = SavedPhraseForm()    
         if request.method == 'POST':
-            form = SavedPhraseForm()    
             if form.validate_on_submit():
                 saved_phrases = request.form['saved_phrases']
                 category = request.form['category']
@@ -269,15 +270,35 @@ def phrase():
                 if exists == False:
                     savedphrase = SavedPhrases(saved_phrases,category)
                     db.session.add(savedphrase)
-                    db.session.commit()
+                    db.session.commit()     
                     return jsonify({"message": 'Saved Phrase Added'}), 201  
                 else:
                     return jsonify({"error": 'Phrase already exists'})
             return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
-            phrases_by_category = {category: [phrase.saved_phrases for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
+            phrases_by_category = {category: [{"id" : phrase.saved_phrases_id ,"word" : phrase.saved_phrases,} for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
             return jsonify(phrases_by_category),201
+        if request.method == 'PUT':
+            if form.validate_on_submit():
+                phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
+                if not phrase:
+                    return jsonify({'message': 'Phrase not found'}), 404
+                saved_phrases = request.form['saved_phrases']
+                category = request.form['category']
+                phrase.saved_phrases = saved_phrases
+                phrase.category = category
+                db.session.commit()
+                return jsonify({'message': 'Saved Phrase Updated'}), 200
+            return jsonify(errors=form_errors(form))
+        if request.method == 'DELETE':
+            phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
+            if not phrase:
+                return jsonify({'message': 'Phrase not found'}), 404
+            db.session.delete(phrase)
+            db.session.commit()
+            return jsonify({'message': 'Saved Phrase Deleted'}), 200
+
         
 # Seed Vocab List
 @app.route('/api/seed_database')
