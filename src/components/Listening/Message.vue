@@ -6,6 +6,7 @@ export default {
   props: {
     msg: Array,
     from: String,
+    tts: Object,
   }
 };
 </script>
@@ -15,14 +16,14 @@ export default {
   <section v-if="from === 'SPEAKER'">
     <div class="speaker-msg">
       <div v-for="word in msg" v-bind:key="word.id">
-        <WordPictureTileMessage :word="word.word" :symbol="word.symbol"  v-if="word.word"/>
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol" :tts="tts"  v-if="word.word"/>
       </div>
     </div>
   </section>
 
   <section v-else class="listener-msg">
       <div v-for="word in msg" v-bind:key="word.id">
-        <WordPictureTileMessage :word="word.word" :symbol="word.symbol"/>
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol" :tts="tts"/>
       </div>
   </section>
 </template>

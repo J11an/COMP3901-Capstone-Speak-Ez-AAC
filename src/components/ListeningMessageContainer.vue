@@ -7,7 +7,8 @@ export default {
     messageList: Array,
     currentScreen: String,
     micState: Boolean,
-    recognizer: Object
+    recognizer: Object,
+    tts: Object,
   },
   data(){
     return {
@@ -60,7 +61,7 @@ export default {
   <div :class="this.currentScreen!=='SPEAKLISTEN' ? 'conversation-container' : 'mixed-conversation-container'" id="con-container">
     <!-- Go through all messages -->
     <div class="msg-body-container" v-for="message in messageList" v-bind:key="message.id">
-      <Message :msg="message.msg" :from="message.from" />
+      <Message :msg="message.msg" :from="message.from" :tts="tts"/>
     </div>
 
 

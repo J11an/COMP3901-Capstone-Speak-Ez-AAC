@@ -4,11 +4,11 @@ import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 export default {
   components:{WordPictureTileMessage},
   props:{
-    currentSentence: Array
+    currentSentence: Array,
+    tts: Object,
   },
   data(){
     return {
-      tts: window.speechSynthesis,
       micActive: false
     }
   },
@@ -37,10 +37,10 @@ export default {
 </script>
 <template>
   <div class="container msg-container">
-    <div id="message" class="msg-display d-flex flex-wrap" @click="updateScreen('SPEAKLISTEN')">
+    <div id="message" class="msg-display d-flex flex-wrap">
       <div class="word-tile" v-for="word in currentSentence" v-bind:key="word.id">
               <WordPictureTileMessage :word="word.word.toUpperCase()"
-                               :symbol="word.symbol"/>
+                               :symbol="word.symbol" :tts="tts"/>
       </div>
     </div>
 

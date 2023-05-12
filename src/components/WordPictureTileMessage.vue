@@ -4,7 +4,8 @@ export default {
     id: Number,
     word: String,
     symbol: String,
-    partOfSpeech: String
+    partOfSpeech: String,
+    tts: Object
   },
   data(){
     return{
@@ -29,6 +30,12 @@ export default {
     findSymbol(){
       this.fetchSearchedWordSymbol(this.word).then((data)=>{this.img = data.symbol || '/HelpIcon.png'})
     },
+    speak(){
+      this.tts.speak(new SpeechSynthesisUtterance(this.word));
+    },
+    usePlaceholderImg(){
+      this.img = '/HelpIcon.png';
+    }
   },
   mounted() {
     if (!this.img){
@@ -39,10 +46,10 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" @click="speak">
     <div id="tile">
         <div class="card">
-          <img :src="img" alt="Image" />
+          <img :src="img" @error="usePlaceholderImg" alt="Image" />
           <div class="card-content">
             <p>{{ word }}</p>
           </div>
@@ -53,6 +60,7 @@ export default {
 
 <style scoped>
 .container{
+  cursor: pointer;
 }
 
 .card {

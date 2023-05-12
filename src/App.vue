@@ -22,7 +22,8 @@ export default {
       currentMessage: [],
       messageList: [],
       micActive: false,
-      recognizer: new webkitSpeechRecognition()
+      recognizer: new webkitSpeechRecognition(),
+      tts: window.speechSynthesis,
     };
   },
   methods: {
@@ -102,6 +103,7 @@ export default {
       :current-screen="currentScreen"
       :mic-state="micActive"
       :recognizer="recognizer"
+      :tts="tts"
       v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
       @updateMessages="updateMessageList"
       @unloadMic="updateMicState"
@@ -109,6 +111,7 @@ export default {
 
     <MessageBar
         :current-sentence="currentMessage"
+        :tts="tts"
         @updateScreen="updateBody"
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
