@@ -206,6 +206,26 @@ def get_word_symbol():
             }
     return jsonify(result)
 
+@app.route('/api/get_categories_group/<string:word>')
+def get_categories_group():
+    word=Words.query.filter_by(word=word).all()
+    categories=set([w.category for w in word])
+    result=[]
+    for category in categories:
+        categories_words=word[w for w in words if w.category==category]
+        category_info=[{
+            'id':w.word_id,
+            'symbol':w.symbol,
+            'words':w.word
+        }for w in categories_words]
+
+        result[category]=category_info
+    return jsonify({word:result})
+    
+        
+    
+
+
 
 # Listening Screen
 @app.route('/api/listen', methods=['POST'])
