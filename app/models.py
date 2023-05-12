@@ -11,7 +11,6 @@ class Words(db.Model):
     grade_level = db.Column(db.String(20))
     time = db.Column(db.String(20))
     place = db.Column(db.String(20))
-    symbol_id= db.Column(db.Integer)
     symbol= db.Column(db.Text)
 
     __table_args__ = (
@@ -19,7 +18,7 @@ class Words(db.Model):
         Index('posidx','partofspeech')
     )
 
-    def __init__(self, word, category, grade_level, partofspeech, time, place, symbol_id,symbol):
+    def __init__(self, word, category, grade_level, partofspeech, time, place,symbol):
 
         self.word = word
         self.partofspeech = partofspeech
@@ -27,7 +26,6 @@ class Words(db.Model):
         self.grade_level = grade_level    
         self.time = time
         self.place = place
-        self.symbol_id = symbol_id
         self.symbol = symbol
         
 

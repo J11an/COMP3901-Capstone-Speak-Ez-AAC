@@ -364,7 +364,6 @@ def seed_database():
                         grade_level=(row['grade_level']),
                         time=(row['time']),
                         place=(row['place']),
-                        symbol_id=(row['symbol_id']),
                         symbol=(row['symbol']),
 
                     )
