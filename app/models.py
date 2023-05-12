@@ -8,7 +8,7 @@ class Words(db.Model):
     word = db.Column(db.String(20), primary_key=True)
     partofspeech = db.Column(db.String(20), primary_key=True)
     category = db.Column(db.String(20))
-    sub_category = db.Column(db.String(20))
+    grade_level = db.Column(db.String(20))
     time = db.Column(db.String(20))
     place = db.Column(db.String(20))
     symbol_id= db.Column(db.Integer)
@@ -19,12 +19,12 @@ class Words(db.Model):
         Index('posidx','partofspeech')
     )
 
-    def __init__(self, word, category, sub_category, partofspeech, time, place, symbol_id,symbol):
+    def __init__(self, word, category, grade_level, partofspeech, time, place, symbol_id,symbol):
 
         self.word = word
         self.partofspeech = partofspeech
         self.category = category
-        self.sub_category = sub_category    
+        self.grade_level = grade_level    
         self.time = time
         self.place = place
         self.symbol_id = symbol_id

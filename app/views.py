@@ -206,21 +206,21 @@ def get_word_symbol():
             }
     return jsonify(result)
 
-""""@app.route('/api/get_categories_group/<string:word>')
-def get_categories_group(word):
-    word=Words.query.filter_by(word=word).all()
-    categories=set([w.category for w in word])
-    result=[]
-    for category in categories:
-        categories_words=word[w for w in words if w.category==category]
-        category_info=[{
-            'id':w.word_id,
-            'symbol':w.symbol,
-            'words':w.word
-        }for w in categories_words]
-
-        result[category]=category_info
-    return jsonify({word:result})"""
+# @app.route('/api/get_categories_group/<string:word>',methods=['GET'])
+# def get_categories_group(word):
+#     word=Words.query.filter_by(word=word).all()
+#     result=[]
+#     for w in word:
+#         category=w.category
+#         if category not in result:
+#             result[category]
+#         result[category].append({
+#             'id': w.word_id
+#             'symbol': w.symbol
+#             'word': w.word
+#         })
+   
+#     return jsonify({word:result})
     
         
     
@@ -342,7 +342,7 @@ def seed_database():
                         word=(row['word']),
                         partofspeech=(row['part_of_speech']),
                         category=(row['category']),
-                        sub_category=(row['sub_category']),
+                        grade_level=(row['grade_level']),
                         time=(row['time']),
                         place=(row['place']),
                         symbol_id=(row['symbol_id']),
