@@ -70,7 +70,7 @@ export default {
 #message{
   cursor: pointer;
   width: 100vw;
-  height: 100px;
+  min-height: 100px;
 }
 #message:hover{
   background-color: lightblue;
@@ -98,6 +98,8 @@ export default {
   border-radius: 20px;
 }
 
+
+
 .btn-group .options {
   display: flex;
   flex-direction: row;
@@ -108,5 +110,10 @@ export default {
 .btn img {
   width: 70px;
   height: 70px;
+}
+
+p{
+  margin: 0;
+  padding: 0;
 }
 </style>
