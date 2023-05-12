@@ -206,7 +206,7 @@ def get_word_symbol():
             }
     return jsonify(result)
 
-@app.route('/api/get_categories_group/<string:word>')
+""""@app.route('/api/get_categories_group/<string:word>')
 def get_categories_group(word):
     word=Words.query.filter_by(word=word).all()
     categories=set([w.category for w in word])
@@ -220,7 +220,7 @@ def get_categories_group(word):
         }for w in categories_words]
 
         result[category]=category_info
-    return jsonify({word:result})
+    return jsonify({word:result})"""
     
         
     

@@ -104,6 +104,7 @@ export default {
       :recognizer="recognizer"
       v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
       @updateMessages="updateMessageList"
+      @unloadMic="updateMicState"
     />
 
     <MessageBar

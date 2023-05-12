@@ -16,6 +16,26 @@ export default {
       cachedRecognizedWord: []
     }
   },
+  watch: {
+    micState : {
+      handler(){
+        this.toggleListening();
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.scrollToBottom();
+    if (this.micState){
+      this.toggleListening()
+    }
+  },
+  updated() {
+    this.scrollToBottom();
+  },
+  unmounted() {
+    this.$emit('unloadMic',false);
+  },
   methods:{
     toggleListening(){
       if (!this.listeningActive){
@@ -32,23 +52,6 @@ export default {
         container.scrollTop = container.scrollHeight;
     },
   },
-  watch: {
-    micState : {
-      handler(){
-        this.toggleListening();
-      },
-      deep: true
-    }
-  },
-  mounted() {
-    this.scrollToBottom();
-    if (this.micState){
-      this.toggleListening();
-    }
-  },
-  updated() {
-    this.scrollToBottom();
-  }
 };
 </script>
 

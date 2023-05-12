@@ -4,7 +4,7 @@ export default {
   components: {WordPictureTileMessage},
 
   props: {
-    msg: String,
+    msg: Array,
     from: String,
   }
 };
