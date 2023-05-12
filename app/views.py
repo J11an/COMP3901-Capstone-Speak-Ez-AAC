@@ -379,6 +379,13 @@ def seed_database():
                     )
                     db.session.add(cword)
                     db.session.commit()
+            if sheet_name =="CensoredTerms":
+                for index, row in sheet_data.iterrows():
+                    cterm = CensoredTerms(
+                        term=(row['term']),
+                    )
+                    db.session.add(cterm)
+                    db.session.commit()
 
             try:
                 if sheet_name == "Parts_of_speech":
@@ -473,6 +480,7 @@ def pinned_words():
         db.session.commit()
 
         return {"success" : "pinned word added"},201
+    
     
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use

@@ -104,7 +104,7 @@ export default {
           <img src="edit.png" alt="" @click="showForm" />
         </button>
 
-        <!-- <EditPhrase v-show="showForm" @close-modal="showForm = false" /> -->
+        <EditPhrase v-show="showForm" @close-modal="showForm = true" />
       </div>
     </div>
   </div>

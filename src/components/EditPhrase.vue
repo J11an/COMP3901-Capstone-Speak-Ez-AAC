@@ -3,8 +3,8 @@ export default {
   name: "EditPhrase",
   emits: ["close-modal", "phrase-edited"],
 
-  props:["category","saved_phrases"],
-  
+  props: ["category", "saved_phrases"],
+
   data() {
     return { csrf_token: "", message: "", error: false };
   },
@@ -54,7 +54,6 @@ export default {
           self.csrf_token = data.csrf_token;
         });
     },
-
   },
 };
 </script>

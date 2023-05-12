@@ -15,7 +15,6 @@ class Words(db.Model):
 
     __table_args__ = (
         Index('idx', 'word_id'),
-        Index('posidx','partofspeech')
     )
 
     def __init__(self, word, category, grade_level, partofspeech, time, place,symbol):
@@ -225,3 +224,24 @@ class PinnedWords(db.Model):
             return unicode(self.pinnedwords_id)  # python 2 support
         except NameError:
             return str(self.pinnedwords_id)  # python 3 support
+
+class CensoredTerms (db.Model):
+
+    term_id = db.Column(db.Integer,primary_key=True)
+    term = db.Column(db.String(20))
+    
+    def __init__(self,term):
+        self.term = term
+
+    def __repr__(self):
+       return '<Censored Word%r>' % (self.term)
+
+    def get_id(self):
+        try:
+            return unicode(self.term_id)  # python 2 support
+        except NameError:
+            return str(self.term_id)  # python 3 support
+
+    __table_args__ = (
+        Index('cw_idx', 'term_id'),
+    )
