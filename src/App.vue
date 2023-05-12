@@ -98,7 +98,7 @@ export default {
 </script>
 
 <template>
-  <AppHeader @updateScreen="updateBody" />
+  <AppHeader @updateScreen="updateBody" :current-screen="currentScreen" />
 
   <main>
     <ListeningMessageContainer

@@ -1,5 +1,8 @@
 <script>
 export default {
+  props: {
+    currentScreen: String
+  },
   methods: {
     updateScreen(screen) {
       this.$emit("updateScreen", screen);
@@ -17,17 +20,17 @@ export default {
         style=""
       >
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <li :class="this.currentScreen==='SPEAKING' || this.currentScreen==='SPEAKLISTEN' ? 'nav-item active' : 'nav-item'">
             <a class="nav-link" v-on:click="updateScreen('SPEAKING')"
               >SPEAKING <img src="/SpeakingScreen.png" class="nav-img"
             /></a>
           </li>
-          <li class="nav-item">
+          <li :class="this.currentScreen==='LISTENING' || this.currentScreen==='SPEAKLISTEN' ? 'nav-item active' : 'nav-item'">
             <a class="nav-link" v-on:click="updateScreen('LISTENING')"
               >LISTENING <img src="/ListeningScreen.png" class="nav-img"
             /></a>
           </li>
-          <li class="nav-item">
+          <li :class="this.currentScreen==='PHRASES' ? 'nav-item active' : 'nav-item'">
             <a class="nav-link" v-on:click="updateScreen('PHRASES')"
               >PHRASES <img src="/SavedPhrasesScreen.png" class="nav-img"
             /></a>
@@ -40,6 +43,10 @@ export default {
 
 <style scoped>
 /* Add any component specific styles here */
+.active {
+  border-bottom: 5px solid black;
+}
+
 .nav-item {
   cursor: pointer;
 }
