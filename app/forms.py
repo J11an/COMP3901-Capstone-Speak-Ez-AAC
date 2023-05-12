@@ -8,3 +8,9 @@ class SavedPhraseForm(FlaskForm):
 
     saved_phrases = StringField('saved_phrases',validators=[InputRequired()]) 
     category = StringField('category',validators=[InputRequired()])
+
+class WordForm(FlaskForm):
+
+    word = StringField('word',validators=[InputRequired()]) 
+    category = StringField('category',validators=[InputRequired()])
+    symbol = StringField('symbol',validators=[InputRequired()])

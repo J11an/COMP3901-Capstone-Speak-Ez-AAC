@@ -42,43 +42,6 @@ def index():
 # The functions below should be applicable to all Flask apps.
 ###
 
-
-# Profile Section
-# @app.route('api/profile')
-# @app.route('api/profile/adduser')
-# @app.route('api//profile/adduser2')
-# @app.route('api//profile/adduser3')
-# @app.route('api//profile/adduser4')
-# @app.route('api//profile/adduser5')
-
-
-# speaker dia
-# from pydub import AudioSegment
-# from scipy.io import wavfile
-# from webrtcvad import Vad
-
-
-# @socketio.on('diarize')
-# def dia_handler(data):
-#     file = data['file']
-#     audio = AudioSegment.from_file(file)
-#     rate, samples = wavfile.read(file)
-#     vad = Vad(3)
-#     results = diarize(audio, samples, rate, vad)
-#     socketio.emit('results', {'results': result})
-
-
-# def diarize(audio, samples, rate, vad):
-#     segment_length_ms = 30
-#     num_channels = audio.channels
-#     bytes_per_sample = audio.sample_width
-#     samples_per_segment = int(segment_length_ms * rate / 1000)
-#     bytes_per_segment = samples_per_segment * bytes_per_sample
-#     segment_stride_ms = 10
-#     samples_per_stride = int(segment_stride_ms * rate / 1000)
-#     bytes_per_stride = samples
-
-
 # Speaking Screen
 @app.route('/api/speak', methods=['POST'])
 def speak():
@@ -229,21 +192,19 @@ def get_catergories():
 
 
 @app.route('/api/get_word_symbol', methods=['GET'])
-def get_word_sybmol():
-    word = request.args.get('word')
-    word = Words.query.filter_by(word=Words.word).first()
-    if word:
-        symbol_id = word.symbol_id
-        symbol_obj = Symbols.query.get(symbol_id)
-        symbol = symbol_obj.symbol
-        result = {
-            'word': word.word,
-            'id': word.word_id,
-            'symbol': symbol
-        }
-        return jsonify(result)
+def get_word_symbol():
+    
+    reqword = request.args.get('word')
+    word = Words.query.filter_by(word=reqword).first()
+    if word == None:
+        return jsonify({'error':"Word is not in database"})
     else:
-        return jsonify({'error': 'Word not found'})
+        result = {
+                'word': word.word,
+                'id': word.word_id,
+                'symbol': word.symbol
+            }
+    return jsonify(result)
 
 
 # Listening Screen
@@ -259,7 +220,7 @@ def listen():
 
 # Saved Phrases
 @app.route('/api/saved_phrases',methods=['POST','GET','PUT','DELETE'])
-def word():
+def phrases():
         id = request.args.get('id')
         form = SavedPhraseForm()    
         if request.method == 'POST':
@@ -298,6 +259,49 @@ def word():
             db.session.delete(phrase)
             db.session.commit()
             return jsonify({'message': 'Saved Phrase Deleted'}), 200
+        
+
+# @app.route('/api/word',methods=['POST','GET','PUT','DELETE'])
+# def words():
+#         id = request.args.get('id')
+#         form = WordForm()    
+#         if request.method == 'POST':
+#             if form.validate_on_submit():
+#                 word = request.form['word']
+#                 category = request.form['category']
+#                 symbol = request.form['word']
+#                 exists = db.session.query(Words.word_id ).filter_by(word=word).first() is not None
+#                 if exists == False:
+#                     savedphrase = Words(saved_phrases,category)
+#                     db.session.add(savedphrase)
+#                     db.session.commit()     
+#                     return jsonify({"message": 'Saved Phrase Added'}), 201  
+#                 else:
+#                     return jsonify({"error": 'Phrase already exists'})
+#             return jsonify(errors=form_errors(form))
+#         if request.method == 'GET': 
+#             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
+#             phrases_by_category = {category: [{"id" : phrase.saved_phrases_id ,"word" : phrase.saved_phrases,} for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
+#             return jsonify(phrases_by_category),201
+#         if request.method == 'PUT':
+#             if form.validate_on_submit():
+#                 phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
+#                 if not phrase:
+#                     return jsonify({'message': 'Phrase not found'}), 404
+#                 saved_phrases = request.form['saved_phrases']
+#                 category = request.form['category']
+#                 phrase.saved_phrases = saved_phrases
+#                 phrase.category = category
+#                 db.session.commit()
+#                 return jsonify({'message': 'Saved Phrase Updated'}), 200
+#             return jsonify(errors=form_errors(form))
+#         if request.method == 'DELETE':
+#             phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
+#             if not phrase:
+#                 return jsonify({'message': 'Phrase not found'}), 404
+#             db.session.delete(phrase)
+#             db.session.commit()
+#             return jsonify({'message': 'Saved Phrase Deleted'}), 200
 
         
 # Seed Vocab List
