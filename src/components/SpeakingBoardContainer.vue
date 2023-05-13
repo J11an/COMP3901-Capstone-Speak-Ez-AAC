@@ -296,6 +296,21 @@ export default {
   }
 }
 
+.speaking-container {
+  overflow-y: scroll;
+}
+.speaking-container::-webkit-scrollbar {
+  width: 5px;
+}
+.speaking-container::-webkit-scrollbar-track {
+  background: #eee;
+}
+.speaking-container::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #3a7bd5;
+  background-image: linear-gradient(to top, #3a7bd5 0%, #3a7bd5 100%);
+}
+
 .toggle-wrapper {
   display: flex;
   flex-direction: row;

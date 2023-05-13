@@ -120,6 +120,21 @@ export default {
   }
 }
 
+.conversation-container {
+  overflow-y: scroll;
+}
+.conversation-container::-webkit-scrollbar {
+  width: 5px;
+}
+.conversation-container::-webkit-scrollbar-track {
+  background: #eee;
+}
+.conversation-container::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #3a7bd5;
+  background-image: linear-gradient(to top, #3a7bd5 0%, #3a7bd5 100%);
+}
+
 .mixed-conversation-container {
   /*border: solid red 1px;*/
   margin: 10px;
@@ -127,6 +142,21 @@ export default {
   overflow: auto;
   min-height: 30vh;
   max-height: 30vh;
+}
+
+.mixed-conversation-container {
+  overflow-y: scroll;
+}
+.mixed-conversation-container::-webkit-scrollbar {
+  width: 5px;
+}
+.mixed-conversation-container::-webkit-scrollbar-track {
+  background: #eee;
+}
+.mixed-conversation-container::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #3a7bd5;
+  background-image: linear-gradient(to top, #3a7bd5 0%, #3a7bd5 100%);
 }
 
 .msg-body-container {

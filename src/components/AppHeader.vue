@@ -52,8 +52,8 @@ export default {
 }
 
 .nav-img {
-  width: 35px;
-  height: 35px;
+  width: 50px;
+  height: 50px;
 }
 
 .nav-link {
