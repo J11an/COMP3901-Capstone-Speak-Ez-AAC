@@ -470,7 +470,10 @@ def get_csrf():
 def pinned_words():
     if request.method == "GET":
         pwords = db.session.execute(db.select(PinnedWords)).scalars()
-        pwords_list = [{"id": pword.pinnedwords_id} for pword in pwords]
+        pword_list=[]
+        for pword in pwords:
+            word= db.session.query(Words).get(pword.pinnedwords_id)
+            pwords_list.append({"id": pword.pinnedwords_id,"word":word.word})
         return jsonify(pwords_list), 200
     
     if request.method == "POST":
