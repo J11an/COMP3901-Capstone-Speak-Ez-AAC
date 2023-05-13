@@ -3,13 +3,11 @@ import AppHeader from "./components/AppHeader.vue";
 import MessageBar from "./components/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
-import PinnedWordsContainer from "./components/PinnedWordsContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
 
 export default {
   components: {
     PhrasesContainer,
-    PinnedWordsContainer,
     SpeakingBoardContainer,
     AppHeader,
     ListeningMessageContainer,

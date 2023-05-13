@@ -11,13 +11,16 @@ export default {
       img: this.symbol,
       backgroundColors: {
         noun:'#BD2B48',
+        noun2 : '#BD2B48',
         pronoun: '#349BEA',
         adjectives: '#57C85C',
+        adjectives2: '#57C85C',
         adverb: 'yellow',
         preposition: 'purple',
         conjunction: 'orange',
         articles: 'violet',
-        verb: 'pink'
+        verb: 'pink',
+        verb2: 'pink'
       }
     }
   },

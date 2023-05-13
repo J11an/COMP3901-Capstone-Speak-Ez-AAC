@@ -1,9 +1,8 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
-import PinnedWordsContainer from "./PinnedWordsContainer.vue";
 
 export default {
-  components: { WordPictureTile, PinnedWordsContainer },
+  components: { WordPictureTile },
   props: {
     currentMessage: Array,
   },
@@ -137,8 +136,7 @@ export default {
 
 <template>
   <!--Toggle-->
-  <div class="speaking-container container">
-    <div class="toggle-wrapper">
+      <div class="toggle-wrapper">
       <button :class="pinsOn ? 'active btn' : 'btn'" @click="switchPins">
         <img class="btn-img" src="/pinned_folder.png" alt="Speaker Icon" />
       </button>
@@ -170,10 +168,7 @@ export default {
         </span>
       </div>
     </div>
-
-    <div>
-      <PinnedWordsContainer v-if="pinsOn" />
-    </div>
+  <div class="speaking-container container">
 
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
@@ -207,7 +202,7 @@ export default {
           class="board-container d-flex justify-content-between mt-3"
         >
           <div v-for="(words, partOfSpeech) in columns">
-            <div v-for="word in words">
+            <div v-for="word in words" @draggable="true">
               <WordPictureTile
                 :word="word.word.toUpperCase()"
                 :symbol="word.symbol"
@@ -248,6 +243,7 @@ export default {
 .speaking-container {
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .toggle-wrapper {
