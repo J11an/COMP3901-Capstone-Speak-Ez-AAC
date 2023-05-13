@@ -56,6 +56,9 @@ export default {
       <button class="btn" @click="handleSpeaker">
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />
       </button>
+      <button class="btn">
+        <img src="/saveIconOff.png" class="btn-img">
+      </button>
       <button class="btn" @click="toggleListening">
         <img src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
         <img src="/micOn.png" alt="Mic On" v-else/>
