@@ -10,6 +10,7 @@ export default {
   data() {
     return {
       phrases: {},
+      words: {},
       currentCategory: "",
       currentPhrases: {},
       toggleExpandedPhrase: false,
@@ -18,6 +19,7 @@ export default {
   },
   mounted() {
     this.getPhrases();
+    this.getWords();
   },
   methods: {
     getPhrases() {
@@ -33,6 +35,7 @@ export default {
         })
         .then(function (data) {
           self.phrases = data;
+          self.currentPhrases = data;
           console.log(self.phrases);
         })
         .catch(function (error) {
@@ -48,6 +51,132 @@ export default {
       this.toggleExpandedPhrase = false;
       this.currentCategory = "";
       this.currentPhrases = {};
+    },
+    deletePhrase(id) {
+      fetch(`/api/saved_phrases?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    updatePhrase(id) {
+      let uploadForm = document.getElementById("registrationform");
+      let form_data = new FormData(uploadForm);
+      fetch(`/api/saved_phrases?id=${id}`, {
+        method: "PUT",
+        body: form_data,
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getWords() {
+      let self = this;
+      fetch("/api/word", {
+        method: "GET",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          self.words = data;
+          console.log(self.words);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    deleteWord(id) {
+      fetch(`/api/word?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    updateWord(id) {
+      let uploadForm = document.getElementById("registrationform");
+      let form_data = new FormData(uploadForm);
+      fetch(`/api/word?id=${id}`, {
+        method: "PUT",
+        body: form_data,
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    saveWord() {
+      let self = this;
+      let uploadForm = document.getElementById("registrationform");
+      let form_data = new FormData(uploadForm);
+      fetch("/api/word", {
+        method: "POST",
+        body: form_data,
+        error: false,
+        errors: [],
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          // self.$emit("phrase-added");
+          console.log(data);
+          if ("error" in data) {
+            self.errors = data.error;
+            self.error = true;
+            console.log(self.error);
+          } else {
+            self.error = false;
+            document.getElementById("registrationform").reset();
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.log(form_data);
+        });
     },
   },
 };
@@ -84,7 +213,11 @@ export default {
       <!-- Expanded Phrases -->
       <div v-if="toggleExpandedPhrase">
         <button class="btn btn-dark" @click="hidePhrases">BACK</button>
-        <Phrase :phrases="currentPhrases" :category="currentCategory" />
+        <Phrase
+          :phrases="currentPhrases"
+          :category="currentCategory"
+          @phrase-added="getPhrases()"
+        />
       </div>
     </div>
   </div>

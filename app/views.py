@@ -344,7 +344,17 @@ def words():
             db.session.commit()
             return jsonify({'message': 'Word Deleted'}), 200
 
-        
+@app.route('/api/test_word',methods = ["POST"])
+def test():
+    id = request.args.get('id')
+    if request.method == 'POST':
+        word = Words.query.filter_by(word_id=id).first()
+        if not word:
+            return jsonify({'message': 'Word not found'}), 404
+        db.session.delete(word)
+        db.session.commit()
+        return jsonify({'message': 'Word Deleted'}), 200
+
 # Seed Vocab List
 @app.route('/api/seed_database')
 def seed_database():
@@ -368,6 +378,13 @@ def seed_database():
 
                     )
                     db.session.add(cword)
+                    db.session.commit()
+            if sheet_name =="CensoredTerms":
+                for index, row in sheet_data.iterrows():
+                    cterm = CensoredTerms(
+                        term=(row['term']),
+                    )
+                    db.session.add(cterm)
                     db.session.commit()
 
             try:
@@ -467,6 +484,17 @@ def pinned_words():
 
         return {"success" : "pinned word added"},201
     
+@app.route('/api/filter_words',methods=["GET"])
+def filter():
+    cterms = set([row.term for row in CensoredTerms.query.all()])
+    message = request.args.get('message')
+    message = message.lower()
+    words = message.split() 
+    filtered_words = [word for word in words if word not in cterms]
+    return jsonify(filtered_words),201
+        
+
+
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
 def form_errors(form):
