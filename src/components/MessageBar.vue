@@ -23,9 +23,6 @@ export default {
       this.tts.speak(new SpeechSynthesisUtterance(this.currentSentence.map((wordObj)=>wordObj.word).join(" ")));
       this.$emit("updateMessages",["LISTENER",this.currentSentence]);
     },
-    updateScreen(screen) {
-      this.$emit("updateScreen",screen);
-    },
     toggleListening(){
       this.micActive = !this.micActive;
       this.$emit("updateMicState",this.micActive);

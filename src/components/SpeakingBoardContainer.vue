@@ -1,14 +1,16 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
+import PinnedWordsContainer from "./PinnedWordsContainer.vue";
 
 export default {
-  components: { WordPictureTile },
+  components: { WordPictureTile, PinnedWordsContainer },
   props: {
     currentMessage: Array,
   },
   data() {
     return {
       searchOn: false,
+      pinsOn: false,
       columns: [],
       searchTerm: "",
       searchResults: [],
@@ -17,6 +19,11 @@ export default {
   methods: {
     toggleSwitch() {
       this.searchOn = !this.searchOn;
+      this.pinsOn = false;
+    },
+    switchPins(){
+      this.pinsOn = !this.pinsOn;
+      this.searchOn = false;
     },
     fetchInitColumns() {
       return fetch("api/inital_tree_setting", {
@@ -131,19 +138,19 @@ export default {
   <!--Toggle-->
   <div class="speaking-container container">
     <div class="toggle-wrapper">
-      <button class="btn" @click="updateScreen('PINNED')">
+      <button :class="pinsOn ? 'active btn' : 'btn'" @click="switchPins">
         <img class="btn-img" src="/pinned_folder.png" alt="Speaker Icon" />
       </button>
 
       <button
         class="refresh-container btn"
         @click="refreshResults"
-        v-if="!searchOn"
+        v-if="!searchOn && !pinsOn"
       >
         <img class="btn-img" src="/refresh-page-option.png" />
       </button>
 
-      <button class="toggle-container btn" @click="toggleSwitch">
+      <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
         <img class="btn-img" src="/search.png" />
       </button>
 
@@ -161,6 +168,10 @@ export default {
           </button>
         </span>
       </div>
+    </div>
+
+    <div>
+      <PinnedWordsContainer v-if="pinsOn" />
     </div>
 
     <!--Linear-->
@@ -188,7 +199,7 @@ export default {
     </div>
 
     <!--Dynamic-->
-    <div v-if="!searchOn" class="dynamic-container">
+    <div v-if="!searchOn && !pinsOn" class="dynamic-container">
       <div>
         <div
           v-if="!searchOn"
@@ -207,6 +218,7 @@ export default {
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -233,6 +245,10 @@ export default {
 .btn-img {
   width: 60px;
   margin: 0 20px;
+}
+
+.active {
+  background-color: #9bb8e3;
 }
 
 #clear{
