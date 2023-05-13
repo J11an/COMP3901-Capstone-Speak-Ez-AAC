@@ -95,7 +95,6 @@ export default {
             <div class="form-outline mb-4">
               <div class="input-group">
                 <select class="form-select" name="category" placeholder="Select category">
-                  <!-- <option selected>Category</option> -->
                   <option value="Home">Home</option>
                   <option value="School">School</option>
                   <option value="Basic Info">Basic Info</option>

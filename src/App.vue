@@ -3,13 +3,11 @@ import AppHeader from "./components/AppHeader.vue";
 import MessageBar from "./components/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
-import PinnedWordsContainer from "./components/PinnedWordsContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
 
 export default {
   components: {
     PhrasesContainer,
-    PinnedWordsContainer,
     SpeakingBoardContainer,
     AppHeader,
     ListeningMessageContainer,
@@ -60,13 +58,13 @@ export default {
       if (from==='SPEAKER') {
         this.messageList.push({
           id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
-          msg: msg,
+          msg: [...msg],
           from: from
         })
       } else {
         this.messageList.push({
           id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
-          msg: msg,
+          msg: [...msg],
           from: from
         })
       }
@@ -118,6 +116,7 @@ export default {
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
         @updateMicState="updateMicState"
+        @updateScreen="updateBody"
         v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||

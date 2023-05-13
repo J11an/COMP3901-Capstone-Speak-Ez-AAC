@@ -26,6 +26,9 @@ export default {
     toggleListening(){
       this.micActive = !this.micActive;
       this.$emit("updateMicState",this.micActive);
+    },
+    updateScreen(screen){
+      this.$emit("updateScreen",screen)
     }
   }
 }
