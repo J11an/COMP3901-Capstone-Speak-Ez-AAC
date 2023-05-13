@@ -128,7 +128,12 @@ export default {
       "
     />
 
-    <SpeakingBoardContainer :current-message="currentMessage" @updateScreen="updateBody" @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
+    <SpeakingBoardContainer
+        :current-message="currentMessage"
+        :current-screen="currentScreen"
+        @updateScreen="updateBody"
+        @updateSentence="updateMessage"
+        v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
 
     <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
   </main>

@@ -36,7 +36,7 @@ export default {
   <div class="container">
     <div id="tile">
         <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:#FF8080'">
-          <img :src="img" @error="usePlaceholderImg" alt="Image" />
+          <img :src="img" @error="usePlaceholderImg" alt="Image" draggable="false"/>
           <div class="card-content">
             <p class="word">{{ word }}</p>
           </div>

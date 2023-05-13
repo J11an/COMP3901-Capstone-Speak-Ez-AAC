@@ -26,13 +26,43 @@ export default {
       },
       searchTerm: "",
       searchResults: [],
-      pinnedResults: []
+      pinnedResults: [],
+      hoverActive: false,
+      currentHoveredWord: -1,
+      csrf_token:''
     };
   },
   methods: {
     toggleSwitch() {
       this.searchOn = !this.searchOn;
       this.pinsOn = false;
+    },
+    toggleActiveFolder(){
+      this.hoverActive = !this.hoverActive;
+    },
+    cachePinnedWord(word){
+      this.currentHoveredWord = word;
+    },
+    addPinnedWord(){
+      fetch(`/api/pinned_words?word_id=${this.currentHoveredWord}`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data;
+        })
+        .catch(function (error) {
+          console.log(error);
+          return error;
+        });
+      this.pinsOn = !this.pinsOn;
+      this.hoverActive = !this.hoverActive;
+      this.currentHoveredWord = '';
     },
     switchPins(){
       this.pinsOn = !this.pinsOn;
@@ -132,10 +162,25 @@ export default {
         this.fetchInitColumns().then((columns) => (this.columns = columns));
       }
     },
+    getCsrfToken() {
+      let self = this;
+      fetch("/api/csrf-token")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          self.csrf_token = data.csrf_token;
+        });
+    },
   },
   mounted() {
     this.fetchInitColumns().then((columns) => (this.columns = columns));
     this.fetchPins().then((pins)=>this.pinnedResults=pins);
+  },
+  created() {
+    this.getCsrfToken();
+  },
+  updated() {
+
   },
   watch: {
     currentMessage: {
@@ -169,6 +214,11 @@ export default {
       },
       deep: true,
     },
+    pinsOn : {
+      handler(){
+        this.fetchPins().then((data)=>this.pinnedResults=data);
+      }
+    }
   },
 };
 </script>
@@ -176,8 +226,15 @@ export default {
 <template>
   <!--Toggle-->
   <div class="toggle-wrapper">
-      <button :class="pinsOn ? 'active btn' : 'btn'" @click="switchPins">
-        <img class="btn-img" src="/pinned_folder.png" alt="Speaker Icon" />
+      <button
+          :class="pinsOn ? 'active btn' : 'btn'"
+          @click="switchPins"
+          @dragenter.prevent="toggleActiveFolder"
+          @dragleave.prevent="toggleActiveFolder"
+          @dragover.prevent
+          @drop.prevent="addPinnedWord"
+      >
+        <img :class="hoverActive ? 'btn-img-hovered btn-img' : 'btn-img' " :src="hoverActive || pinsOn  ? '/open-folder.png' : '/pinned_folder.png'" alt="Speaker Icon" />
       </button>
 
       <button
@@ -248,6 +305,8 @@ export default {
                   :symbol="word.symbol"
                   :part-of-speech="column[0]"
                   @click="addWord(word.id, word.word, word.symbol, column[0])"
+                  draggable="true"
+                  @dragstart="cachePinnedWord(word.id)"
               />
             </div>
           </div>
@@ -323,9 +382,14 @@ export default {
   margin: 0 20px;
 }
 
+.btn-img-hovered{
+  width: 100px;
+}
 .active {
   background-color: #9bb8e3;
 }
+
+
 
 #clear{
 
