@@ -48,27 +48,19 @@ export default {
       this.currentHoveredWord = word;
     },
     addPinnedWord(){
-      fetch(`/api/pinned_words?word_id=${this.currentHoveredWord}`, {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": this.csrf_token,
-        },
+      this.addPinnedWordRequest(this.currentHoveredWord).then((data)=>{
+        this.pinnedResults = [];
+        this.fetchPins().then((pins)=>this.pinnedResults=pins);
       })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          return data;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
       this.pinsOn = !this.pinsOn;
       this.hoverActiveAdd = !this.hoverActiveAdd;
       this.currentHoveredWord = '';
     },
     removePinnedWord(){
+      this.deletePinnedWordRequest(this.currentHoveredWord).then((data)=>{
+        this.pinnedResults = [];
+        this.fetchPins().then((pins)=>this.pinnedResults=pins);
+      })
       this.hoverActiveDelete = !this.hoverActiveDelete;
       this.currentHoveredWord = '';
     },
@@ -83,6 +75,40 @@ export default {
       );
       console.log(sortedArr);
       return sortedArr;
+    },
+    deletePinnedWordRequest(wordID){
+      return fetch(`/api/pinned_words?id=${wordID}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data;
+        })
+        .catch(function (error) {
+          return error;
+        });
+    },
+    addPinnedWordRequest(wordID){
+      return fetch(`/api/pinned_words?word_id=${wordID}`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data;
+        })
+        .catch(function (error) {
+          return error;
+        });
     },
     fetchInitColumns() {
       return fetch("api/inital_tree_setting", {
@@ -219,11 +245,6 @@ export default {
       },
       deep: true,
     },
-    pinsOn : {
-      handler(){
-        this.fetchPins().then((data)=>this.pinnedResults=data);
-      }
-    }
   },
 };
 </script>
