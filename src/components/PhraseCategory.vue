@@ -1,26 +1,27 @@
 <script>
+import WordPictureTile from './WordPictureTile.vue';
+
 export default {
-  name: "PhraseCategory",
-
-  props: ["category"],
-
-  data() {
-    return {
-      toggleExpand: false
-    };
-  },
-  mounted() {},
-  methods: {
-  },
+    name: "PhraseCategory",
+    props: ["category"],
+    data() {
+        return {
+            toggleExpand: false
+        };
+    },
+    mounted() { },
+    methods: {},
+    components: { WordPictureTile }
 };
 </script>
 
 <template>
-      <button class="btn-container">
+       <!-- <button class="btn-container">
         <div class="folder-btn">
           <p class="centered">{{ category.toUpperCase() }}</p>
         </div>
-      </button>
+      </button>  -->
+      <WordPictureTile :word="category.toUpperCase()" :symbol="category.symbol"/> 
 </template>
 
 <style scoped>

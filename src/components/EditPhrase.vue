@@ -3,8 +3,8 @@ export default {
   name: "EditPhrase",
   emits: ["close-modal", "phrase-edited"],
 
-  props: ["category", "saved_phrases"],
-
+  props:["saved_phrases","category"],
+  
   data() {
     return { csrf_token: "", message: "", error: false };
   },
@@ -16,7 +16,8 @@ export default {
       let self = this;
       let editForm = document.getElementById("edit-form");
       let form_data = new FormData(editForm);
-      fetch("/api/edit_phrase", {
+      console.log(form_data)
+      fetch("/api/saved_phrases", {
         method: "PUT",
         body: form_data,
         error: false,
@@ -83,12 +84,12 @@ export default {
             @submit.prevent="editPhrase"
           >
             <div class="form-outline row-mb-4">
-              <label class="form-label" for="edit_phrase">Phrase</label>
+              <label class="form-label" for="saved_phrases"></label>
               <input
-                id="edit_phrase"
+                id="saved_phrases"
                 type="text"
                 class="form-control"
-                name="edit_phrase"
+                name="saved_phrases"
                 placeholder="Enter your phrase here"
               />
             </div>
@@ -97,7 +98,6 @@ export default {
             <div class="form-outline mb-4">
               <div class="input-group">
                 <select class="form-select" name="category">
-                  <option selected>Category</option>
                   <option value="Home">Home</option>
                   <option value="School">School</option>
                   <option value="Basic Info">Basic Info</option>
