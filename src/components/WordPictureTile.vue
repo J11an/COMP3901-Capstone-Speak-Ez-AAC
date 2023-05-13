@@ -10,17 +10,17 @@ export default {
     return{
       img: this.symbol,
       backgroundColors: {
-        noun:'#BD2B48',
-        noun2 : '#BD2B48',
-        pronoun: '#349BEA',
-        adjectives: '#57C85C',
-        adjectives2: '#57C85C',
-        adverb: 'yellow',
-        preposition: 'purple',
-        conjunction: 'orange',
+        noun:'#5FC3FA',
+        noun2 : '#5FC3FA',
+        pronoun: '#0DB5FA',
+        adjectives: '#DECE1F',
+        adjectives2: '#DECE1F',
+        adverb: '#6BDE33',
+        preposition: '#A143DE',
+        conjunction: '#FBF62C',
         articles: 'violet',
-        verb: 'pink',
-        verb2: 'pink'
+        verb: '#33DE66',
+        verb2: '#33DE66'
       }
     }
   },
