@@ -11,6 +11,19 @@ export default {
       searchOn: false,
       pinsOn: false,
       columns: [],
+      columnSortOrder: {
+        "pronoun":0,
+        "noun":1,
+        "noun2":1,
+        "verb":2,
+        "verb2":2,
+        "adjectives":3,
+        "adjective2":3,
+        "articles":4,
+        "preposition":5,
+        "conjunction":6,
+        "adverb":7,
+      },
       searchTerm: "",
       searchResults: [],
       pinnedResults: []
@@ -24,6 +37,14 @@ export default {
     switchPins(){
       this.pinsOn = !this.pinsOn;
       this.searchOn = false;
+    },
+    sortColumns(columns){
+      const convertedArr = Object.keys(columns).map((key) => [key, columns[key]]);
+      const sortedArr = convertedArr.sort(
+          (a,b)=>this.columnSortOrder[a[0]]-this.columnSortOrder[b[0]]
+      );
+      console.log(sortedArr);
+      return sortedArr;
     },
     fetchInitColumns() {
       return fetch("api/inital_tree_setting", {
@@ -201,13 +222,14 @@ export default {
           v-if="!searchOn"
           class="board-container d-flex justify-content-between mt-3"
         >
-          <div v-for="(words, partOfSpeech) in columns">
-            <div v-for="word in words" @draggable="true">
+          <div v-for="column in this.sortColumns(columns)">
+            <div v-for="word in column[1]" @draggable="true">
               <WordPictureTile
-                :word="word.word.toUpperCase()"
-                :symbol="word.symbol"
-                :part-of-speech="partOfSpeech"
-                @click="addWord(word.id, word.word, word.symbol, partOfSpeech)"
+                  :id="word.id"
+                  :word="word.word.toUpperCase()"
+                  :symbol="word.symbol"
+                  :part-of-speech="column[0]"
+                  @click="addWord(word.id, word.word, word.symbol, column[0])"
               />
             </div>
           </div>
