@@ -286,16 +286,7 @@ def phrases():
             return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
-            phrases_by_category = {}
-            for category in categories:
-                phrases = []
-                for phrase in SavedPhrases.query.filter_by(category=category).all():
-                    word = Words.query.filter_by(word=phrase.saved_phrases, category=category).first()
-                    if word:
-                        phrases.append({"id": phrase.saved_phrases_id, "word": phrase.saved_phrases, "symbol": word.symbol})
-                    else:
-                        phrases.append({"id": phrase.saved_phrases_id, "word": phrase.saved_phrases})
-                phrases_by_category[category] = phrases    
+            phrases_by_category = {category: [{"id" : phrase.saved_phrases_id ,"word" : phrase.saved_phrases} for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
             return jsonify(phrases_by_category),201
         if request.method == 'PUT':
             if form.validate_on_submit():
