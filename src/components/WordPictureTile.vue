@@ -11,13 +11,16 @@ export default {
       img: this.symbol,
       backgroundColors: {
         noun:'#BD2B48',
+        noun2 : '#BD2B48',
         pronoun: '#349BEA',
         adjectives: '#57C85C',
+        adjectives2: '#57C85C',
         adverb: 'yellow',
         preposition: 'purple',
         conjunction: 'orange',
         articles: 'violet',
-        verb: 'pink'
+        verb: 'pink',
+        verb2: 'pink'
       }
     }
   },
@@ -32,7 +35,7 @@ export default {
 <template>
   <div class="container">
     <div id="tile">
-        <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:red'">
+        <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:#FF8080'">
           <img :src="img" @error="usePlaceholderImg" alt="Image" />
           <div class="card-content">
             <p>{{ word }}</p>

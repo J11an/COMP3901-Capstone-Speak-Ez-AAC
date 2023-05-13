@@ -23,9 +23,6 @@ export default {
       this.tts.speak(new SpeechSynthesisUtterance(this.currentSentence.map((wordObj)=>wordObj.word).join(" ")));
       this.$emit("updateMessages",["LISTENER",this.currentSentence]);
     },
-    updateScreen(screen) {
-      this.$emit("updateScreen",screen);
-    },
     toggleListening(){
       this.micActive = !this.micActive;
       this.$emit("updateMicState",this.micActive);
@@ -48,9 +45,6 @@ export default {
       <button class="btn" @click="handleBackspace">
         <img src="/Backspace.png" alt="Backspace Icon" />
       </button>
-      <button class="btn" @click="handleClear">
-        <img src="/clear.png" alt="Clear Icon" />
-      </button>
       <button class="btn" @click="handleSpeaker">
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />
       </button>
@@ -58,8 +52,8 @@ export default {
         <img src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
         <img src="/micOn.png" alt="Mic On" v-else/>
       </button>
-      <button class="btn" @click="updateScreen('PINNED')">
-        <img src="/pinned_folder.png" alt="Speaker Icon" />
+      <button class="btn" @click="handleClear">
+        <img src="/clear.png" alt="Clear Icon" />
       </button>
     </div>
 

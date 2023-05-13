@@ -3,13 +3,11 @@ import AppHeader from "./components/AppHeader.vue";
 import MessageBar from "./components/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
-import PinnedWordsContainer from "./components/PinnedWordsContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
 
 export default {
   components: {
     PhrasesContainer,
-    PinnedWordsContainer,
     SpeakingBoardContainer,
     AppHeader,
     ListeningMessageContainer,
@@ -115,7 +113,6 @@ export default {
     <MessageBar
         :current-sentence="currentMessage"
         :tts="tts"
-        @updateScreen="updateBody"
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
         @updateMicState="updateMicState"
@@ -127,9 +124,7 @@ export default {
       "
     />
 
-    <PinnedWordsContainer v-if="currentScreen === 'PINNED'" />
-
-    <SpeakingBoardContainer :current-message="currentMessage" @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
+    <SpeakingBoardContainer :current-message="currentMessage" @updateScreen="updateBody" @updateSentence="updateMessage" v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
 
     <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
   </main>

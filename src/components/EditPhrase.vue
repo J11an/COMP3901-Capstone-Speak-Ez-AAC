@@ -55,7 +55,6 @@ export default {
           self.csrf_token = data.csrf_token;
         });
     },
-
   },
 };
 </script>

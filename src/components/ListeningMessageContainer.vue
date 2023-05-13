@@ -10,37 +10,37 @@ export default {
     recognizer: Object,
     tts: Object,
   },
-  data(){
+  data() {
     return {
-      currentClass: '',
+      currentClass: "",
       listeningActive: false,
-      cachedRecognizedWord: []
-    }
+      cachedRecognizedWord: [],
+    };
   },
   watch: {
-    micState : {
-      handler(){
+    micState: {
+      handler() {
         this.toggleListening();
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
     this.scrollToBottom();
-    if (this.micState){
-      this.toggleListening()
+    if (this.micState) {
+      this.toggleListening();
     }
   },
   updated() {
     this.scrollToBottom();
   },
   unmounted() {
-    this.$emit('sendMicState',this.micState);
+    this.$emit("sendMicState", this.micState);
     this.recognizer.abort();
   },
-  methods:{
-    toggleListening(){
-      if (!this.listeningActive){
+  methods: {
+    toggleListening() {
+      if (!this.listeningActive) {
         this.recognizer.start();
         console.log("Ready to receive audio");
       } else {
@@ -49,9 +49,9 @@ export default {
       }
       this.listeningActive = !this.listeningActive;
     },
-    scrollToBottom(){
-        const container = document.querySelector('#con-container');
-        container.scrollTop = container.scrollHeight;
+    scrollToBottom() {
+      const container = document.querySelector("#con-container");
+      container.scrollTop = container.scrollHeight;
     },
   },
 };
@@ -59,12 +59,22 @@ export default {
 
 <template>
   <!-- Messages container at top -->
-  <div :class="this.currentScreen!=='SPEAKLISTEN' ? 'conversation-container' : 'mixed-conversation-container'" id="con-container">
+  <div
+    :class="
+      this.currentScreen !== 'SPEAKLISTEN'
+        ? 'conversation-container'
+        : 'mixed-conversation-container'
+    "
+    id="con-container"
+  >
     <!-- Go through all messages -->
-    <div class="msg-body-container" v-for="message in messageList" v-bind:key="message.id">
-      <Message :msg="message.msg" :from="message.from" :tts="tts"/>
+    <div
+      class="msg-body-container"
+      v-for="message in messageList"
+      v-bind:key="message.id"
+    >
+      <Message :msg="message.msg" :from="message.from" :tts="tts" />
     </div>
-
 
     <div id="anchor"></div>
   </div>
