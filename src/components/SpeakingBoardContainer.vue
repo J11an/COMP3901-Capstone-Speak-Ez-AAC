@@ -1,22 +1,30 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
+import PinnedWordsContainer from "./PinnedWordsContainer.vue";
 
 export default {
-  components: { WordPictureTile },
+  components: { WordPictureTile, PinnedWordsContainer },
   props: {
     currentMessage: Array,
   },
   data() {
     return {
       searchOn: false,
+      pinsOn: false,
       columns: [],
       searchTerm: "",
       searchResults: [],
+      pinnedResults: []
     };
   },
   methods: {
     toggleSwitch() {
       this.searchOn = !this.searchOn;
+      this.pinsOn = false;
+    },
+    switchPins(){
+      this.pinsOn = !this.pinsOn;
+      this.searchOn = false;
     },
     fetchInitColumns() {
       return fetch("api/inital_tree_setting", {
@@ -131,17 +139,22 @@ export default {
   <!--Toggle-->
   <div class="speaking-container container">
     <div class="toggle-wrapper">
-      <div
+      <button :class="pinsOn ? 'active btn' : 'btn'" @click="switchPins">
+        <img class="btn-img" src="/pinned_folder.png" alt="Speaker Icon" />
+      </button>
+
+      <button
         class="refresh-container btn"
         @click="refreshResults"
-        v-if="!searchOn"
+        v-if="!searchOn && !pinsOn"
       >
-        <img class="search-icon" src="/refresh-page-option.png" />
-      </div>
-
-      <button class="toggle-container btn" @click="toggleSwitch">
-        <img class="search-icon" src="/search.png" />
+        <img class="btn-img" src="/refresh-page-option.png" />
       </button>
+
+      <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
+        <img class="btn-img" src="/search.png" />
+      </button>
+
 
       <div class="search-btn-container" v-if="searchOn">
         <input
@@ -156,6 +169,10 @@ export default {
           </button>
         </span>
       </div>
+    </div>
+
+    <div>
+      <PinnedWordsContainer v-if="pinsOn" />
     </div>
 
     <!--Linear-->
@@ -183,7 +200,7 @@ export default {
     </div>
 
     <!--Dynamic-->
-    <div v-if="!searchOn" class="dynamic-container">
+    <div v-if="!searchOn && !pinsOn" class="dynamic-container">
       <div>
         <div
           v-if="!searchOn"
@@ -202,6 +219,20 @@ export default {
         </div>
       </div>
     </div>
+
+    <!-- Pins -->
+    <div v-if="pinsOn" class="pinned-container">
+      <div v-if="pinnedResults" class="search-section d-flex flex-wrap">
+        <div v-for="word in pinnedResults" v-bind:key="word.id">
+          <WordPictureTile
+            :word="word.word"
+            :symbol="word.symbol"
+            @click="addWord(word.id, word.word, word.symbol)"
+          />
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -225,9 +256,13 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.search-icon {
-  width: 50px;
+.btn-img {
+  width: 60px;
   margin: 0 20px;
+}
+
+.active {
+  background-color: #9bb8e3;
 }
 
 #clear{
