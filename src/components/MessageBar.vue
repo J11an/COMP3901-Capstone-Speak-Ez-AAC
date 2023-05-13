@@ -58,9 +58,6 @@ export default {
       <button class="btn" @click="handleClear">
         <img src="/clear.png" alt="Clear Icon" />
       </button>
-      <button class="btn" @click="updateScreen('PINNED')">
-        <img src="/pinned_folder.png" alt="Speaker Icon" />
-      </button>
     </div>
 
   </div>

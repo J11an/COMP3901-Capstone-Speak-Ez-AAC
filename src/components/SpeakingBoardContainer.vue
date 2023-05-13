@@ -131,17 +131,22 @@ export default {
   <!--Toggle-->
   <div class="speaking-container container">
     <div class="toggle-wrapper">
-      <div
+      <button class="btn" @click="updateScreen('PINNED')">
+        <img class="btn-img" src="/pinned_folder.png" alt="Speaker Icon" />
+      </button>
+
+      <button
         class="refresh-container btn"
         @click="refreshResults"
         v-if="!searchOn"
       >
-        <img class="search-icon" src="/refresh-page-option.png" />
-      </div>
+        <img class="btn-img" src="/refresh-page-option.png" />
+      </button>
 
       <button class="toggle-container btn" @click="toggleSwitch">
-        <img class="search-icon" src="/search.png" />
+        <img class="btn-img" src="/search.png" />
       </button>
+
 
       <div class="search-btn-container" v-if="searchOn">
         <input
@@ -225,8 +230,8 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.search-icon {
-  width: 50px;
+.btn-img {
+  width: 60px;
   margin: 0 20px;
 }
 
