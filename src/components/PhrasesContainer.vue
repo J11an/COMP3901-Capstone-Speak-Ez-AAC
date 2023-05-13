@@ -1,11 +1,11 @@
 <script>
 import AddPhrase from "../components/AddPhrase.vue";
-import PhraseCategory from "./PhraseCategory.vue";
 import Phrase from "./Phrase.vue";
+import WordPictureTile from "./WordPictureTile.vue";
 
 export default {
   name: "PhrasesContainer",
-  components: { AddPhrase, PhraseCategory, Phrase },
+  components: { AddPhrase, Phrase, WordPictureTile },
 
   data() {
     return {
@@ -204,10 +204,15 @@ export default {
         v-for="(phrases, category) in phrases"
         :key="category"
       >
-        <PhraseCategory
-          :category="category"
+        <WordPictureTile
+          :word="category.toUpperCase()"
+          :symbol="category.symbol"
           @click="expandPhrase(category, phrases)"
         />
+        <!-- <PhraseCategory
+          :category="category"
+          @click="expandPhrase(category, phrases)"
+        /> -->
       </div>
 
       <!-- Expanded Phrases -->

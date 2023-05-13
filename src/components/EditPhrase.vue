@@ -3,8 +3,8 @@ export default {
   name: "EditPhrase",
   emits: ["close-modal", "phrase-edited"],
 
-  props:["saved_phrases","category"],
-  
+  props: ["saved_phrases", "category"],
+
   data() {
     return { csrf_token: "", message: "", error: false };
   },
@@ -16,7 +16,7 @@ export default {
       let self = this;
       let editForm = document.getElementById("edit-form");
       let form_data = new FormData(editForm);
-      console.log(form_data)
+      console.log(form_data);
       fetch("/api/saved_phrases", {
         method: "PUT",
         body: form_data,
