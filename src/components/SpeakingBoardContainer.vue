@@ -1,9 +1,8 @@
 <script>
-import SearchBar from "../components/SearchBar.vue";
 import WordPictureTile from "./WordPictureTile.vue";
 
 export default {
-  components: { WordPictureTile, SearchBar },
+  components: { WordPictureTile },
   props: {
     currentMessage: Array,
   },
@@ -153,7 +152,7 @@ export default {
         />
         <span>
           <button id="clear" class="btn" @click="handleClear">
-            <img src="/clear.png" alt="Clear Icon" /> Clear search
+            <img src="/clear.png" class="clear-img" alt="Clear Icon" />
           </button>
         </span>
       </div>
@@ -207,6 +206,10 @@ export default {
 </template>
 
 <style scoped>
+.clear-img{
+  width: 50px;
+}
+
 .search-btn-container {
   display: flex;
 }
@@ -225,5 +228,9 @@ export default {
 .search-icon {
   width: 50px;
   margin: 0 20px;
+}
+
+#clear{
+
 }
 </style>

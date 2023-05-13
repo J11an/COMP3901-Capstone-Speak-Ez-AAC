@@ -48,15 +48,15 @@ export default {
       <button class="btn" @click="handleBackspace">
         <img src="/Backspace.png" alt="Backspace Icon" />
       </button>
-      <button class="btn" @click="handleClear">
-        <img src="/clear.png" alt="Clear Icon" />
-      </button>
       <button class="btn" @click="handleSpeaker">
         <img src="/SpeakerIcon.png" alt="Speaker Icon" />
       </button>
       <button class="btn" @click="toggleListening">
         <img src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
         <img src="/micOn.png" alt="Mic On" v-else/>
+      </button>
+      <button class="btn" @click="handleClear">
+        <img src="/clear.png" alt="Clear Icon" />
       </button>
       <button class="btn" @click="updateScreen('PINNED')">
         <img src="/pinned_folder.png" alt="Speaker Icon" />
