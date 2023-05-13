@@ -27,7 +27,8 @@ export default {
       searchTerm: "",
       searchResults: [],
       pinnedResults: [],
-      hoverActive: false,
+      hoverActiveAdd: false,
+      hoverActiveDelete : false,
       currentHoveredWord: -1,
       csrf_token:''
     };
@@ -38,7 +39,10 @@ export default {
       this.pinsOn = false;
     },
     toggleActiveFolder(){
-      this.hoverActive = !this.hoverActive;
+      this.hoverActiveAdd = !this.hoverActiveAdd;
+    },
+    toggleActiveDelete(){
+      this.hoverActiveDelete = !this.hoverActiveDelete;
     },
     cachePinnedWord(word){
       this.currentHoveredWord = word;
@@ -61,7 +65,11 @@ export default {
           return error;
         });
       this.pinsOn = !this.pinsOn;
-      this.hoverActive = !this.hoverActive;
+      this.hoverActiveAdd = !this.hoverActiveAdd;
+      this.currentHoveredWord = '';
+    },
+    removePinnedWord(){
+      this.hoverActiveDelete = !this.hoverActiveDelete;
       this.currentHoveredWord = '';
     },
     switchPins(){
@@ -179,9 +187,6 @@ export default {
   created() {
     this.getCsrfToken();
   },
-  updated() {
-
-  },
   watch: {
     currentMessage: {
       handler(oldVal, newVal) {
@@ -209,7 +214,6 @@ export default {
       handler() {
         this.fetchSearchedWord(this.searchTerm).then((data) => {
           this.searchResults = data;
-          console.log(this.searchResults);
         });
       },
       deep: true,
@@ -226,6 +230,7 @@ export default {
 <template>
   <!--Toggle-->
   <div class="toggle-wrapper">
+
       <button
           :class="pinsOn ? 'active btn' : 'btn'"
           @click="switchPins"
@@ -234,7 +239,18 @@ export default {
           @dragover.prevent
           @drop.prevent="addPinnedWord"
       >
-        <img :class="hoverActive ? 'btn-img-hovered btn-img' : 'btn-img' " :src="hoverActive || pinsOn  ? '/open-folder.png' : '/pinned_folder.png'" alt="Speaker Icon" />
+        <img :class="hoverActiveAdd && hoverActiveDelete ? 'btn-img-hovered btn-img' : 'btn-img' " :src="hoverActiveAdd || pinsOn  ? '/open-folder.png' : '/pinned_folder.png'" alt="Speaker Icon" />
+      </button>
+
+      <button
+          v-if="pinsOn"
+          class="btn"
+          @dragenter.prevent="toggleActiveDelete"
+          @dragleave.prevent="toggleActiveDelete"
+          @dragover.prevent
+          @drop.prevent="removePinnedWord"
+      >
+        <img :class="hoverActiveDelete ? 'btn-img-hovered btn-img' : 'btn-img' " :src="hoverActiveDelete  ? '/trashOpen.png' : '/trashClosed.png'" alt="Speaker Icon" />
       </button>
 
       <button
@@ -322,6 +338,8 @@ export default {
             :word="word.word.toUpperCase()"
             :symbol="word.symbol"
             @click="addWord(word.id, word.word, word.symbol)"
+            draggable="true"
+            @dragstart="cachePinnedWord(word.id)"
           />
         </div>
       </div>
