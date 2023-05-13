@@ -14,7 +14,7 @@ export default {
   },
   methods : {
     fetchSearchedWordSymbol(word) {
-      return fetch(`/api/get_word_symbol?word=${word}`, {
+      return fetch(`/api/get_word_symbol?word=${word.toLowerCase()}`, {
         method: "GET",
       })
         .then(function (response) {
@@ -51,7 +51,7 @@ export default {
         <div class="card">
           <img :src="img" @error="usePlaceholderImg" alt="Image" />
           <div class="card-content">
-            <p>{{ word }}</p>
+            <p>{{ word.toUpperCase() }}</p>
           </div>
         </div>
     </div>

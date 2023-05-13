@@ -90,6 +90,23 @@ export default {
           return error;
         });
     },
+    fetchPins() {
+      return fetch(`/api/pinned_words`, {
+        method: "GET",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data;
+        })
+        .catch(function (error) {
+          return error;
+        });
+    },
     addWord(id, word, symbol, partOfSpeech) {
       this.$emit("updateSentence", [
         "add",
@@ -118,6 +135,7 @@ export default {
   },
   mounted() {
     this.fetchInitColumns().then((columns) => (this.columns = columns));
+    this.fetchPins().then((pins)=>this.pinnedResults=pins);
   },
   watch: {
     currentMessage: {
@@ -242,7 +260,7 @@ export default {
       <div v-if="pinnedResults" class="search-section d-flex flex-wrap">
         <div v-for="word in pinnedResults" v-bind:key="word.id">
           <WordPictureTile
-            :word="word.word"
+            :word="word.word.toUpperCase()"
             :symbol="word.symbol"
             @click="addWord(word.id, word.word, word.symbol)"
           />
