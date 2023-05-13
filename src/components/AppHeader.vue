@@ -51,9 +51,18 @@ export default {
   cursor: pointer;
 }
 
+.nav-item:hover{
+  background-color: #9bb8e3;
+  font-weight: bolder;
+}
+
 .nav-img {
   width: 50px;
   height: 50px;
+}
+.nav-img:hover{
+  width: 80px;
+  height: 80px;
 }
 
 .nav-link {

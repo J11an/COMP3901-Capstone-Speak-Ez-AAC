@@ -239,7 +239,7 @@ export default {
           @dragover.prevent
           @drop.prevent="addPinnedWord"
       >
-        <img :class="hoverActiveAdd && hoverActiveDelete ? 'btn-img-hovered btn-img' : 'btn-img' " :src="hoverActiveAdd || pinsOn  ? '/open-folder.png' : '/pinned_folder.png'" alt="Speaker Icon" />
+        <img :class="hoverActiveAdd && !pinsOn ? 'btn-img-hovered btn-img' : 'btn-img' " :src="hoverActiveAdd || pinsOn  ? '/open-folder.png' : '/pinned_folder.png'" alt="Speaker Icon" />
       </button>
 
       <button
@@ -307,6 +307,7 @@ export default {
     </div>
 
     <!--Dynamic-->
+    <TransitionGroup name="fade">
     <div v-if="!searchOn && !pinsOn" class="dynamic-container">
       <div>
         <div
@@ -329,6 +330,7 @@ export default {
         </div>
       </div>
     </div>
+    </TransitionGroup>
 
     <!-- Pins -->
     <div v-if="pinsOn" class="pinned-container">
@@ -398,6 +400,10 @@ export default {
 .btn-img {
   width: 60px;
   margin: 0 20px;
+}
+
+.btn-img:hover{
+  width: 65px;
 }
 
 .btn-img-hovered{

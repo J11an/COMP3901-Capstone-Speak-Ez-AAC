@@ -109,6 +109,11 @@ export default {
   height: 70px;
 }
 
+.btn img:hover{
+  width: 85px;
+  height: 85px;
+}
+
 p{
   margin: 0;
   padding: 0;

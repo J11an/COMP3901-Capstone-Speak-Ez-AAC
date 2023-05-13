@@ -102,45 +102,69 @@ export default {
   <AppHeader @updateScreen="updateBody" :current-screen="currentScreen" />
 
   <main>
-    <ListeningMessageContainer
-      :message-list="messageList"
-      :current-screen="currentScreen"
-      :mic-state="micActive"
-      :recognizer="recognizer"
-      :tts="tts"
-      v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
-      @updateMessages="updateMessageList"
-      @sendMicState="updateMicState"
-    />
-
-    <MessageBar
-        :current-sentence="currentMessage"
-        :tts="tts"
-        @updateSentence="updateMessage"
-        @updateMessages="updateMessageList"
-        @updateMicState="updateMicState"
-        @updateScreen="updateBody"
-        v-if="
-        currentScreen === 'SPEAKING' ||
-        currentScreen === 'LISTENING' ||
-        currentScreen === 'PINNED' ||
-        currentScreen==='SPEAKLISTEN'
-      "
-    />
-
-    <SpeakingBoardContainer
-        :current-message="currentMessage"
+    <Transition name="fade">
+      <ListeningMessageContainer
+        :message-list="messageList"
         :current-screen="currentScreen"
-        @updateScreen="updateBody"
-        @updateSentence="updateMessage"
-        v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
+        :mic-state="micActive"
+        :recognizer="recognizer"
+        :tts="tts"
+        v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
+        @updateMessages="updateMessageList"
+        @sendMicState="updateMicState"
+      />
+    </Transition>
 
-    <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
+
+    <Transition name="fade">
+      <MessageBar
+          :current-sentence="currentMessage"
+          :tts="tts"
+          @updateSentence="updateMessage"
+          @updateMessages="updateMessageList"
+          @updateMicState="updateMicState"
+          @updateScreen="updateBody"
+          v-if="
+          currentScreen === 'SPEAKING' ||
+          currentScreen === 'LISTENING' ||
+          currentScreen === 'PINNED' ||
+          currentScreen==='SPEAKLISTEN'
+        "
+      />
+    </Transition>
+
+    <Transition name="fade">
+      <SpeakingBoardContainer
+          :current-message="currentMessage"
+          :current-screen="currentScreen"
+          @updateScreen="updateBody"
+          @updateSentence="updateMessage"
+          v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
+    </Transition>
+
+    <Transition name="fade">
+      <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
+    </Transition>
   </main>
 </template>
 
 <style>
 *{
   transition: 200ms;
+}
+
+.fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.fade-leave-active {
+  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-enter-from{
+  opacity: 0;
+}
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
