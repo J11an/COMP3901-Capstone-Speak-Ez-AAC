@@ -20,7 +20,7 @@ export default {
       currentMessage: [],
       messageList: [],
       micActive: false,
-      recognizer: new webkitSpeechRecognition(),
+      recognizer: new webkitSpeechRecognition() ? new webkitSpeechRecognition() : null,
       tts: window.speechSynthesis,
     };
   },
@@ -73,20 +73,23 @@ export default {
       this.micActive = newState;
     },
     configureRecognizer(){
-      this.recognizer.continuous = true;
-      this.recognizer.lang = "en-US";
-      this.recognizer.interimResults = false;
-      this.recognizer.maxAlternatives = 1;
-      this.recognizer.onresult = (event) => {
-        this.updateMessageList(["SPEAKER",event.results[event.results.length-1][0].transcript.split(" ").map(
-            (val)=>{
-              return {
-                id: -1,
-                word: val,
+      if (this.recognizer){
+        this.recognizer.continuous = true;
+        this.recognizer.lang = "en-US";
+        this.recognizer.interimResults = false;
+        this.recognizer.maxAlternatives = 1;
+        this.recognizer.onresult = (event) => {
+          this.updateMessageList(["SPEAKER",event.results[event.results.length-1][0].transcript.split(" ").map(
+              (val)=>{
+                return {
+                  id: -1,
+                  word: val,
+                }
               }
-            }
-        )])
-      };
+          )])
+        };
+      }
+
     },
   },
   mounted() {
