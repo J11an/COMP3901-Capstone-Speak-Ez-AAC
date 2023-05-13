@@ -286,7 +286,16 @@ def phrases():
             return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
-            phrases_by_category = {category: [{"id" : phrase.saved_phrases_id ,"word" : phrase.saved_phrases} for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
+            phrases_by_category = {}
+            for category in categories:
+                phrases = []
+                for phrase in SavedPhrases.query.filter_by(category=category).all():
+                    word = Words.query.filter_by(word=phrase.saved_phrases, category=category).first()
+                    if word:
+                        phrases.append({"id": phrase.saved_phrases_id, "word": phrase.saved_phrases, "symbol": word.symbol})
+                    else:
+                        phrases.append({"id": phrase.saved_phrases_id, "word": phrase.saved_phrases})
+                phrases_by_category[category] = phrases    
             return jsonify(phrases_by_category),201
         if request.method == 'PUT':
             if form.validate_on_submit():
@@ -475,24 +484,24 @@ def seed_database():
 def get_csrf():
     return jsonify({'csrf_token' : generate_csrf()})
 
-# @app.route('/api/pinned_words',methods=["GET","POST"])
-# def pinned_words():
-#     if request.method == "GET":
-#         pwords = db.session.execute(db.select(PinnedWords)).scalars()
-#         for pword in pwords:
-#             pword_id = pword.pinnedwords_id
-#             words = Words.query.filter_by(word_id=pword_id)
-#             for word in words:
-#                 p_list = {"id":word.word_id, "word":word.word, "symbol":word.symbol}
-#         return jsonify(p_list),201
-    
-#     if request.method == "POST":
-#         pinnedword_id = request.args.get('word_id')
-#         cPinnedWords = PinnedWords(pinnedword_id)
-#         db.session.add(cPinnedWords)
-#         db.session.commit()
+@app.route('/api/pinned_words',methods=["GET","POST"])
+def pinned_words():
+    if request.method == "GET":
+        pwords = PinnedWords.query.all()
+        pinned_word_list = []
+        for pword in pwords:
+            word = Words.query.filter_by(word_id=pword.pinnedwords_id).first()
+            if word:
+                pinned_word_list.append({"id": pword.pinnedwords_id, "word": word.word, "symbol": word.symbol})
+        return jsonify(pinned_word_list), 201
+        
+    if request.method == "POST":
+        pinnedword_id = request.args.get('word_id')
+        cPinnedWords = PinnedWords(pinnedword_id)
+        db.session.add(cPinnedWords)
+        db.session.commit()
 
-#         return {"success" : "pinned word added"},201
+        return {"success" : "pinned word added"},201
     
 @app.route('/api/filter_words',methods=["GET","POST"])
 def filter():
