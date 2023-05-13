@@ -38,7 +38,7 @@ export default {
         <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:#FF8080'">
           <img :src="img" @error="usePlaceholderImg" alt="Image" />
           <div class="card-content">
-            <p>{{ word }}</p>
+            <p class="word">{{ word }}</p>
           </div>
         </div>
     </div>
@@ -51,8 +51,8 @@ export default {
 }
 
 .card {
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -79,5 +79,11 @@ export default {
 .card-content {
   padding: 10px;
   text-align: center;
+}
+
+.word{
+  letter-spacing: 2px;
+  font-weight: bolder;
+  font-size: 18px;
 }
 </style>

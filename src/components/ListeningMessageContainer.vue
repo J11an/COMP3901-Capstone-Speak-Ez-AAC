@@ -103,6 +103,21 @@ export default {
     min-height: 49vh;
     max-height: 49vh;
   }
+
+  @media (max-width: 1200px) {
+    min-height: 67vh;
+    max-height: 67vh;
+  }
+
+  @media (max-width: 1200px) and (max-height:984px) {
+    min-height: 60vh;
+    max-height: 60vh;
+  }
+
+  @media (max-width: 1200px) and (max-height:814px) {
+    min-height: 55vh;
+    max-height: 55vh;
+  }
 }
 
 .mixed-conversation-container {

@@ -266,6 +266,16 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  max-height:100vh;
+  @media (min-height: 300px) {
+    max-height: 55vh;
+  }
+  @media (min-height: 808px) {
+    max-height: 60vh;
+  }
+  @media (min-height: 1000px) {
+    max-height: 65vh;
+  }
 }
 
 .toggle-wrapper {
