@@ -473,7 +473,7 @@ def pinned_words():
         pword_list=[]
         for pword in pwords:
             word= db.session.query(Words).get(pword.pinnedwords_id)
-            pwords_list.append({"id": pword.pinnedwords_id,"word":word.word})
+            pwords_list.append({"id": pword.pinnedwords_id,"word":word.word,"symbol":word.symbol})
         return jsonify(pwords_list), 200
     
     if request.method == "POST":
