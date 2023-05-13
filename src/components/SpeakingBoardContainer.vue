@@ -337,7 +337,7 @@ export default {
           class="board-container d-flex justify-content-between mt-3"
         >
           <div v-for="column in this.sortColumns(columns)">
-            <div v-for="word in column[1]" @draggable="true">
+            <div v-for="word in column[1]" >
               <WordPictureTile
                   :id="word.id"
                   :word="word.word.toUpperCase()"
