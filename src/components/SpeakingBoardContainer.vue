@@ -115,6 +115,7 @@ export default {
         });
     },
     fetchSearchedWord(word) {
+      this.searchResults = [];
       return fetch(`api/search/${word}`, {
         method: "GET",
       })
