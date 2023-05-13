@@ -14,6 +14,7 @@ export default {
       columns: [],
       searchTerm: "",
       searchResults: [],
+      pinnedResults: []
     };
   },
   methods: {
@@ -215,6 +216,19 @@ export default {
               />
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pins -->
+    <div v-if="pinsOn" class="pinned-container">
+      <div v-if="pinnedResults" class="search-section d-flex flex-wrap">
+        <div v-for="word in pinnedResults" v-bind:key="word.id">
+          <WordPictureTile
+            :word="word.word"
+            :symbol="word.symbol"
+            @click="addWord(word.id, word.word, word.symbol)"
+          />
         </div>
       </div>
     </div>
