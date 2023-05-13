@@ -78,7 +78,7 @@ export default {
   overflow: hidden;
   justify-self: center;
   align-items: center;
-  margin-bottom: 15px;
+  margin: 2px;
 }
 
 .card img {

@@ -1,10 +1,12 @@
 <script>
 import EditPhrase from "./EditPhrase.vue";
+import PhrasesContainer from "./PhrasesContainer.vue";
+import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 
 const tts = window.speechSynthesis;
 
 export default {
-  components: { EditPhrase },
+  components: { EditPhrase, WordPictureTileMessage },
 
   name: "PhraseCategory",
 
@@ -20,10 +22,11 @@ export default {
     this.getCsrfToken();
   },
   methods: {
-    texttospeech(e) {
-      let message = e.target.firstChild.data;
-      console.log(message);
-      let utterance = new SpeechSynthesisUtterance(message);
+    texttospeech(phrase) {
+      // let message = e;
+      // console.log(message);
+      console.log(phrase)
+      let utterance = new SpeechSynthesisUtterance(phrase);
       tts.speak(utterance);
     },
     deletePhrase(id) {
@@ -83,29 +86,36 @@ export default {
     <h1 id="title">{{ category }}</h1>
     <h3 id="title">Tap the phrase you want them to hear!</h3>
     <br />
-    <div class="d-grid gap-2 col-6 mx-auto" role="group">
-      <div class="btn-group" v-for="(item, index) in phrases" :key="index">
-        <button
-          type="button"
-          id="phrase"
-          class="btn btn-primary btn-block"
-          @click="texttospeech($event)"
-        >
-          {{ item.word }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary delete-btn"
-          @click="deletePhrase(item.id)"
-        >
-          <img src="delete.png" alt="" />
-        </button>
-        <button type="button" class="btn btn-secondary delete-btn">
-          <img src="edit.png" alt="" @click="showForm" />
-        </button>
-
-        <!-- <EditPhrase v-show="showForm" @close-modal="showForm = false" /> -->
+    <div class="d-grid gap-2 col-7 mx-auto" role="group">
+      <div v-for="(phrase, index) in phrases" :key="index" class="phrase-container">
+        <div class="phrase" @click="texttospeech(phrase.word)">
+          <div v-for="word in phrase.word.split(' ')" :key="word.id">
+            <div class="row-6 word">
+              <WordPictureTileMessage :word="word" :symbol="word.symbol" :tts="tts" />
+            </div>
+          </div>
+        </div>
+        <div class="phrase-opts" >
+            <button
+              type="button"
+              class="btn  delete-btn"
+              @click="deletePhrase(phrase.id)"
+            >
+            <img src="delete.png" alt="" />
+              <p>Delete</p>
+            </button>
+            <editPhrase
+              v-show="showForm"
+              @close-modal="showForm = false"
+              @phrase-added="updatePhrase(phrase.id)"
+            />
+            <button type="button" class="btn  delete-btn">
+              <img src="edit.png" alt="" @click="showForm = true" />
+              <p>Edit</p>
+            </button>
+        </div>
       </div>
+      
     </div>
   </div>
 </template>
@@ -122,8 +132,8 @@ export default {
 
 .delete-btn {
   margin: 0;
-  height: 50px;
-  width: 50px;
+  height: 50%;
+  width: 80px;
 }
 
 .delete-btn img {
@@ -132,6 +142,29 @@ export default {
 }
 
 .phrase {
-  width: 100opx;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid black;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  height: 100%;
+  max-width: 100%;
+  border-radius: 10px;
 }
+
+.phrase-container {
+  display: flex;
+}
+
+.phrase {
+  flex: 1;
+}
+
+.phrase-opts {
+  display: flex;
+  align-items: center;
+}
+
+
 </style>
