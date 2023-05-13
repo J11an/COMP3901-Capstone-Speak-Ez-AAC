@@ -58,13 +58,13 @@ export default {
       if (from==='SPEAKER') {
         this.messageList.push({
           id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
-          msg: msg,
+          msg: [...msg],
           from: from
         })
       } else {
         this.messageList.push({
           id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
-          msg: msg,
+          msg: [...msg],
           from: from
         })
       }
@@ -116,6 +116,7 @@ export default {
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
         @updateMicState="updateMicState"
+        @updateScreen="updateBody"
         v-if="
         currentScreen === 'SPEAKING' ||
         currentScreen === 'LISTENING' ||
