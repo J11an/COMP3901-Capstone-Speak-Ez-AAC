@@ -366,7 +366,7 @@ def seed_database():
             if sheet_name == "Words":
                 for index, row in sheet_data.iterrows():
                     cword = Words(
-                        word=(row['word']),
+                        word=str(row['word']).lower() if isinstance(row['word'], str) else row['word'],
                         partofspeech=(row['part_of_speech']),
                         category=(row['category']),
                         grade_level=(row['grade_level']),
@@ -380,7 +380,8 @@ def seed_database():
             if sheet_name =="CensoredTerms":
                 for index, row in sheet_data.iterrows():
                     cterm = CensoredTerms(
-                        term=(row['term']),
+                        term=str(row['term']).lower() if isinstance(row['term'], str) else row['term'],
+
                     )
                     db.session.add(cterm)
                     db.session.commit()
