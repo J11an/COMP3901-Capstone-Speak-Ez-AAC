@@ -1,8 +1,9 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
+import draggable from 'vuedraggable'
 
 export default {
-  components: { WordPictureTile },
+  components: { WordPictureTile, draggable },
   props: {
     currentMessage: Array,
   },
@@ -45,6 +46,7 @@ export default {
       this.hoverActiveDelete = !this.hoverActiveDelete;
     },
     cachePinnedWord(word){
+      console.log(word)
       this.currentHoveredWord = word;
     },
     addPinnedWord(){
@@ -338,15 +340,16 @@ export default {
         >
           <div v-for="column in this.sortColumns(columns)">
             <div v-for="word in column[1]" >
-              <WordPictureTile
+               <WordPictureTile
                   :id="word.id"
                   :word="word.word.toUpperCase()"
                   :symbol="word.symbol"
                   :part-of-speech="column[0]"
                   @click="addWord(word.id, word.word, word.symbol, column[0])"
-                  draggable="true"
                   @dragstart="cachePinnedWord(word.id)"
+                  draggable="true"
               />
+
             </div>
           </div>
         </div>
