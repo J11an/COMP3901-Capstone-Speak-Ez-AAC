@@ -465,7 +465,7 @@ def seed_database():
 def get_csrf():
     return jsonify({'csrf_token' : generate_csrf()})
 
-@app.route('/api/pinned_words',methods=["GET","POST"])
+@app.route('/api/pinned_words',methods=["GET","POST","DELETE"])
 def pinned_words():
     if request.method == "GET":
         pwords = PinnedWords.query.all()
@@ -477,12 +477,22 @@ def pinned_words():
         return jsonify(pinned_word_list), 201
         
     if request.method == "POST":
-        pinnedword_id = request.args.get('word_id')
-        cPinnedWords = PinnedWords(pinnedword_id)
+        pinnedwords_id = request.args.get('word_id')
+        cPinnedWords = PinnedWords(pinnedwords_id)
         db.session.add(cPinnedWords)
         db.session.commit()
 
         return {"success" : "pinned word added"},201
+    
+    if request.method == "DELETE":
+        id = request.args.get('id')
+        pword = PinnedWords.query.filter_by(pinnedwords_id=id).first()
+        if not pword:
+            return jsonify({'message': 'Pinned Word not found'}), 404
+        db.session.delete(pword)
+        db.session.commit()
+        return jsonify({'message': 'Pinned Word Deleted'}), 200
+    
     
 @app.route('/api/filter_words',methods=["GET","POST"])
 def filter():
