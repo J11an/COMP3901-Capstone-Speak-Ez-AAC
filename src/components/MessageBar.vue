@@ -24,6 +24,11 @@ export default {
       this.$emit("updateMessages",["LISTENER",this.currentSentence]);
     },
     toggleListening(){
+      if (!this.micActive) {
+        this.tts.speak(new SpeechSynthesisUtterance("I am listening"));
+      } else {
+        this.tts.speak(new SpeechSynthesisUtterance("Goodbye"));
+      }
       this.micActive = !this.micActive;
       this.$emit("updateMicState",this.micActive);
     },
