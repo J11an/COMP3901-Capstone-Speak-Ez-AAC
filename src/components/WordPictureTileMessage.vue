@@ -64,8 +64,8 @@ export default {
 }
 
 .card {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -79,12 +79,13 @@ export default {
   justify-self: center;
   align-items: center;
   margin: 2px;
+
 }
 
 .card img {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   object-fit: contain;
   margin: 3px;
 }
@@ -92,6 +93,12 @@ export default {
 .card-content {
   padding: 0;
   text-align: center;
-  font-size: 22px;
+  display: inline-block;
+  overflow-wrap: break-word;
+}
+
+p{
+  font-size: 18px;
+  word-break: break-word;
 }
 </style>
