@@ -175,7 +175,7 @@ export default {
 
 <template>
   <!--Toggle-->
-      <div class="toggle-wrapper">
+  <div class="toggle-wrapper">
       <button :class="pinsOn ? 'active btn' : 'btn'" @click="switchPins">
         <img class="btn-img" src="/pinned_folder.png" alt="Speaker Icon" />
       </button>
@@ -301,6 +301,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10px;
 }
 .btn-img {
   width: 60px;

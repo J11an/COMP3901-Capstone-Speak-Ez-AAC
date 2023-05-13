@@ -1,7 +1,7 @@
 <script>
 export default {
   props: {
-    currentScreen: String
+    currentScreen: String,
   },
   methods: {
     updateScreen(screen) {

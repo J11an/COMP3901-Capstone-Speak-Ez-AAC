@@ -51,8 +51,8 @@ export default {
 }
 
 .card {
-  width: 160px;
-  height: 160px;
+  width: 170px;
+  height: 170px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
