@@ -1,5 +1,5 @@
 <script>
-import MessageBar from "../components/MessageBar.vue";
+import MessageBar from "../components/MessageBar/MessageBar.vue";
 import WordPictureTile from "../components/WordPictureTile.vue";
 import AACBoard from "../components/AACBoard.vue";
 import SearchBar from "../components/SearchBar.vue";

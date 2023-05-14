@@ -1,12 +1,11 @@
 <script>
 import EditPhrase from "./EditPhrase.vue";
-import PhrasesContainer from "./PhrasesContainer.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 
 const tts = window.speechSynthesis;
 
 export default {
-  components: { EditPhrase, WordPictureTileMessage },
+  components: { WordPictureTileMessage, EditPhrase },
 
   name: "PhraseCategory",
 
@@ -25,7 +24,7 @@ export default {
     texttospeech(phrase) {
       // let message = e;
       // console.log(message);
-      console.log(phrase)
+      console.log(phrase);
       let utterance = new SpeechSynthesisUtterance(phrase);
       tts.speak(utterance);
     },
@@ -87,35 +86,47 @@ export default {
     <h3 id="title">Tap the phrase you want them to hear!</h3>
     <br />
     <div class="d-grid gap-2 col-7 mx-auto" role="group">
-      <div v-for="(phrase, index) in phrases" :key="index" class="phrase-container">
+      <div
+        v-for="(phrase, index) in phrases"
+        :key="index"
+        class="phrase-container"
+      >
         <div class="phrase" @click="texttospeech(phrase.word)">
-          <div v-for="word in phrase.word.split(' ')" :key="word.id">
+          <div
+            v-if="phrase.word"
+            v-for="word in phrase.word.split(' ')"
+            :key="word.id"
+          >
             <div class="row-6 word">
-              <WordPictureTileMessage :word="word" :symbol="word.symbol" :tts="tts" />
+              <WordPictureTileMessage
+                :word="word"
+                :symbol="word.symbol"
+                :tts="tts"
+              />
             </div>
           </div>
         </div>
-        <div class="phrase-opts" >
-            <button
-              type="button"
-              class="btn  delete-btn"
-              @click="deletePhrase(phrase.id)"
-            >
+        <div class="phrase-opts">
+          <button
+            type="button"
+            class="btn delete-btn"
+            @click="deletePhrase(phrase.id)"
+          >
             <img src="delete.png" alt="" />
-              <p>Delete</p>
-            </button>
-            <editPhrase
-              v-show="showForm"
-              @close-modal="showForm = false"
-              @phrase-added="updatePhrase(phrase.id)"
-            />
-            <button type="button" class="btn  delete-btn">
-              <img src="edit.png" alt="" @click="showForm = true" />
-              <p>Edit</p>
-            </button>
+            <p>Delete</p>
+          </button>
+
+          <button type="button" class="btn delete-btn" @click="showForm = true">
+            <img src="edit.png" alt="" />
+            <p>Edit</p>
+          </button>
+          <editPhrase
+            v-show="showForm"
+            @close-modal="showForm = false"
+            @phrase-edited="updatePhrase(phrase.id)"
+          />
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -165,6 +176,4 @@ export default {
   display: flex;
   align-items: center;
 }
-
-
 </style>

@@ -58,16 +58,16 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <div id="tile">
-        <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:#FF8080'">
-          <img :src="img" @error="usePlaceholderImg" alt="Image" draggable="false"/>
-          <div class="card-content">
-            <p class="word">{{ word }}</p>
+    <div class="container">
+      <div id="tile">
+          <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:#FF8080'">
+            <img :src="img" @error="usePlaceholderImg" alt="Image" draggable="false"/>
+            <div class="card-content">
+              <p class="word">{{ word }}</p>
+            </div>
           </div>
-        </div>
+      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
@@ -76,8 +76,8 @@ export default {
 }
 
 .card {
-  width: 170px;
-  height: 170px;
+  width: 120px;
+  height: 120px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -95,8 +95,8 @@ export default {
 
 .card img {
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
   margin: 3px;
 }
@@ -107,8 +107,8 @@ export default {
 }
 
 .word{
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   font-weight: bolder;
-  font-size: 18px;
+  font-size: 13px;
 }
 </style>
