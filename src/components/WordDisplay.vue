@@ -100,7 +100,7 @@
       <button type="submit">Add Word</button>
     </form>
     <br/>
-    <div v-for="column in this.columns">  
+    <!-- <div v-for="column in this.columns">  
         <div v-for="word in column[1]" @draggable="true">
         <WordPictureTile
             :id="word.id"
@@ -108,8 +108,8 @@
             :symbol="word.symbol"
             @click="test()"
         />
-        </div>
-    </div>
+        </div> 
+    </div> -->
     
 </template>
 

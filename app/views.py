@@ -578,18 +578,13 @@ def phrases():
             )
 
     if request.method == "GET":
-        categories = [
-            category[0]
-            for category in db.session.query(SavedPhrases.category).distinct()
-        ]
-        phrases_by_category = {
-            category: [
-                {"id": phrase.saved_phrases_id, "word": phrase.saved_phrases}
-                for phrase in SavedPhrases.query.filter_by(category=category).all()
-            ]
-            for category in categories
-        }
-        return jsonify(phrases_by_category), 201
+
+        category = request.args.get("category")
+
+        phrases = [{"id": phrase.saved_phrases_id, "word": phrase.saved_phrases}
+        for phrase in SavedPhrases.query.filter_by(category=category).all()]
+        
+        return jsonify(phrases), 201
 
     if request.method == "PUT":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()

@@ -1,22 +1,23 @@
 <script>
 export default {
   name: "AddPhrase",
+  //props: ["phrase", "category"],
   emits: ["close-modal", "phrase-added"],
 
   data() {
-    return { csrf_token: "", message: "", error: false };
+    return { csrf_token: "", 
+    message: "", 
+    error: false,
+    newPhrase: "",
+    newCategory:"" };
   },
   created() {
     this.getCsrfToken();
   },
   methods: {
-    savePhrase() {
-      let self = this;
-      let uploadForm = document.getElementById("registrationform");
-      let form_data = new FormData(uploadForm);
-      fetch("/api/saved_phrases", {
+    savePhrase(phrase, category) {
+      fetch(`/api/saved_phrases?category=${category}&saved_phrases=${phrase}`, {
         method: "POST",
-        body: form_data,
         error: false,
         errors: [],
         headers: {
@@ -27,7 +28,6 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          self.$emit("phrase-added");
           console.log(data);
           if ("error" in data) {
             self.errors = data.error;
@@ -35,12 +35,11 @@ export default {
             console.log(self.error);
           } else {
             self.error = false;
-            document.getElementById("registrationform").reset();
+            //document.getElementById("registrationform").reset();
           }
         })
         .catch(function (error) {
           console.log(error);
-          console.log(form_data);
         });
     },
     getCsrfToken() {
@@ -61,7 +60,7 @@ export default {
     <div class="modal-dialog d-flex justify-content-center" @click.stop>
       <div class="modal-content w-100 +">
         <div class="modal-header">
-          <h5 id="exampleModalLabel1" class="modal-title">Save a Phrase</h5>
+          <h5 class="modal-title">Save a Phrase</h5>
           <button
             type="button"
             class="btn-close"
@@ -78,15 +77,15 @@ export default {
           <form
             id="registrationform"
             enctype="multipart/form-data"
-            @submit.prevent="savePhrase"
           >
             <div class="form-outline row-mb-4">
-              <label class="form-label" for="saved_phrases">Phrase</label>
+              <label class="form-label" for="phrase">Phrase</label>
               <input
-                id="saved_phrases"
+                id="phrase"
                 type="text"
                 class="form-control"
-                name="saved_phrases"
+                name="newPhrase"
+                v-model="newPhrase"
                 placeholder="Enter your phrase here"
               />
             </div>
@@ -95,7 +94,7 @@ export default {
             <div class="form-outline mb-4">
               <label class="form-label" for="category">Category</label>
               <div class="input-group">
-                <input type="text" name="category" list="categories" />
+                <input type="text" name="newCategory" list="categories" v-model="newCategory" />
                 <datalist id="categories">
                   <option value="Home">Home</option>
                   <option value="School">School</option>
@@ -112,7 +111,7 @@ export default {
             </div>
 
             <button
-              @click="$emit('phrase-added')"
+              @click="savePhrase(newPhrase, newCategory)"
               class="btn btn-success btn-md"
               type="submit"
             >

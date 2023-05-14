@@ -3,34 +3,36 @@ export default {
   name: "EditPhrase",
   emits: ["close-modal", "phrase-edited"],
 
-  props: ["saved_phrases", "category"],
+  props: ["phrase_id","phrase", "category"],
 
   data() {
-    return { csrf_token: "", message: "", error: false };
+    return {
+      csrf_token: "",
+      message: "",
+      error: false,
+      newPhrase: "",
+      newCategory: "",
+    };
   },
   created() {
     this.getCsrfToken();
   },
   methods: {
-    editPhrase() {
-      let self = this;
-      let editForm = document.getElementById("edit-form");
-      let form_data = new FormData(editForm);
-      console.log(form_data);
-      fetch("/api/saved_phrases", {
-        method: "PUT",
-        body: form_data,
-        error: false,
-        errors: [],
-        headers: {
-          "X-CSRFToken": this.csrf_token,
-        },
-      })
+    editPhrase(id, newPhrase, newCategory) {
+      console.log(id)
+      fetch(
+        `/api/phrase?id=${id}&?saved_phrases=${newPhrase}&?category=${newCategory}`,
+        {
+          method: "PUT",
+          headers: {
+            "X-CSRFToken": this.csrf_token,
+          },
+        }
+      )
         .then(function (response) {
           return response.json();
         })
         .then(function (data) {
-          self.$emit("phrase-edited");
           console.log(data);
           if ("error" in data) {
             self.errors = data.error;
@@ -43,7 +45,6 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-          console.log(form_data);
         });
     },
     getCsrfToken() {
@@ -64,7 +65,7 @@ export default {
     <div class="modal-dialog d-flex justify-content-center" @click.stop>
       <div class="modal-content w-100 +">
         <div class="modal-header">
-          <h5 id="exampleModalLabel1" class="modal-title">Edit a Phrase</h5>
+          <h5 class="modal-title">Edit a Phrase</h5>
           <button
             type="button"
             class="btn-close"
@@ -81,15 +82,15 @@ export default {
           <form
             id="edit-form"
             enctype="multipart/form-data"
-            @submit.prevent="editPhrase"
           >
             <div class="form-outline row-mb-4">
-              <label class="form-label" for="saved_phrases">Phrase</label>
+              <label class="form-label" for="phrase">Phrase</label>
               <input
-                id="saved_phrases"
+                id="phrase"
                 type="text"
                 class="form-control"
-                name="saved_phrases"
+                name="newPhrase"
+                v-model="newPhrase"
                 placeholder="Enter your phrase here"
               />
             </div>
@@ -98,7 +99,12 @@ export default {
             <div class="form-outline mb-4">
               <label class="form-label" for="category">Category</label>
               <div class="input-group">
-                <input type="text" name="category" list="categories" />
+                <input
+                  type="text"
+                  name="newCategory"
+                  list="categories"
+                  v-model="newCategory"
+                />
                 <datalist id="categories">
                   <option value="Home">Home</option>
                   <option value="School">School</option>
@@ -109,7 +115,7 @@ export default {
             </div>
 
             <button
-              @click="$emit('phrase-edited')"
+              @click="editPhrase(phrase_id, newPhrase, newCategory)"
               class="btn btn-success btn-md"
               type="submit"
             >
@@ -123,9 +129,6 @@ export default {
 </template>
 
 <style scoped>
-.close-img {
-  width: 50px;
-}
 
 .container-model {
   position: fixed;
