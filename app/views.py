@@ -17,14 +17,11 @@ from flask import (
 from flask_wtf.csrf import generate_csrf
 import os
 from app.models import *
-from .forms import *
 from werkzeug.utils import secure_filename
 from app.Scripts.tts import *
 from app.Scripts.vosk_speech_rec import *
 from vosk import Model, KaldiRecognizer
 import pandas as pd
-import numpy as np
-import random
 from sqlalchemy import func
 from difflib import get_close_matches
 
