@@ -40,6 +40,11 @@ export default {
               >WORDS <img src="/SavedPhrasesScreen.png" class="nav-img"
             /></a>
           </li>
+          <li :class="this.currentScreen==='SETTINGS' ? 'nav-item active' : 'nav-item'">
+            <a class="nav-link" v-on:click="updateScreen('SETTINGS')"
+              >SETTINGS <img src="/settings.png" class="nav-img"
+            /></a>
+          </li>
         </ul>
       </div>
     </nav>
