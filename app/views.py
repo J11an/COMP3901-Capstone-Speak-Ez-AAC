@@ -336,7 +336,7 @@ def words():
                 symbol = request.form['symbol']
                 exists = db.session.query(Words.word_id ).filter_by(word=word).first() is not None
                 if exists == False:
-                    word = Words(word,category,"","","","",1,symbol)
+                    word = Words(word,category,"","","","",symbol)
                     db.session.add(word)
                     db.session.commit()     
                     return jsonify({"message": 'Word Added'}), 201  
@@ -359,7 +359,7 @@ def words():
                 word.category = category
                 word.symbol = symbol
                 db.session.commit()
-                return jsonify({'message': 'Word Updated'}), 200
+                return jsonify({'message': 'Word Updated'}), 201
             return jsonify(errors=form_errors(form))
         if request.method == 'DELETE':
             word = Words.query.filter_by(word_id=id).first()
@@ -367,7 +367,7 @@ def words():
                 return jsonify({'message': 'Word not found'}), 404
             db.session.delete(word)
             db.session.commit()
-            return jsonify({'message': 'Word Deleted'}), 200
+            return jsonify({'message': 'Word Deleted'}), 201
 
 # Seed Vocab List
 @app.route('/api/seed_database')
