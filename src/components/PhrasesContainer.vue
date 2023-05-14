@@ -112,6 +112,7 @@ export default {
       this.sendPhraseFetch(phrase,category)
           .then((data)=>{
             if (data.message){
+              this.getCategories();
               this.message = data.message;
               this.error = '';
               setTimeout(()=>{
