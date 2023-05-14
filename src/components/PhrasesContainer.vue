@@ -190,6 +190,14 @@ export default {
   <div class="container">
     <div class="phrase-header">
       <!--  -->
+      <Transition name="fade" appear>
+        <div v-if="toggleExpandedPhrase">
+          <WordPictureTilePhraseOpen
+            :word="currentCategory"
+            @click="hidePhrases"
+          />
+        </div>
+      </Transition>
       <button class="toggle-container btn p-4" @click="expandAddForm">
         <img class="add-icon" src="Add.png" />
       </button>
@@ -231,7 +239,7 @@ export default {
                   type="text"
                   name="newCategory"
                   list="categories"
-                  v-model="newCategory"
+                  v-model="currentCategory"
                 />
                 <datalist id="categories">
                   <div v-for="category in categories">
@@ -350,43 +358,38 @@ export default {
       </div>
 
       <!-- Expanded Phrases -->
-      <div v-if="toggleExpandedPhrase">
+      <Transition name="fade" appear>
+        <div v-if="toggleExpandedPhrase">
 
-        <div class="phrase-container">
-          <div class="back-btn-container container">
-            <WordPictureTilePhraseOpen
-              :word="currentCategory"
-              @click="hidePhrases"
-            />
-          </div>
-
-          <div v-for="phrase in phrases" :key="phrase.id">
-            <div class="phrase" @click="texttospeech(phrase.word)">
-              <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
-                <WordPictureTileMessage :word="item" :tts="tts" />
+          <div class="phrase-container">
+            <div v-for="phrase in phrases" :key="phrase.id">
+              <div class="phrase" @click="texttospeech(phrase.word)">
+                <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
+                  <WordPictureTileMessage :word="item" :tts="tts" />
+                </div>
               </div>
-            </div>
-            <div class="phrase-opts">
-              <button
-                type="button"
-                class="btn delete-btn"
-                @click="AutoDelete(phrase.id, currentCategory)"
-              >
-                <img src="delete.png" alt="" />
-                <p>Delete</p>
-              </button>
-              <button
-                type="button"
-                class="btn delete-btn"
-                @click="expandEditForm(phrase.id)"
-              >
-                <img src="edit.png" alt="" />
-                <p>Edit</p>
-              </button>
+              <div class="phrase-opts">
+                <button
+                  type="button"
+                  class="btn delete-btn"
+                  @click="AutoDelete(phrase.id, currentCategory)"
+                >
+                  <img src="delete.png" alt="" />
+                  <p>Delete</p>
+                </button>
+                <button
+                  type="button"
+                  class="btn delete-btn"
+                  @click="expandEditForm(phrase.id)"
+                >
+                  <img src="edit.png" alt="" />
+                  <p>Edit</p>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -477,7 +480,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .phrase {

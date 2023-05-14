@@ -274,8 +274,6 @@ export default {
   border-radius: 20px;
 }
 
-
-
 .btn-group .options {
   display: flex;
   flex-direction: row;
