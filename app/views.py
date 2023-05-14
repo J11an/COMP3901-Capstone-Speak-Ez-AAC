@@ -199,6 +199,11 @@ def get_catergories():
     categories = [c[0] for c in categories]
     return jsonify(categories)
 
+@app.route('/api/get_phrase_categories', methods=['GET'])
+def get_phrase_categories():
+    categories = db.session.query(SavedPhrases.category).distinct().all()
+    categories = [c[0] for c in categories]
+    return jsonify(categories)
 
 @app.route('/api/get_word_symbol', methods=['GET'])
 def get_word_symbol():
