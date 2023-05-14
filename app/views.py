@@ -597,10 +597,17 @@ def phrases():
             return jsonify({"message": "Phrase not found"}), 404
         saved_phrases = request.args.get("saved_phrases")
         category = request.args.get("category")
-        phrase.saved_phrases = saved_phrases
-        phrase.category = category
-        db.session.commit()
-        return jsonify({"message": "Saved Phrase Updated"}), 201
+        if (
+            saved_phrases != ""
+            and category != ""
+            and saved_phrases != None
+            and category != None
+        ):
+            phrase.saved_phrases = saved_phrases
+            phrase.category = category
+            db.session.commit()
+            return jsonify({"message": "Saved Phrase Updated"}), 201
+        return jsonify({"message": "Phrase or Category field is blank"})
 
     if request.method == "DELETE":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
@@ -633,7 +640,6 @@ def fetch_category_symbols():
         elif query == []:
             phrases_by_category[category] = [{"symbol": "public\HelpIcon.png"}]
 
-    # Return the result as JSON
     return jsonify(phrases_by_category)
 
 
@@ -648,12 +654,14 @@ def words():
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
-        if exists == False:
+        if exists == False and word != "":
             word = Words(word, category, "", "", "", "", symbol)
             db.session.add(word)
             db.session.commit()
             return jsonify({"message": "Word Added"}), 201
         else:
+            if word == "":
+                return jsonify({"error": "Word field is empty"})
             return jsonify({"error": "Word already exists"})
 
     if request.method == "GET":
@@ -677,11 +685,14 @@ def words():
         cword = request.args.get("word")
         symbol = request.args.get("symbol")
         category = request.args.get("category")
-        word.word = cword
-        word.category = category
-        word.symbol = symbol
-        db.session.commit()
-        return jsonify({"message": "Word Updated"}), 201
+        if cword != "" and cword != None:
+            word.word = cword
+            word.category = category
+            word.symbol = symbol
+            db.session.commit()
+            return jsonify({"message": "Word Updated"}), 201
+        else:
+            return jsonify({"error": "Word field is blank"}), 201
 
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
@@ -843,7 +854,7 @@ def pinned_words():
         db.session.add(cPinnedWords)
         db.session.commit()
 
-        return {"success": "pinned word added"}, 201
+        return {"success": "Pinned word added"}, 201
 
     if request.method == "DELETE":
         id = request.args.get("id")
