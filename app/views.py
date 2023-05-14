@@ -275,38 +275,33 @@ def listen():
 @app.route('/api/saved_phrases',methods=['POST','GET','PUT','DELETE'])
 def phrases():
         id = request.args.get('id')
-        form = SavedPhraseForm()    
         if request.method == 'POST':
-            if form.validate_on_submit():
-                saved_phrases = request.form['saved_phrases']
-                category = request.form['category']
-                exists = db.session.query(SavedPhrases.saved_phrases_id ).filter_by(saved_phrases=saved_phrases).first() is not None
-                num_categories = db.session.query(db.func.count(db.distinct(SavedPhrases.category))).scalar()
-                print(num_categories)
-                if exists == False and num_categories < 10:
-                    savedphrase = SavedPhrases(saved_phrases,category)
-                    db.session.add(savedphrase)
-                    db.session.commit()     
-                    return jsonify({"message": 'Saved Phrase Added'}), 201  
-                else:
-                    return jsonify({"error": 'Phrase already exists or there are 10 categories'})
-            return jsonify(errors=form_errors(form))
+            saved_phrases = request.args.get('saved_phrases')
+            category = request.args.get('category')
+            exists = db.session.query(SavedPhrases.saved_phrases_id ).filter_by(saved_phrases=saved_phrases).first() is not None
+            num_categories = db.session.query(db.func.count(db.distinct(SavedPhrases.category))).scalar()
+            print(num_categories)
+            if exists == False and num_categories < 10:
+                savedphrase = SavedPhrases(saved_phrases,category)
+                db.session.add(savedphrase)
+                db.session.commit()     
+                return jsonify({"message": 'Saved Phrase Added'}), 201  
+            else:
+                return jsonify({"error": 'Phrase already exists or there are 10 categories'})
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
             phrases_by_category = {category: [{"id" : phrase.saved_phrases_id ,"word" : phrase.saved_phrases} for phrase in SavedPhrases.query.filter_by(category=category).all()] for category in categories}        
             return jsonify(phrases_by_category),201
         if request.method == 'PUT':
-            if form.validate_on_submit():
-                phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
-                if not phrase:
-                    return jsonify({'message': 'Phrase not found'}), 404
-                saved_phrases = request.form['saved_phrases']
-                category = request.form['category']
-                phrase.saved_phrases = saved_phrases
-                phrase.category = category
-                db.session.commit()
-                return jsonify({'message': 'Saved Phrase Updated'}), 200
-            return jsonify(errors=form_errors(form))
+            phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
+            if not phrase:
+                return jsonify({'message': 'Phrase not found'}), 404
+            saved_phrases = request.args.get('saved_phrases')
+            category = request.args.get('category')
+            phrase.saved_phrases = saved_phrases
+            phrase.category = category
+            db.session.commit()
+            return jsonify({'message': 'Saved Phrase Updated'}), 200
         if request.method == 'DELETE':
             phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
             if not phrase:
@@ -335,39 +330,34 @@ def test():
 @app.route('/api/word',methods=['POST','GET','PUT','DELETE'])
 def words():
         id = request.args.get('id')
-        form = WordForm()
         if request.method == 'POST':    
-            if form.validate_on_submit():
-                word = request.form['word']
-                category = request.form['category']
-                symbol = request.form['symbol']
-                exists = db.session.query(Words.word_id ).filter_by(word=word).first() is not None
-                if exists == False:
-                    word = Words(word,category,"","","","",symbol)
-                    db.session.add(word)
-                    db.session.commit()     
-                    return jsonify({"message": 'Word Added'}), 201  
-                else:
-                    return jsonify({"error": 'Word already exists'})
-            return jsonify(errors=form_errors(form))
+            word = request.args.get('word')
+            symbol = request.args.get('symbol')
+            category = request.args.get('category')
+            exists = db.session.query(Words.word_id ).filter_by(word=word).first() is not None
+            if exists == False:
+                word = Words(word,category,"","","","",symbol)
+                db.session.add(word)
+                db.session.commit()     
+                return jsonify({"message": 'Word Added'}), 201  
+            else:
+                return jsonify({"error": 'Word already exists'})
         if request.method == 'GET': 
             words = Words.query.all()
             words = [{'id': word.word_id, 'word': word.word,'partofspeech': word.partofspeech, 'category': word.category, 'symbols': word.symbol} for word in words]
             return jsonify(words),201
         if request.method == 'PUT':
-            if form.validate_on_submit():
-                word = Words.query.filter_by(word_id=id).first()
-                if not word:
-                    return jsonify({'message': 'Word not found'}), 404
-                cword = request.form['word']
-                category = request.form['category']
-                symbol = request.form['symbol']
-                word.word = cword
-                word.category = category
-                word.symbol = symbol
-                db.session.commit()
-                return jsonify({'message': 'Word Updated'}), 201
-            return jsonify(errors=form_errors(form))
+            word = Words.query.filter_by(word_id=id).first()
+            if not word:
+                return jsonify({'message': 'Word not found'}), 404
+            cword = request.args.get('word')
+            symbol = request.args.get('symbol')
+            category = request.args.get('category')
+            word.word = cword
+            word.category = category
+            word.symbol = symbol
+            db.session.commit()
+            return jsonify({'message': 'Word Updated'}), 201
         if request.method == 'DELETE':
             word = Words.query.filter_by(word_id=id).first()
             if not word:
