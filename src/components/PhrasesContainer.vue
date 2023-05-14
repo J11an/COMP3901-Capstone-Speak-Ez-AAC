@@ -19,6 +19,9 @@ export default {
       toggleAddPhraseForm: false,
       categories: [],
       currentCategory: "",
+      newCategory: "",
+      newPhrase: "",
+      currentId: 0,
     };
   },
   mounted() {
@@ -55,17 +58,19 @@ export default {
     hidePhrases() {
       this.toggleExpandedPhrase = false;
     },
-    expandEditForm() {
+    expandEditForm(id) {
+      let self = this;
       this.toggleEditPhraseForm = true;
+      self.currentId = id;
     },
     hideEditForm() {
       this.toggleEditPhraseForm = false;
     },
     expandAddForm() {
-      this.toggleEditPhraseForm = true;
+      this.toggleAddPhraseForm = true;
     },
     hideAddForm() {
-      this.toggleEditPhraseForm = false;
+      this.toggleAddPhraseForm = false;
     },
     deletePhrase(id) {
       fetch(`/api/saved_phrases?id=${id}`, {
@@ -79,6 +84,33 @@ export default {
         })
         .then(function (data) {
           console.log(data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    savePhrase(phrase, category) {
+      fetch(`/api/saved_phrases?category=${category}&saved_phrases=${phrase}`, {
+        method: "POST",
+        error: false,
+        errors: [],
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+          if ("error" in data) {
+            self.errors = data.error;
+            self.error = true;
+            console.log(self.error);
+          } else {
+            self.error = false;
+            //document.getElementById("registrationform").reset();
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -141,52 +173,142 @@ export default {
   <div class="container">
     <div class="phrase-header">
       <h2>SELECT FROM OR ADD ONE OF YOUR PHRASES</h2>
-      <!-- <button class="toggle-container btn" @click="showForm = true">
+      <!--  -->
+      <button class="toggle-container btn" @click="expandAddForm">
+        <img class="add-icon" src="Add.png" />
+        <p>ADD PHRASE</p>
+      </button> 
+
+      
+      <addPhrase v-show="showForm" @close-modal="showForm = false" />
+      <!-- <button class="toggle-container btn" @click="toggleAddForm">
         <img class="add-icon" src="Add.png" />
         <p>ADD PHRASE</p>
       </button> -->
-
-      <!--  -->
-      <addPhrase v-show="showForm" @close-modal="showForm = false" />
-      <button class="toggle-container btn" @click="toggleAddForm">
-        <img class="add-icon" src="Add.png" />
-        <p>ADD PHRASE</p>
-      </button>
     </div>
 
-    <div v-if="toggleAddForm">
+    <!-- START OF ADD PHRASE MODAL -->
+
+    <div v-if="toggleAddPhraseForm">
       <Transition name="modal">
-        <div v-if="show" class="modal-mask">
+        <div class="modal-mask">
           <div class="modal-container">
             <div class="modal-header">
-              <button class="btn btn-dark" @click="hideAddForm">BACK</button>
-              <slot name="header">default header</slot>
+              <slot name="header"> 
+                <p id="modal-title">Add a Phrase</p>
+              </slot>
+              <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-dismiss="modal"
+                aria-label="Close"
+                @click="hideAddForm"
+              ></button>
             </div>
-
             <div class="modal-body">
-              <slot name="body">default body</slot>
+              <div class="form-outline row-mb-4"></div>
+              <label class="form-label" for="phrase">Phrase</label>
+              <input
+                id="phrase"
+                type="text"
+                class="form-control"
+                name="newPhrase"
+                v-model="newPhrase"
+                placeholder="Enter your phrase here"
+              />
+              <div class="form-outline mb-4">
+                <label class="form-label" for="category">Category</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="newCategory"
+                    list="categories"
+                    v-model="newCategory"
+                  />
+                  <datalist id="categories">
+                    <option value="Home">Home</option>
+                    <option value="School">School</option>
+                    <option value="Basic Info">Basic Info</option>
+                    <option value="Emergency">Emergency</option>
+                  </datalist>
+                </div>
+              </div>
+              <button
+              @click="savePhrase(newPhrase, newCategory)"
+              class="btn btn-success btn-md submit-btn"
+              type="submit"
+            >
+              Add Phrase
+            </button>
             </div>
+            
           </div>
         </div>
       </Transition>
     </div>
+    <!-- END OF ADD PHRASE MODAL -->
 
-    <div v-if="toggleEditForm">
+    <!-- START OF EDIT PHRASE MODAL -->
+    <div v-if="toggleEditPhraseForm">
       <Transition name="modal">
-        <div v-if="show" class="modal-mask">
+        <div class="modal-mask">
           <div class="modal-container">
             <div class="modal-header">
-              <button class="btn btn-dark" @click="hideEditForm">BACK</button>
-              <slot name="header">default header</slot>
+              <slot name="header"> 
+                <p id="modal-title">Edit a Phrase</p>
+              </slot>
+              <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-dismiss="modal"
+                aria-label="Close"
+                @click="hideEditForm"
+              ></button>
             </div>
-
             <div class="modal-body">
-              <slot name="body">default body</slot>
+              <div class="form-outline row-mb-4"></div>
+              <label class="form-label" for="phrase">Phrase</label>
+              <input
+                id="phrase"
+                type="text"
+                class="form-control"
+                name="newPhrase"
+                v-model="newPhrase"
+                placeholder="Enter your phrase here"
+              />
+              <div class="form-outline mb-4">
+                <label class="form-label" for="category">Category</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="newCategory"
+                    list="categories"
+                    v-model="newCategory"
+                  />
+                  <datalist id="categories">
+                    <option value="Home">Home</option>
+                    <option value="School">School</option>
+                    <option value="Basic Info">Basic Info</option>
+                    <option value="Emergency">Emergency</option>
+                  </datalist>
+                </div>
+              </div>
+              <button
+              @click="updatePhrase(currentId, newPhrase, newCategory)"
+              class="btn btn-success btn-md submit-btn"
+              type="submit"
+            >
+              Save Changes
+            </button>
             </div>
+            
           </div>
         </div>
       </Transition>
     </div>
+    <!-- END OF EDIT PHRASE MODAL -->
 
     <div>
       <!-- Folders -->
@@ -227,7 +349,7 @@ export default {
               <button
                 type="button"
                 class="btn delete-btn"
-                @click="expandEditForm"
+                @click="expandEditForm(phrase.id)"
               >
                 <img src="edit.png" alt="" />
                 <p>Edit</p>
@@ -256,6 +378,44 @@ export default {
   margin: auto;
 }
 
+.modal-container{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: auto;
+}
+
+#modal-title {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0;
+}
+.modal-body{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-label{
+  font-size: x-large;
+  font-weight: bold;
+}
+
+input {
+  font-size: 18px;
+  padding: 5px;
+  outline: none;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.submit-btn{
+  width: 50%;
+  padding: 5px;
+  text-align: center;
+}
+
+
 .phrase-header {
   display: flex;
   align-items: center;
@@ -271,10 +431,9 @@ export default {
   align-items: center;
   padding: 5px;
   height: auto;
-  min-width: 80%;
+  min-width: fit-content;
   border-radius: 10px;
   margin: 20px;
-  float: left;
 }
 
 .phrase-container {
@@ -294,7 +453,6 @@ export default {
 .delete-btn {
   height: 50%;
   width: 80px;
-  margin: 5px
 }
 
 .delete-btn img {
