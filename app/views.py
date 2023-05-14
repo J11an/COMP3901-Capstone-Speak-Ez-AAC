@@ -692,6 +692,20 @@ def words():
         return jsonify({"message": "Word Deleted"}), 201
 
 
+@app.route("/api/check_message")
+def check_message():
+    saved_phrases = request.args.get("saved_phrases")
+    exists = (
+        db.session.query(SavedPhrases.saved_phrases_id)
+        .filter_by(saved_phrases=saved_phrases)
+        .first()
+        is not None
+    )
+    if exists == True and saved_phrases != "":
+        return jsonify({"message": "Phrase exists"}), 201
+    return jsonify({"message": "Phrase does not exist"})
+
+
 # Seed Vocab List
 @app.route("/api/seed_database")
 def seed_database():
