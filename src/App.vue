@@ -1,6 +1,6 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
-import MessageBar from "./components/MessageBar.vue";
+import MessageBar from "./components/MessageBar/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
@@ -74,6 +74,23 @@ export default {
     updateMicState(newState){
       this.micActive = newState;
     },
+    filterSentence(sentence){
+      return fetch(`/api/filter_words?message=${sentence}`, {
+        method: "GET",
+        headers: {
+          "X-CSRFToken": this.csrf_token,
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data;
+        })
+        .catch(function (error) {
+          return error;
+        });
+    },
     configureRecognizer(){
       if (this.recognizer){
         this.recognizer.continuous = true;
@@ -81,14 +98,22 @@ export default {
         this.recognizer.interimResults = false;
         this.recognizer.maxAlternatives = 1;
         this.recognizer.onresult = (event) => {
-          this.updateMessageList(["SPEAKER",event.results[event.results.length-1][0].transcript.split(" ").map(
-              (val)=>{
-                return {
-                  id: -1,
-                  word: val,
-                }
-              }
-          )])
+          const msg = event.results[event.results.length-1][0].transcript;
+          this.filterSentence(msg)
+              .then((filteredSentence)=>{
+                this.updateMessageList(
+                    ["SPEAKER",
+                      filteredSentence.map(
+                          (val)=>{
+                            return {
+                              id: 0,
+                              word: val,
+                            }
+                          }
+                      )
+                    ]
+                )
+              })
         };
       }
 

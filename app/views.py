@@ -307,7 +307,23 @@ def phrases():
             db.session.delete(phrase)
             db.session.commit()
             return jsonify({'message': 'Saved Phrase Deleted'}), 200
-        
+
+@app.route('/api/fetch_category_symbols')
+def test():
+    # Get the distinct categories from the saved_phrases table
+    categories = [category[0].lower() for category in db.session.query(SavedPhrases.category).distinct()]
+    # Query the saved_phrases and words tables and join them on the 'word' column
+    phrases_by_category = {}
+    for category in categories:
+        query = db.session.query(Words.symbol).outerjoin(SavedPhrases,Words.word==SavedPhrases.saved_phrases).filter(Words.word == category).all()
+        print(query)
+        if query != []:
+            phrases_by_category[category] = [{"symbol": phrase.symbol} for phrase in query]
+        elif query == []: 
+            phrases_by_category[category] = [{"symbol": "public\HelpIcon.png"}]
+
+    # Return the result as JSON
+    return jsonify(phrases_by_category)
 
 @app.route('/api/word',methods=['POST','GET','PUT','DELETE'])
 def words():
