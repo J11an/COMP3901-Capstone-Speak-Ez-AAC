@@ -1,1 +1,0 @@
-Name each picture the same as it is in the vocab list. But append the file type next to it
