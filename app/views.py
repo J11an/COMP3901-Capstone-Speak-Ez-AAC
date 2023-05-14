@@ -199,6 +199,11 @@ def get_catergories():
     categories = [c[0] for c in categories]
     return jsonify(categories)
 
+@app.route('/api/get_phrase_categories', methods=['GET'])
+def get_phrase_categories():
+    categories = db.session.query(SavedPhrases.category).distinct().all()
+    categories = [c[0] for c in categories]
+    return jsonify(categories)
 
 @app.route('/api/get_word_symbol', methods=['GET'])
 def get_word_symbol():
@@ -276,13 +281,15 @@ def phrases():
                 saved_phrases = request.form['saved_phrases']
                 category = request.form['category']
                 exists = db.session.query(SavedPhrases.saved_phrases_id ).filter_by(saved_phrases=saved_phrases).first() is not None
-                if exists == False:
+                num_categories = db.session.query(db.func.count(db.distinct(SavedPhrases.category))).scalar()
+                print(num_categories)
+                if exists == False and num_categories < 10:
                     savedphrase = SavedPhrases(saved_phrases,category)
                     db.session.add(savedphrase)
                     db.session.commit()     
                     return jsonify({"message": 'Saved Phrase Added'}), 201  
                 else:
-                    return jsonify({"error": 'Phrase already exists'})
+                    return jsonify({"error": 'Phrase already exists or there are 10 categories'})
             return jsonify(errors=form_errors(form))
         if request.method == 'GET': 
             categories = [category[0] for category in db.session.query(SavedPhrases.category).distinct()]
@@ -336,7 +343,7 @@ def words():
                 symbol = request.form['symbol']
                 exists = db.session.query(Words.word_id ).filter_by(word=word).first() is not None
                 if exists == False:
-                    word = Words(word,category,"","","","",1,symbol)
+                    word = Words(word,category,"","","","",symbol)
                     db.session.add(word)
                     db.session.commit()     
                     return jsonify({"message": 'Word Added'}), 201  
@@ -359,7 +366,7 @@ def words():
                 word.category = category
                 word.symbol = symbol
                 db.session.commit()
-                return jsonify({'message': 'Word Updated'}), 200
+                return jsonify({'message': 'Word Updated'}), 201
             return jsonify(errors=form_errors(form))
         if request.method == 'DELETE':
             word = Words.query.filter_by(word_id=id).first()
@@ -367,7 +374,7 @@ def words():
                 return jsonify({'message': 'Word not found'}), 404
             db.session.delete(word)
             db.session.commit()
-            return jsonify({'message': 'Word Deleted'}), 200
+            return jsonify({'message': 'Word Deleted'}), 201
 
 # Seed Vocab List
 @app.route('/api/seed_database')
