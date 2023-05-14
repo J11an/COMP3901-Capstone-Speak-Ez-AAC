@@ -1,12 +1,13 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
+import WordPictureTilePhrase from "./WordPictureTilePhrase.vue";
 
 const tts = window.speechSynthesis;
 
 export default {
   name: "PhrasesContainer",
-  components: { WordPictureTile, WordPictureTileMessage },
+  components: {WordPictureTilePhrase, WordPictureTile, WordPictureTileMessage },
 
   data() {
     return {
@@ -49,6 +50,7 @@ export default {
         });
     },
     expandPhrase(category) {
+      console.log("Expanding ", category)
       let self = this;
       this.toggleExpandedPhrase = true;
       self.currentCategory = category;
@@ -338,7 +340,7 @@ export default {
           :key="index"
           class="category"
         >
-          <WordPictureTile
+          <WordPictureTilePhrase
             :word="category.toUpperCase()"
             :symbol="category.symbol"
             @click="expandPhrase(category)"
