@@ -93,6 +93,7 @@ export default {
             <br />
 
             <div class="form-outline mb-4">
+              <label class="form-label" for="category">Category</label>
               <div class="input-group">
                 <input type="text" name="category" list="categories" />
                 <datalist id="categories">

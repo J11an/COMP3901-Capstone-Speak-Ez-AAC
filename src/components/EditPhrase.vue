@@ -98,16 +98,13 @@ export default {
             <div class="form-outline mb-4">
               <label class="form-label" for="category">Category</label>
               <div class="input-group">
-                <select
-                  class="form-select"
-                  name="category"
-                  placeholder="Select Category"
-                >
+                <input type="text" name="category" list="categories" />
+                <datalist id="categories">
                   <option value="Home">Home</option>
                   <option value="School">School</option>
                   <option value="Basic Info">Basic Info</option>
                   <option value="Emergency">Emergency</option>
-                </select>
+                </datalist>
               </div>
             </div>
 
