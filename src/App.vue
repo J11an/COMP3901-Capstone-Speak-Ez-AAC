@@ -4,6 +4,7 @@ import MessageBar from "./components/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
+import WordDisplay from "./components/WordDisplay.vue";
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     AppHeader,
     ListeningMessageContainer,
     MessageBar,
+    WordDisplay,
   },
   data() {
     return {
@@ -144,6 +146,9 @@ export default {
 
     <Transition name="fade">
       <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
+    </Transition>
+    <Transition name="fade">
+      <WordDisplay v-if="currentScreen === 'WORDS'" />
     </Transition>
   </main>
 </template>

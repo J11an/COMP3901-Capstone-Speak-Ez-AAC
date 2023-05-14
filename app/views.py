@@ -312,7 +312,7 @@ def phrases():
 @app.route('/api/word',methods=['POST','GET','PUT','DELETE'])
 def words():
         id = request.args.get('id')
-        form = WordForm()    
+        form = WordForm()
         if request.method == 'POST':    
             if form.validate_on_submit():
                 word = request.form['word']
