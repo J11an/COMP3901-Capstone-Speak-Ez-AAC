@@ -13,6 +13,9 @@ export default {
     return {
       micActive: false,
       showSavePhraseModal: false,
+      phraseAdded: false,
+      success: false,
+      errorMsg: '',
       categories: [],
       csrf_token: ''
     }
@@ -41,8 +44,8 @@ export default {
       this.$emit("updateScreen",screen)
     },
     sendPhraseRequest(category,phrase){
-      return fetch(`/api/saved_phrases`, {
-          method: "PUT",
+      return fetch(`/api/saved_phrases?saved_phrases=${phrase.map((p)=>p.word).join(" ")}&category=${category}`, {
+          method: "POST",
           headers: {
             "X-CSRFToken": this.csrf_token,
           },
@@ -59,8 +62,28 @@ export default {
       },
       addPhrase(category){
         this.sendPhraseRequest(category,this.currentSentence)
-            .then((data)=>console.log(data))
-            .catch((error)=>console.log(error))
+            .then((data)=>{
+              console.log(data)
+              this.success = true;
+              if (data.error){
+                this.success = false
+                this.errorMsg = data.error;
+              }
+              this.phraseAdded = true;
+              setTimeout(()=>{
+                this.showSavePhraseModal = false;
+                setTimeout(()=>{this.phraseAdded=false},100);
+              },3000)
+            })
+            .catch((error)=>{
+              this.success = false;
+              this.errorMsg = error;
+              this.phraseAdded = true;
+              setTimeout(()=>{
+                this.showSavePhraseModal = false;
+                setTimeout(()=>{this.phraseAdded=false},100);
+              },1000)
+            })
       },
       fetchCategories() {
         return fetch(`/api/get_phrase_categories`, {
@@ -87,7 +110,8 @@ export default {
         },
     },
     mounted() {
-    this.fetchCategories().then((categories)=>this.categories=categories)
+      this.fetchCategories().then((categories)=>this.categories=categories);
+      this.getCsrfToken();
     }
 }
 
@@ -123,7 +147,7 @@ export default {
             </button>
           </template>
           <template #body>
-            <div class="phrase-section d-flex flex-wrap">
+            <div v-if="!phraseAdded" class="phrase-section d-flex flex-wrap">
               <div
                   v-for="category in categories"
                   @click="addPhrase(category)">
@@ -132,6 +156,16 @@ export default {
                     :word="category.toUpperCase()"
                   />
               </div>
+            </div>
+            <div class="d-flex flex-wrap success-wrapper" v-else>
+              <div v-if="success">
+                <img class="success-wrapper-btn" src="/checked.png"/>
+              </div>
+              <div class="d-flex flex-wrap success-wrapper" v-else>
+                <img class="success-wrapper-btn" src="/error.png"/>
+                <p class="text-center error-msg">{{ errorMsg }}</p>
+              </div>
+
             </div>
           </template>
         </SavedPhraseModal>
@@ -150,6 +184,22 @@ export default {
 </template>
 
 <style scoped>
+.success-wrapper{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.success-wrapper-btn{
+  width: 150px;
+  height: 150px;
+}
+.error-msg{
+  font-size: 26px;
+  font-weight: bolder;
+  color: crimson;
+}
+
 #message{
   cursor: pointer;
   width: 100vw;

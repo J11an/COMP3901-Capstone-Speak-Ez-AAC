@@ -95,8 +95,8 @@ export default {
 
 .card img {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
   margin: 3px;
 }
@@ -107,8 +107,8 @@ export default {
 }
 
 .word{
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   font-weight: bolder;
-  font-size: 12px;
+  font-size: 13px;
 }
 </style>
