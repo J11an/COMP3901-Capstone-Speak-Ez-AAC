@@ -597,12 +597,17 @@ def phrases():
             return jsonify({"message": "Phrase not found"}), 404
         saved_phrases = request.args.get("saved_phrases")
         category = request.args.get("category")
-        if saved_phrases != "" and category != "":
+        if (
+            saved_phrases != ""
+            and category != ""
+            and saved_phrases != None
+            and category != None
+        ):
             phrase.saved_phrases = saved_phrases
             phrase.category = category
             db.session.commit()
             return jsonify({"message": "Saved Phrase Updated"}), 201
-        return jsonify({"message": {"Phrase or Category field is blank"}})
+        return jsonify({"message": "Phrase or Category field is blank"})
 
     if request.method == "DELETE":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
@@ -680,7 +685,7 @@ def words():
         cword = request.args.get("word")
         symbol = request.args.get("symbol")
         category = request.args.get("category")
-        if cword != "":
+        if cword != "" and cword != None:
             word.word = cword
             word.category = category
             word.symbol = symbol
@@ -688,6 +693,7 @@ def words():
             return jsonify({"message": "Word Updated"}), 201
         else:
             return jsonify({"error": "Word field is blank"}), 201
+
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
