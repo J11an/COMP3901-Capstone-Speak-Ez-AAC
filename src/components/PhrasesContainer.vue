@@ -171,11 +171,13 @@ export default {
           console.log(error);
         });
     },
-    AutoDelete(id, category) {
-      let self = this;
-      this.deletePhrase(id);
-      this.hidePhrases();
-      this.expandPhrase(category);
+    removePhrase(id, category) {
+      this.deletePhrase(id).then((data) => {
+        this.phrases = [];
+        console.log(this.phrases);
+        this.getPhrases(category).then((data) => (this.phrases = data));
+        console.log(category, this.phrases);
+      });
     },
     texttospeech(phrase) {
       console.log(phrase);
@@ -386,6 +388,24 @@ export default {
                   <p>Edit</p>
                 </button>
               </div>
+            </div>
+            <div class="phrase-opts">
+              <button
+                type="button"
+                class="btn delete-btn"
+                @click="removePhrase(phrase.id, currentCategory)"
+              >
+                <img src="delete.png" alt="" />
+                <p>Delete</p>
+              </button>
+              <button
+                type="button"
+                class="btn delete-btn"
+                @click="expandEditForm(phrase.id)"
+              >
+                <img src="edit.png" alt="" />
+                <p>Edit</p>
+              </button>
             </div>
           </div>
         </div>
