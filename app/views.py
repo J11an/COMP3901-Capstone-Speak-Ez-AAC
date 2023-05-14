@@ -680,12 +680,14 @@ def words():
         cword = request.args.get("word")
         symbol = request.args.get("symbol")
         category = request.args.get("category")
-        word.word = cword
-        word.category = category
-        word.symbol = symbol
-        db.session.commit()
-        return jsonify({"message": "Word Updated"}), 201
-
+        if cword != "":
+            word.word = cword
+            word.category = category
+            word.symbol = symbol
+            db.session.commit()
+            return jsonify({"message": "Word Updated"}), 201
+        else:
+            return jsonify({"error": "Word field is blank"}), 201
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
