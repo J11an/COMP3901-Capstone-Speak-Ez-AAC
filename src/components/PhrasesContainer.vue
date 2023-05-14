@@ -1,12 +1,14 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
+import WordPictureTilePhrase from "./WordPictureTilePhrase.vue";
+import WordPictureTilePhraseOpen from "./WordPictureTilePhraseOpen.vue";
 
 const tts = window.speechSynthesis;
 
 export default {
   name: "PhrasesContainer",
-  components: { WordPictureTile, WordPictureTileMessage },
+  components: {WordPictureTilePhraseOpen, WordPictureTilePhrase, WordPictureTile, WordPictureTileMessage },
 
   data() {
     return {
@@ -20,6 +22,8 @@ export default {
       newCategory: "",
       newPhrase: "",
       currentId: 0,
+      error : '',
+      message : ''
     };
   },
   mounted() {
@@ -47,6 +51,7 @@ export default {
         });
     },
     expandPhrase(category) {
+      console.log("Expanding ", category)
       let self = this;
       this.toggleExpandedPhrase = true;
       self.currentCategory = category;
@@ -87,11 +92,9 @@ export default {
           console.log(error);
         });
     },
-    savePhrase(phrase, category) {
-      fetch(`/api/saved_phrases?category=${category}&saved_phrases=${phrase}`, {
+    sendPhraseFetch(phrase,category){
+      return fetch(`/api/saved_phrases?category=${category}&saved_phrases=${phrase}`, {
         method: "POST",
-        error: false,
-        errors: [],
         headers: {
           "X-CSRFToken": this.csrf_token,
         },
@@ -100,19 +103,35 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
-          if ("error" in data) {
-            self.errors = data.error;
-            self.error = true;
-            console.log(self.error);
-          } else {
-            self.error = false;
-            //document.getElementById("registrationform").reset();
+          if (data.message || data.error){
+            return data;
           }
         })
         .catch(function (error) {
           console.log(error);
         });
+    },
+    savePhrase(phrase, category) {
+      this.sendPhraseFetch(phrase,category)
+          .then((data)=>{
+            if (data.message){
+              this.getCategories();
+              this.message = data.message;
+              this.error = '';
+              setTimeout(()=>{
+                this.toggleAddPhraseForm = false;
+                setTimeout(()=>{
+                  this.error = '';
+                  this.message = '';
+                },100)
+              },3000);
+            }
+            if (data.error) {
+              this.error = data.error;
+            }
+
+
+          })
     },
     updatePhrase(id, saved_phrases, category) {
       fetch(
@@ -172,78 +191,82 @@ export default {
 <template>
   <div class="container">
     <div class="phrase-header">
-      <h2>SELECT FROM OR ADD ONE OF YOUR PHRASES</h2>
       <!--  -->
-      <button class="toggle-container btn" @click="expandAddForm">
+      <button class="toggle-container btn p-4" @click="expandAddForm">
         <img class="add-icon" src="Add.png" />
-        <p>ADD PHRASE</p>
       </button>
     </div>
 
     <!-- START OF ADD PHRASE MODAL -->
 
-    <div v-if="toggleAddPhraseForm">
-      <Transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-container">
-            <div class="modal-header">
-              <slot name="header">
-                <p id="modal-title">Add a Phrase</p>
-              </slot>
-              <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
-              <button
-                type="button"
-                class="btn-close"
-                data-mdb-dismiss="modal"
-                aria-label="Close"
-                @click="hideAddForm"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="form-outline row-mb-4"></div>
-              <label class="form-label" for="phrase">Phrase</label>
-              <input
-                id="phrase"
-                type="text"
-                class="form-control"
-                name="newPhrase"
-                v-model="newPhrase"
-                placeholder="Enter your phrase here"
-              />
-              <div class="form-outline mb-4">
-                <label class="form-label" for="category">Category</label>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    name="newCategory"
-                    list="categories"
-                    v-model="newCategory"
-                  />
-                  <datalist id="categories">
-                    <option value="Home">Home</option>
-                    <option value="School">School</option>
-                    <option value="Basic Info">Basic Info</option>
-                    <option value="Emergency">Emergency</option>
-                  </datalist>
-                </div>
+    <Transition name="fade" appear>
+      <div v-if="toggleAddPhraseForm" class="modal-mask">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              <p id="modal-title">Add a Phrase</p>
+            </slot>
+            <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
+            <button
+              type="button"
+              class="btn-close"
+              data-mdb-dismiss="modal"
+              aria-label="Close"
+              @click="hideAddForm"
+            ></button>
+          </div>
+          <div v-if="!message" class="modal-body">
+            <div class="form-outline row-mb-4"></div>
+            <label class="form-label" for="phrase">Phrase</label>
+            <input
+              id="phrase"
+              type="text"
+              class="form-control"
+              name="newPhrase"
+              v-model="newPhrase"
+              placeholder="Enter your phrase here"
+            />
+            <div class="form-outline mb-4">
+              <label class="form-label" for="category">Category</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="newCategory"
+                  list="categories"
+                  v-model="newCategory"
+                />
+                <datalist id="categories">
+                  <div v-for="category in categories">
+                    <option  :value="category">{{ category }}</option>
+                  </div>
+                </datalist>
               </div>
-              <button
-                @click="savePhrase(newPhrase, newCategory)"
-                class="btn btn-success btn-md submit-btn"
-                type="submit"
-              >
-                Add Phrase
-              </button>
+            </div>
+            <button
+              @click="savePhrase(newPhrase, newCategory)"
+              class="btn btn-success btn-md submit-btn"
+              type="submit"
+            >
+              Add Phrase
+            </button>
+          </div>
+          <div>
+            <div v-if="message">
+              <img class="success-wrapper-btn" src="/checked.png"/>
+              <p class="form-message">{{ message }}</p>
+            </div>
+            <div v-if="error">
+              <p class="form-error">{{ error }}</p>
             </div>
           </div>
         </div>
-      </Transition>
-    </div>
+      </div>
+    </Transition>
     <!-- END OF ADD PHRASE MODAL -->
 
     <!-- START OF EDIT PHRASE MODAL -->
     <div v-if="toggleEditPhraseForm">
-      <Transition name="modal">
+      <Transition name="fade" appear>
         <div class="modal-mask">
           <div class="modal-container">
             <div class="modal-header">
@@ -280,10 +303,9 @@ export default {
                     v-model="newCategory"
                   />
                   <datalist id="categories">
-                    <option value="Home">Home</option>
-                    <option value="School">School</option>
-                    <option value="Basic Info">Basic Info</option>
-                    <option value="Emergency">Emergency</option>
+                    <div v-for="category in categories">
+                      <option  :value="category">{{ category }}</option>
+                    </div>
                   </datalist>
                 </div>
               </div>
@@ -294,6 +316,18 @@ export default {
               >
                 Save Changes
               </button>
+              <div>
+                <div v-if="message">
+                  <p class="form-message">
+                    {{ message }}
+                  </p>
+                </div>
+                <div v-if="error">
+                  <p class="form-error">
+                    {{ error }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -303,14 +337,13 @@ export default {
 
     <div>
       <!-- Folders -->
-      <div class="category-container">
+      <div v-if="!toggleExpandedPhrase" class="category-container">
         <div
           v-for="(category, index) in categories"
-          v-if="!toggleExpandedPhrase"
           :key="index"
           class="category"
         >
-          <WordPictureTile
+          <WordPictureTilePhrase
             :word="category.toUpperCase()"
             :symbol="category.symbol"
             @click="expandPhrase(category)"
@@ -320,9 +353,15 @@ export default {
 
       <!-- Expanded Phrases -->
       <div v-if="toggleExpandedPhrase">
-        <button class="btn btn-dark" @click="hidePhrases">BACK</button>
+
         <div class="phrase-container">
-          <h1>{{ currentCategory }}</h1>
+          <div class="back-btn-container container">
+            <WordPictureTilePhraseOpen
+              :word="currentCategory"
+              @click="hidePhrases"
+            />
+          </div>
+
           <div v-for="phrase in phrases" :key="phrase.id">
             <div class="phrase" @click="texttospeech(phrase.word)">
               <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
@@ -355,6 +394,27 @@ export default {
 </template>
 
 <style scoped>
+.back-btn-container{
+  width: 200px;
+  height: 200px;
+}
+
+.form-error{
+  font-size: 26px;
+  font-weight: bolder;
+  color: crimson;
+}
+.form-message{
+  font-size: 26px;
+  font-weight: bolder;
+  color: #3a7bd5;
+}
+
+.success-wrapper-btn{
+  width: 150px;
+  height: 150px;
+}
+
 .category-container {
   display: flex;
   flex-direction: row;
@@ -364,10 +424,18 @@ export default {
   justify-content: center;
 }
 
+.btn-back {
+  width: 50px;
+  height: 50px;
+}
+
 .add-icon {
   width: 80%;
   height: auto;
   margin: auto;
+}
+.add-icon:hover {
+  width: 95%;
 }
 
 .modal-container {
