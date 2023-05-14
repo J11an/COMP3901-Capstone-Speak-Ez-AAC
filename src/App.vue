@@ -131,7 +131,7 @@ export default {
   <AppHeader @updateScreen="updateBody" :current-screen="currentScreen" />
 
   <main>
-    <Transition name="fade">
+    <Transition name="fade" appear>
       <ListeningMessageContainer
         :message-list="messageList"
         :current-screen="currentScreen"
@@ -145,7 +145,7 @@ export default {
     </Transition>
 
 
-    <Transition name="fade">
+    <Transition name="fade" appear>
       <MessageBar
           :current-sentence="currentMessage"
           :tts="tts"
@@ -162,7 +162,7 @@ export default {
       />
     </Transition>
 
-    <Transition name="fade">
+    <Transition name="fade" appear>
       <SpeakingBoardContainer
           :current-message="currentMessage"
           :current-screen="currentScreen"
@@ -171,14 +171,14 @@ export default {
           v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
     </Transition>
 
-    <Transition name="fade">
+    <Transition name="fade" appear>
       <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
     </Transition>
-    <Transition name="fade">
+    <Transition name="fade" appear>
       <WordDisplay v-if="currentScreen === 'WORDS'" />
     </Transition>
 
-    <Transition name="fade">
+    <Transition name="fade" appear>
       <SettingsDisplay v-if="currentScreen === 'SETTINGS'" />
     </Transition>
   </main>
