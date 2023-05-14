@@ -2,12 +2,13 @@
 import WordPictureTile from "./WordPictureTile.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 import WordPictureTilePhrase from "./WordPictureTilePhrase.vue";
+import WordPictureTilePhraseOpen from "./WordPictureTilePhraseOpen.vue";
 
 const tts = window.speechSynthesis;
 
 export default {
   name: "PhrasesContainer",
-  components: {WordPictureTilePhrase, WordPictureTile, WordPictureTileMessage },
+  components: {WordPictureTilePhraseOpen, WordPictureTilePhrase, WordPictureTile, WordPictureTileMessage },
 
   data() {
     return {
@@ -350,9 +351,15 @@ export default {
 
       <!-- Expanded Phrases -->
       <div v-if="toggleExpandedPhrase">
-        <button class="btn" @click="hidePhrases"><img class="btn-back" src="/back.png"></button>
+
         <div class="phrase-container">
-        <h1>{{currentCategory}}</h1>
+          <div class="back-btn-container container">
+            <WordPictureTilePhraseOpen
+              :word="currentCategory"
+              @click="hidePhrases"
+            />
+          </div>
+
           <div v-for="phrase in phrases" :key="phrase.id">
             <div class="phrase" @click="texttospeech(phrase.word)">
               <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
@@ -385,6 +392,11 @@ export default {
 </template>
 
 <style scoped>
+.back-btn-container{
+  width: 200px;
+  height: 200px;
+}
+
 .form-error{
   font-size: 26px;
   font-weight: bolder;
