@@ -428,6 +428,7 @@ def inital_tree_setting():
             "id": noun.word_id,
             "word": noun.word,
             "symbol": noun.symbol,
+            "category": noun.category
         }
         for noun in Words.query.filter_by(partofspeech="Noun")
         .order_by(func.random())
@@ -440,6 +441,8 @@ def inital_tree_setting():
             "id": verb.word_id,
             "word": verb.word,
             "symbol": verb.symbol,
+            "category": verb.category
+
         }
         for verb in Words.query.filter_by(partofspeech="Verb")
         .order_by(func.random())
@@ -452,6 +455,8 @@ def inital_tree_setting():
             "id": adjectives.word_id,
             "word": adjectives.word,
             "symbol": adjectives.symbol,
+            "category": adjectives.category
+
         }
         for adjectives in Words.query.filter_by(partofspeech="Adjectives")
         .order_by(func.random())
@@ -464,6 +469,8 @@ def inital_tree_setting():
             "id": articles.word_id,
             "word": articles.word,
             "symbol": articles.symbol,
+            "category": articles.category,
+
         }
         for articles in Words.query.filter_by(partofspeech="Articles")
         .order_by(func.random())
@@ -476,6 +483,8 @@ def inital_tree_setting():
             "id": pronoun.word_id,
             "word": pronoun.word,
             "symbol": pronoun.symbol,
+            "category": pronoun.category,
+
         }
         for pronoun in Words.query.filter_by(partofspeech="Pronoun")
         .order_by(func.random())
@@ -508,7 +517,7 @@ def get_word_symbol():
     if word == None:
         return jsonify({"error": "Word is not in database"})
     else:
-        result = {"word": word.word, "id": word.word_id, "symbol": word.symbol}
+        result = {"word": word.word, "id": word.word_id, "symbol": word.symbol, "category": word.category}
     return jsonify(result)
 
 
@@ -649,13 +658,13 @@ def words():
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
-        if exists == False and word != "":
+        if exists == False and word != "" and word != None:
             word = Words(word, category, "", "", "", "", symbol)
             db.session.add(word)
             db.session.commit()
             return jsonify({"message": "Word Added"}), 201
         else:
-            if word == "":
+            if word == "" or word == None:
                 return jsonify({"error": "Word field is empty"})
             return jsonify({"error": "Word already exists"})
 

@@ -1,30 +1,31 @@
 <script>
 export default {
-  props:{
+  props: {
     id: Number,
     word: String,
     symbol: String,
-    partOfSpeech: String
+    partOfSpeech: String,
+    category: String,
   },
-  data(){
-    return{
+  data() {
+    return {
       img: this.symbol,
       backgroundColors: {
-        noun:'#5FC3FA',
-        noun2 : '#5FC3FA',
-        pronoun: '#0DB5FA',
-        adjectives: '#DECE1F',
-        adjectives2: '#DECE1F',
-        adverb: '#6BDE33',
-        preposition: '#A143DE',
-        conjunction: '#FBF62C',
-        articles: 'violet',
-        verb: '#33DE66',
-        verb2: '#33DE66'
-      }
-    }
+        noun: "#5FC3FA",
+        noun2: "#5FC3FA",
+        pronoun: "#0DB5FA",
+        adjectives: "#DECE1F",
+        adjectives2: "#DECE1F",
+        adverb: "#6BDE33",
+        preposition: "#A143DE",
+        conjunction: "#FBF62C",
+        articles: "violet",
+        verb: "#33DE66",
+        verb2: "#33DE66",
+      },
+    };
   },
-  methods : {
+  methods: {
     fetchSearchedWordSymbol(word) {
       return fetch(`/api/get_word_symbol?word=${word.toLowerCase()}`, {
         method: "GET",
@@ -33,49 +34,63 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          return data
+          return data;
         })
         .catch(function (error) {
-          return error
+          return error;
         });
     },
-    findSymbol(){
-      this.fetchSearchedWordSymbol(this.word).then((data)=>{this.img = data.symbol || '/HelpIcon.png'})
+    findSymbol() {
+      this.fetchSearchedWordSymbol(this.word).then((data) => {
+        this.img = data.symbol || "/HelpIcon.png";
+      });
     },
-    speak(){
+    speak() {
       this.tts.speak(new SpeechSynthesisUtterance(this.word));
     },
-    usePlaceholderImg(){
-      this.img = '/HelpIcon.png';
-    }
+    usePlaceholderImg() {
+      this.img = "/HelpIcon.png";
+    },
   },
   mounted() {
-    if (!this.img){
-      this.findSymbol()
+    if (!this.img) {
+      this.findSymbol();
     }
-  }
-}
+  },
+};
 </script>
 
 <template>
   <div class="container">
     <div id="tile">
-        <div class="card" :style="this.partOfSpeech ? `background-color:${this.backgroundColors[partOfSpeech]}` : 'background-color:#FF8080'">
-          <img :src="img" @error="usePlaceholderImg" alt="Image" draggable="false"/>
-          <div class="card-content">
-            <p class="word">{{ word }}</p>
-          </div>
+      <div
+        class="card"
+        :style="
+          this.partOfSpeech
+            ? `background-color:${this.backgroundColors[partOfSpeech]}`
+            : 'background-color:#FF8080'
+        "
+      >
+        <img
+          :src="img"
+          @error="usePlaceholderImg"
+          alt="Image"
+          draggable="false"
+        />
+        <div class="card-content">
+          <p class="word">{{ word }}</p>
         </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.container{
+.container {
   cursor: pointer;
 }
-.container:hover{
-  filter: sepia(0.60);
+.container:hover {
+  filter: sepia(0.6);
 }
 
 .card {
@@ -109,7 +124,7 @@ export default {
   text-align: center;
 }
 
-.word{
+.word {
   letter-spacing: 2px;
   font-weight: bolder;
   font-size: 18px;

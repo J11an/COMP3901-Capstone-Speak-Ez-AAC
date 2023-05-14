@@ -1,6 +1,4 @@
 <script>
-import AddPhrase from "../components/AddPhrase.vue";
-import Phrase from "./Phrase.vue";
 import WordPictureTile from "./WordPictureTile.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
 
@@ -8,7 +6,7 @@ const tts = window.speechSynthesis;
 
 export default {
   name: "PhrasesContainer",
-  components: { AddPhrase, Phrase, WordPictureTile, WordPictureTileMessage },
+  components: { WordPictureTile, WordPictureTileMessage },
 
   data() {
     return {
@@ -177,14 +175,7 @@ export default {
       <button class="toggle-container btn" @click="expandAddForm">
         <img class="add-icon" src="Add.png" />
         <p>ADD PHRASE</p>
-      </button> 
-
-      
-      <addPhrase v-show="showForm" @close-modal="showForm = false" />
-      <!-- <button class="toggle-container btn" @click="toggleAddForm">
-        <img class="add-icon" src="Add.png" />
-        <p>ADD PHRASE</p>
-      </button> -->
+      </button>
     </div>
 
     <!-- START OF ADD PHRASE MODAL -->
@@ -194,7 +185,7 @@ export default {
         <div class="modal-mask">
           <div class="modal-container">
             <div class="modal-header">
-              <slot name="header"> 
+              <slot name="header">
                 <p id="modal-title">Add a Phrase</p>
               </slot>
               <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
@@ -235,14 +226,13 @@ export default {
                 </div>
               </div>
               <button
-              @click="savePhrase(newPhrase, newCategory)"
-              class="btn btn-success btn-md submit-btn"
-              type="submit"
-            >
-              Add Phrase
-            </button>
+                @click="savePhrase(newPhrase, newCategory)"
+                class="btn btn-success btn-md submit-btn"
+                type="submit"
+              >
+                Add Phrase
+              </button>
             </div>
-            
           </div>
         </div>
       </Transition>
@@ -255,7 +245,7 @@ export default {
         <div class="modal-mask">
           <div class="modal-container">
             <div class="modal-header">
-              <slot name="header"> 
+              <slot name="header">
                 <p id="modal-title">Edit a Phrase</p>
               </slot>
               <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
@@ -296,14 +286,13 @@ export default {
                 </div>
               </div>
               <button
-              @click="updatePhrase(currentId, newPhrase, newCategory)"
-              class="btn btn-success btn-md submit-btn"
-              type="submit"
-            >
-              Save Changes
-            </button>
+                @click="updatePhrase(currentId, newPhrase, newCategory)"
+                class="btn btn-success btn-md submit-btn"
+                type="submit"
+              >
+                Save Changes
+              </button>
             </div>
-            
           </div>
         </div>
       </Transition>
@@ -331,6 +320,7 @@ export default {
       <div v-if="toggleExpandedPhrase">
         <button class="btn btn-dark" @click="hidePhrases">BACK</button>
         <div class="phrase-container">
+        <h1>{{currentCategory}}</h1>
           <div v-for="phrase in phrases" :key="phrase.id">
             <div class="phrase" @click="texttospeech(phrase.word)">
               <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
@@ -378,7 +368,7 @@ export default {
   margin: auto;
 }
 
-.modal-container{
+.modal-container {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -390,13 +380,13 @@ export default {
   font-weight: bold;
   margin: 0;
 }
-.modal-body{
+.modal-body {
   text-align: center;
   justify-content: center;
   align-items: center;
 }
 
-.form-label{
+.form-label {
   font-size: x-large;
   font-weight: bold;
 }
@@ -409,12 +399,11 @@ input {
   border-radius: 5px;
 }
 
-.submit-btn{
+.submit-btn {
   width: 50%;
   padding: 5px;
   text-align: center;
 }
-
 
 .phrase-header {
   display: flex;
