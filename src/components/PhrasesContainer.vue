@@ -278,10 +278,7 @@ export default {
                     v-model="newCategory"
                   />
                   <datalist id="categories">
-                    <option value="Home">Home</option>
-                    <option value="School">School</option>
-                    <option value="Basic Info">Basic Info</option>
-                    <option value="Emergency">Emergency</option>
+                    <option v-for="category in categories" :value="category">{{ category }}</option>
                   </datalist>
                 </div>
               </div>
