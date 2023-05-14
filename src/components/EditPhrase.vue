@@ -84,7 +84,7 @@ export default {
             @submit.prevent="editPhrase"
           >
             <div class="form-outline row-mb-4">
-              <label class="form-label" for="saved_phrases"></label>
+              <label class="form-label" for="saved_phrases">Phrase</label>
               <input
                 id="saved_phrases"
                 type="text"
@@ -96,8 +96,13 @@ export default {
             <br />
 
             <div class="form-outline mb-4">
+              <label class="form-label" for="category">Category</label>
               <div class="input-group">
-                <select class="form-select" name="category">
+                <select
+                  class="form-select"
+                  name="category"
+                  placeholder="Select Category"
+                >
                   <option value="Home">Home</option>
                   <option value="School">School</option>
                   <option value="Basic Info">Basic Info</option>
