@@ -278,7 +278,9 @@ export default {
                     v-model="newCategory"
                   />
                   <datalist id="categories">
-                    <option v-for="category in categories" :value="category">{{ category }}</option>
+                    <div v-for="category in categories">
+                      <option  :value="category">{{ category }}</option>
+                    </div>
                   </datalist>
                 </div>
               </div>
@@ -298,10 +300,9 @@ export default {
 
     <div>
       <!-- Folders -->
-      <div class="category-container">
+      <div v-if="!toggleExpandedPhrase" class="category-container">
         <div
           v-for="(category, index) in categories"
-          v-if="!toggleExpandedPhrase"
           :key="index"
           class="category"
         >
@@ -315,7 +316,7 @@ export default {
 
       <!-- Expanded Phrases -->
       <div v-if="toggleExpandedPhrase">
-        <button class="btn btn-dark" @click="hidePhrases">BACK</button>
+        <button class="btn" @click="hidePhrases"><img class="btn-back" src="/back.png"></button>
         <div class="phrase-container">
         <h1>{{currentCategory}}</h1>
           <div v-for="phrase in phrases" :key="phrase.id">
@@ -357,6 +358,11 @@ export default {
   flex: auto;
   align-items: center;
   justify-content: center;
+}
+
+.btn-back {
+  width: 50px;
+  height: 50px;
 }
 
 .add-icon {
