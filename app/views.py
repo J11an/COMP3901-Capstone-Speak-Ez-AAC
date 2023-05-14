@@ -557,6 +557,7 @@ def listen():
 @app.route("/api/saved_phrases", methods=["POST", "GET", "PUT", "DELETE"])
 def phrases():
     id = request.args.get("id")
+
     if request.method == "POST":
         saved_phrases = request.args.get("saved_phrases")
         category = request.args.get("category")
@@ -578,6 +579,7 @@ def phrases():
             return jsonify(
                 {"error": "Phrase already exists or there are 10 categories"}
             )
+
     if request.method == "GET":
         categories = [
             category[0]
@@ -591,6 +593,7 @@ def phrases():
             for category in categories
         }
         return jsonify(phrases_by_category), 201
+
     if request.method == "PUT":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
         if not phrase:
@@ -600,24 +603,23 @@ def phrases():
         phrase.saved_phrases = saved_phrases
         phrase.category = category
         db.session.commit()
-        return jsonify({"message": "Saved Phrase Updated"}), 200
+        return jsonify({"message": "Saved Phrase Updated"}), 201
+
     if request.method == "DELETE":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
         if not phrase:
             return jsonify({"message": "Phrase not found"}), 404
         db.session.delete(phrase)
         db.session.commit()
-        return jsonify({"message": "Saved Phrase Deleted"}), 200
+        return jsonify({"message": "Saved Phrase Deleted"}), 201
 
 
 @app.route("/api/fetch_category_symbols")
-def test():
-    # Get the distinct categories from the saved_phrases table
+def fetch_category_symbols():
     categories = [
         category[0].lower()
         for category in db.session.query(SavedPhrases.category).distinct()
     ]
-    # Query the saved_phrases and words tables and join them on the 'word' column
     phrases_by_category = {}
     for category in categories:
         query = (
@@ -641,6 +643,7 @@ def test():
 @app.route("/api/word", methods=["POST", "GET", "PUT", "DELETE"])
 def words():
     id = request.args.get("id")
+
     if request.method == "POST":
         word = request.args.get("word")
         symbol = request.args.get("symbol")
@@ -655,6 +658,7 @@ def words():
             return jsonify({"message": "Word Added"}), 201
         else:
             return jsonify({"error": "Word already exists"})
+
     if request.method == "GET":
         words = Words.query.all()
         words = [
@@ -668,6 +672,7 @@ def words():
             for word in words
         ]
         return jsonify(words), 201
+
     if request.method == "PUT":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
@@ -680,6 +685,7 @@ def words():
         word.symbol = symbol
         db.session.commit()
         return jsonify({"message": "Word Updated"}), 201
+
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
