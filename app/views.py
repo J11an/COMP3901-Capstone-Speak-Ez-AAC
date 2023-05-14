@@ -567,7 +567,7 @@ def phrases():
         num_categories = db.session.query(
             db.func.count(db.distinct(SavedPhrases.category))
         ).scalar()
-        if exists == False and num_categories < 10:
+        if exists == False and num_categories < 10 and category != "":
             savedphrase = SavedPhrases(saved_phrases, category)
             db.session.add(savedphrase)
             db.session.commit()
