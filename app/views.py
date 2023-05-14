@@ -556,7 +556,7 @@ def phrases():
     id = request.args.get("id")
 
     if request.method == "POST":
-        saved_phrases = request.args.get("saved_phrases")
+        saved_phrases = request.args.get("saved_phrases").lower()
         category = request.args.get("category")
         exists = (
             db.session.query(SavedPhrases.saved_phrases_id)
@@ -694,7 +694,7 @@ def words():
 
 @app.route("/api/check_message")
 def check_message():
-    saved_phrases = request.args.get("saved_phrases")
+    saved_phrases = request.args.get("saved_phrases").lower()
     exists = (
         db.session.query(SavedPhrases.saved_phrases_id)
         .filter_by(saved_phrases=saved_phrases)
