@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import WordPictureTile from "./WordPictureTile.vue";
+import WordPictureTile from "../WordPictureTile.vue";
 
 const searchTerm = ref("");
 const results = ref([]);

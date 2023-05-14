@@ -1,8 +1,8 @@
 <script>
-import AppHeader from "./components/AppHeader.vue";
+import AppHeader from "./components/Layout/AppHeader.vue";
 import MessageBar from "./components/MessageBar/MessageBar.vue";
-import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
-import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
+import ListeningMessageContainer from "./components/Listening/ListeningMessageContainer.vue";
+import SpeakingBoardContainer from "./components/Speaking/SpeakingBoardContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";
 import WordDisplay from "./components/WordDisplay.vue";
 import SettingsDisplay from "./components/Settings/SettingsDisplay.vue";

@@ -1,5 +1,5 @@
 <script>
-import Message from "../components/Listening/Message.vue";
+import Message from "./Message.vue";
 
 export default {
   components: { Message },

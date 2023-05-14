@@ -1,5 +1,5 @@
 <script>
-import WordPictureTile from "./WordPictureTile.vue";
+import WordPictureTile from "../WordPictureTile.vue";
 import draggable from "vuedraggable";
 
 export default {

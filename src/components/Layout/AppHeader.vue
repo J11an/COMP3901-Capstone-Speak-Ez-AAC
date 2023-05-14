@@ -77,6 +77,7 @@ export default {
 
 .nav-link {
   padding: 0;
+  margin: 0 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
