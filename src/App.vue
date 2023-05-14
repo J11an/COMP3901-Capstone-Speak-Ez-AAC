@@ -25,7 +25,7 @@ export default {
       messageList: [],
       micActive: false,
       recognizer: new webkitSpeechRecognition() ? new webkitSpeechRecognition() : null,
-      tts: window.speechSynthesis,
+      //tts: window.speechSynthesis,
     };
   },
   methods: {
@@ -179,7 +179,7 @@ export default {
     </Transition>
 
     <Transition name="fade" appear>
-      <SettingsDisplay v-if="currentScreen === 'SETTINGS'" />
+      <SettingsDisplay :tts="tts" v-if="currentScreen === 'SETTINGS'" />
     </Transition>
   </main>
 </template>

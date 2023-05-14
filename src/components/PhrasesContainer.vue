@@ -152,11 +152,13 @@ export default {
           console.log(error);
         });
     },
-    AutoDelete(id, category) {
-      let self = this;
-      this.deletePhrase(id);
-      this.hidePhrases();
-      this.expandPhrase(category);
+    removePhrase(id, category) {
+      this.deletePhrase(id).then((data) => {
+        this.phrases = [];
+        console.log(this.phrases);
+        this.getPhrases(category).then((data) => (this.phrases = data));
+        console.log(category, this.phrases);
+      });
     },
     texttospeech(phrase) {
       console.log(phrase);
@@ -320,7 +322,7 @@ export default {
       <div v-if="toggleExpandedPhrase">
         <button class="btn btn-dark" @click="hidePhrases">BACK</button>
         <div class="phrase-container">
-        <h1>{{currentCategory}}</h1>
+          <h1>{{ currentCategory }}</h1>
           <div v-for="phrase in phrases" :key="phrase.id">
             <div class="phrase" @click="texttospeech(phrase.word)">
               <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
@@ -331,7 +333,7 @@ export default {
               <button
                 type="button"
                 class="btn delete-btn"
-                @click="AutoDelete(phrase.id, currentCategory)"
+                @click="removePhrase(phrase.id, currentCategory)"
               >
                 <img src="delete.png" alt="" />
                 <p>Delete</p>
