@@ -1,15 +1,17 @@
 <script>
-import WordPictureTileMessage from "./WordPictureTileMessage.vue";
+import WordPictureTileMessage from "../WordPictureTileMessage.vue";
+import SavedPhraseModal from './SavedPhraseModal.vue'
 
 export default {
-  components:{WordPictureTileMessage},
+  components:{WordPictureTileMessage, SavedPhraseModal},
   props:{
     currentSentence: Array,
     tts: Object,
   },
   data(){
     return {
-      micActive: false
+      micActive: false,
+      showSavePhraseModal: false,
     }
   },
   methods:{
@@ -34,6 +36,9 @@ export default {
     },
     updateScreen(screen){
       this.$emit("updateScreen",screen)
+    },
+    handleSavedPhrase(){
+
     }
   }
 }
@@ -51,20 +56,36 @@ export default {
 
     <div class="btn-group btn-group-md options">
       <button class="btn" @click="handleBackspace">
-        <img src="/Backspace.png" alt="Backspace Icon" />
+        <img class="btn-img" src="/Backspace.png" alt="Backspace Icon" />
       </button>
       <button class="btn" @click="handleSpeaker">
-        <img src="/SpeakerIcon.png" alt="Speaker Icon" />
+        <img  class="btn-img" src="/SpeakerIcon.png" alt="Speaker Icon" />
       </button>
-      <button class="btn">
+
+      <button class="btn" @click="showSavePhraseModal = true">
         <img src="/saveIconOff.png" class="btn-img">
       </button>
+      <Teleport to="body">
+
+        <SavedPhraseModal :show="showSavePhraseModal">
+          <template #header>
+            <button class="btn" @click="showSavePhraseModal = false">
+              <img src="/clear.png" class="btn-modal"/>
+            </button>
+            <h3>Phrase Categories</h3>
+          </template>
+          <template #body>
+            <p>Tiles Here</p>
+          </template>
+        </SavedPhraseModal>
+      </Teleport>
+
       <button class="btn" @click="toggleListening">
-        <img src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
-        <img src="/micOn.png" alt="Mic On" v-else/>
+        <img class="btn-img" src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
+        <img class="btn-img" src="/micOn.png" alt="Mic On" v-else/>
       </button>
       <button class="btn" @click="handleClear">
-        <img src="/clear.png" alt="Clear Icon" />
+        <img class="btn-img" src="/clear.png" alt="Clear Icon" />
       </button>
     </div>
 
@@ -112,14 +133,19 @@ export default {
   margin: auto;
 }
 
-.btn img {
+.btn-img {
   width: 70px;
   height: 70px;
 }
 
-.btn img:hover{
+.btn-img:hover{
   width: 85px;
   height: 85px;
+}
+
+.btn-modal{
+  width: 30px;
+  height: 30px;
 }
 
 p{

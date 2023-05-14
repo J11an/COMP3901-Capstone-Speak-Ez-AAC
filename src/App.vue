@@ -1,6 +1,6 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
-import MessageBar from "./components/MessageBar.vue";
+import MessageBar from "./components/MessageBar/MessageBar.vue";
 import ListeningMessageContainer from "./components/ListeningMessageContainer.vue";
 import SpeakingBoardContainer from "./components/SpeakingBoardContainer.vue";
 import PhrasesContainer from "./components/PhrasesContainer.vue";

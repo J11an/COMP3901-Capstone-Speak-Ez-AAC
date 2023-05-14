@@ -25,8 +25,33 @@ export default {
     }
   },
   methods : {
+    fetchSearchedWordSymbol(word) {
+      return fetch(`/api/get_word_symbol?word=${word.toLowerCase()}`, {
+        method: "GET",
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data
+        })
+        .catch(function (error) {
+          return error
+        });
+    },
+    findSymbol(){
+      this.fetchSearchedWordSymbol(this.word).then((data)=>{this.img = data.symbol || '/HelpIcon.png'})
+    },
+    speak(){
+      this.tts.speak(new SpeechSynthesisUtterance(this.word));
+    },
     usePlaceholderImg(){
-      this.img = "/HelpIcon.png"
+      this.img = '/HelpIcon.png';
+    }
+  },
+  mounted() {
+    if (!this.img){
+      this.findSymbol()
     }
   }
 }
