@@ -51,6 +51,8 @@ export default {
 
 .modal-body {
   margin: 20px 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-default-button {
