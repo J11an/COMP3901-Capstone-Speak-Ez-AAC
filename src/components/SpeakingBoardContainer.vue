@@ -332,7 +332,7 @@ export default {
           />
         </div>
         <div v-if="searchResults.length <= 0">
-          <p>Couldn't find {{ searchTerm }}. Would you like to add it?</p>
+          <p>Couldn't find {{ searchTerm }}. But you can still add it to your sentence</p>
           <WordPictureTile
             :word="searchTerm.toUpperCase()"
             symbol="/HelpIcon.png"
@@ -350,17 +350,21 @@ export default {
             class="board-container d-flex justify-content-between mt-3"
           >
             <div v-for="column in this.sortColumns(columns)">
-              <div v-for="word in column[1]">
-                <WordPictureTile
-                  :id="word.id"
-                  :word="word.word.toUpperCase()"
-                  :symbol="word.symbol"
-                  :part-of-speech="column[0]"
-                  @click="addWord(word.id, word.word, word.symbol, column[0])"
-                  @dragstart="cachePinnedWord(word.id)"
-                  draggable="true"
-                />
-              </div>
+              <Transition name="fade" appear>
+                <div>
+                  <div v-for="word in column[1]">
+                    <WordPictureTile
+                      :id="word.id"
+                      :word="word.word.toUpperCase()"
+                      :symbol="word.symbol"
+                      :part-of-speech="column[0]"
+                      @click="addWord(word.id, word.word, word.symbol, column[0])"
+                      @dragstart="cachePinnedWord(word.id)"
+                      draggable="true"
+                    />
+                  </div>
+                </div>
+              </Transition>
             </div>
           </div>
         </div>

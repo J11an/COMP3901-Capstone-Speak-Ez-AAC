@@ -62,6 +62,9 @@ export default {
 .container{
   cursor: pointer;
 }
+.container:hover{
+  filter: sepia(0.60);
+}
 
 .card {
   width: 120px;

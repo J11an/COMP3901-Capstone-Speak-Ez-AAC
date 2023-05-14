@@ -1,7 +1,7 @@
 <script>
 export default {
   props:{
-
+    tts: Object
   },
   data() {
     return {

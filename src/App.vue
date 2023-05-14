@@ -190,11 +190,11 @@ export default {
 }
 
 .fade-enter-active {
-  transition: all 0.2s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .fade-leave-active {
-  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .fade-enter-from{
