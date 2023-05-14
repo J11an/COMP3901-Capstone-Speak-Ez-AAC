@@ -343,7 +343,6 @@ export default {
     </div>
 
     <!--Dynamic-->
-    <TransitionGroup name="fade">
       <div v-if="!searchOn && !pinsOn" class="dynamic-container">
         <div>
           <div
@@ -366,7 +365,6 @@ export default {
           </div>
         </div>
       </div>
-    </TransitionGroup>
 
     <!-- Pins -->
     <div v-if="pinsOn" class="pinned-container">

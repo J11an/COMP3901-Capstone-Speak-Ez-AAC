@@ -14,6 +14,7 @@ export default {
       micActive: false,
       showSavePhraseModal: false,
       phraseAdded: false,
+      phraseExists: false,
       success: false,
       errorMsg: '',
       categories: [],
@@ -68,6 +69,8 @@ export default {
               if (data.error){
                 this.success = false
                 this.errorMsg = data.error;
+              } else {
+                this.phraseExists = true
               }
               this.phraseAdded = true;
               setTimeout(()=>{
@@ -99,6 +102,22 @@ export default {
             return error;
           });
       },
+      checkPhrase(phrase) {
+        return fetch(`/api/check_message?saved_phrases=${phrase.map((p)=>p.word).join(" ")}`, {
+          headers: {
+            "X-CSRFToken": this.csrf_token,
+          },
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            return data;
+          })
+          .catch(function (error) {
+            return error;
+          });
+      },
       getCsrfToken() {
           let self = this;
           fetch("/api/csrf-token")
@@ -112,6 +131,22 @@ export default {
     mounted() {
       this.fetchCategories().then((categories)=>this.categories=categories);
       this.getCsrfToken();
+    },
+    watch:{
+      currentSentence:{
+        handler(oldVal,newVal){
+          this.checkPhrase(newVal).then((data)=>{
+            const msg = data.message;
+            console.log(msg)
+            if (msg==='Phrase exists'){
+              this.phraseExists = true;
+            } else {
+              this.phraseExists = false;
+            }
+          });
+        },
+        deep: true
+      }
     }
 }
 
@@ -135,10 +170,10 @@ export default {
       </button>
 
       <button class="btn" @click="showSavePhraseModal = true">
-        <img src="/saveIconOff.png" class="btn-img">
+        <img v-if="!phraseExists" src="/saveIconOff.png" class="btn-img">
+        <img v-else src="/saveIconOn.png" class="btn-img">
       </button>
       <Teleport to="body">
-
         <SavedPhraseModal :show="showSavePhraseModal">
           <template #header>
             <h3>Saving Phrase</h3>
