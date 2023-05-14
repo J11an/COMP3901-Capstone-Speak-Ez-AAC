@@ -1,9 +1,10 @@
 <script>
 import WordPictureTileMessage from "../WordPictureTileMessage.vue";
+import WordPictureTileCategory from "../WordPictureTileCategory.vue";
 import SavedPhraseModal from './SavedPhraseModal.vue'
 
 export default {
-  components:{WordPictureTileMessage, SavedPhraseModal},
+  components:{WordPictureTileMessage, WordPictureTileCategory, SavedPhraseModal},
   props:{
     currentSentence: Array,
     tts: Object,
@@ -12,6 +13,8 @@ export default {
     return {
       micActive: false,
       showSavePhraseModal: false,
+      categories: [],
+      csrf_token: ''
     }
   },
   methods:{
@@ -37,10 +40,55 @@ export default {
     updateScreen(screen){
       this.$emit("updateScreen",screen)
     },
-    handleSavedPhrase(){
-
+    sendPhraseRequest(category,phrase){
+      return fetch(`/api/saved_phrases`, {
+          method: "PUT",
+          headers: {
+            "X-CSRFToken": this.csrf_token,
+          },
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            return data;
+          })
+          .catch(function (error) {
+            return error;
+          });
+      },
+      addPhrase(category){
+        this.sendPhraseRequest(category,this.currentSentence)
+            .then((data)=>console.log(data))
+            .catch((error)=>console.log(error))
+      },
+      fetchCategories() {
+        return fetch(`/api/get_phrase_categories`, {
+          method: "GET",
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            return data;
+          })
+          .catch(function (error) {
+            return error;
+          });
+      },
+      getCsrfToken() {
+          let self = this;
+          fetch("/api/csrf-token")
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              self.csrf_token = data.csrf_token;
+            });
+        },
+    },
+    mounted() {
+    this.fetchCategories().then((categories)=>this.categories=categories)
     }
-  }
 }
 
 
@@ -69,13 +117,22 @@ export default {
 
         <SavedPhraseModal :show="showSavePhraseModal">
           <template #header>
+            <h3>Saving Phrase</h3>
             <button class="btn" @click="showSavePhraseModal = false">
               <img src="/clear.png" class="btn-modal"/>
             </button>
-            <h3>Phrase Categories</h3>
           </template>
           <template #body>
-            <p>Tiles Here</p>
+            <div class="phrase-section d-flex flex-wrap">
+              <div
+                  v-for="category in categories"
+                  @click="addPhrase(category)">
+                  <WordPictureTileCategory
+                    :id="-2"
+                    :word="category.toUpperCase()"
+                  />
+              </div>
+            </div>
           </template>
         </SavedPhraseModal>
       </Teleport>
@@ -100,6 +157,14 @@ export default {
 }
 #message:hover{
   background-color: lightblue;
+}
+
+.phrase-section{
+  max-width: 50vw;
+  max-height: 50vh;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
 }
 
 .msg-container {
