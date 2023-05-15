@@ -18,19 +18,9 @@ from flask_wtf.csrf import generate_csrf
 import os
 from app.models import *
 from werkzeug.utils import secure_filename
-from app.Scripts.tts import *
-from app.Scripts.vosk_speech_rec import *
-from vosk import Model, KaldiRecognizer
 import pandas as pd
 from sqlalchemy import func
 from difflib import get_close_matches
-
-phrases = []
-rootdir = os.getcwd()
-model_dir = os.path.join(rootdir + r"\model\vosk-model-small-en-us-0.15")
-model = Model(model_dir)
-rec = KaldiRecognizer(model, 16000)
-
 
 ###
 # Routing for your application.
@@ -658,8 +648,13 @@ def words():
 
     if request.method == "POST":
         word = request.args.get("word").lower()
+        word = word.replace("%20", " ")
         symbol = request.args.get("symbol")
-        category = request.args.get("category").lower()
+        category = request.args.get("category")
+
+        if category != None:
+            category = category.replace("%20", " ")
+            category = request.args.get("category").lower()
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
