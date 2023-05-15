@@ -174,19 +174,27 @@ export default {
 </script>
 
 <template>
-  <div class="word-container">
+  <div class="container">
+  <div class="word-container row">
     <h1>Here you can add or edit a word</h1>
-    <button class="toggle-container btn" @click="expandAddForm">
-      <img id="add-icon" src="Add.png" />
-      <p>ADD WORD</p>
-    </button>
-    <button class="toggle-container btn" @click="expandWordColumn">
-      <img id="edit-icon" src="edit.png" />
-      <p>EDIT WORD</p>
-    </button>
-    <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
-      <img class="btn-img" src="/search.png" />
-    </button>
+    <div class="word-option col-sm">
+      <button class="toggle-container btn" @click="expandAddForm">
+        <img id="add-icon" src="Add.png" />
+        <p>ADD WORD</p>
+      </button>
+    </div>
+    <div class="word-option col-sm">
+      <button class="toggle-container btn" @click="expandWordColumn">
+        <img id="edit-icon" src="edit.png" />
+        <p>EDIT WORD</p>
+      </button>
+    </div>
+    <div class="word-option col-sm">
+      <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
+        <img class="btn-img" src="/search.png" />
+        <p>SEARCH WORD</p>
+      </button>
+    </div>
   </div>
 
   <div class="search-btn-container" v-if="searchOn">
@@ -386,9 +394,49 @@ export default {
     </Transition>
   </div>
   <!-- END OF EDIT word MODAL -->
+  </div>
 </template>
 
-<style>
+<style scoped>
+.container{
+  display: block;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width:90%
+}
+
+.word-container{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
+}
+
+.word-option{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.15);
+  /* background-color: rgb(198, 216, 37); */
+  border-radius: 10px;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  padding: auto;
+  float: right;
+}
+
+
+p{
+  font-size: x-large;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
 .modal-container {
   display: flex;
   flex-direction: column;
@@ -424,6 +472,7 @@ input {
   width: 80%;
   height: auto;
   margin: auto;
+  background: transparent;
 }
 
 #edit-icon {
@@ -441,8 +490,8 @@ input {
 }
 
 .btn-img {
-  width: 60px;
-  margin: 0 20px;
+  width: 80px;
+  margin: 10px 90px;
 }
 
 .btn-img:hover {

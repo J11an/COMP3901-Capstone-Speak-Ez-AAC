@@ -34,9 +34,9 @@ export default {
       this.voices.forEach((voice, i) => {
         const option = new Option(`${voice.name} (${voice.lang})`, i);
 
-        if (voice.default) {
-          option.textContent += " — DEFAULT";
-        }
+        // if (voice.default) {
+        //   option.textContent += " — DEFAULT";
+        // }
 
         option.setAttribute("data-lang", voice.lang);
         option.setAttribute("data-name", voice.name);
