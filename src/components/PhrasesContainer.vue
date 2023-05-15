@@ -1,12 +1,14 @@
 <script>
 import WordPictureTile from "./WordPictureTile.vue";
 import WordPictureTileMessage from "./WordPictureTileMessage.vue";
+import WordPictureTilePhrase from "./WordPictureTilePhrase.vue";
+import WordPictureTilePhraseOpen from "./WordPictureTilePhraseOpen.vue";
 
 const tts = window.speechSynthesis;
 
 export default {
   name: "PhrasesContainer",
-  components: { WordPictureTile, WordPictureTileMessage },
+  components: {WordPictureTilePhraseOpen, WordPictureTilePhrase, WordPictureTile, WordPictureTileMessage },
 
   data() {
     return {
@@ -49,6 +51,7 @@ export default {
         });
     },
     expandPhrase(category) {
+      console.log("Expanding ", category)
       let self = this;
       this.toggleExpandedPhrase = true;
       self.currentCategory = category;
@@ -168,11 +171,13 @@ export default {
           console.log(error);
         });
     },
-    AutoDelete(id, category) {
-      let self = this;
-      this.deletePhrase(id);
-      this.hidePhrases();
-      this.expandPhrase(category);
+    removePhrase(id, category) {
+      this.deletePhrase(id).then((data) => {
+        this.phrases = [];
+        console.log(this.phrases);
+        this.getPhrases(category).then((data) => (this.phrases = data));
+        console.log(category, this.phrases);
+      });
     },
     texttospeech(phrase) {
       console.log(phrase);
@@ -187,6 +192,14 @@ export default {
   <div class="container">
     <div class="phrase-header">
       <!--  -->
+      <Transition name="fade" appear>
+        <div v-if="toggleExpandedPhrase">
+          <WordPictureTilePhraseOpen
+            :word="currentCategory"
+            @click="hidePhrases"
+          />
+        </div>
+      </Transition>
       <button class="toggle-container btn p-4" @click="expandAddForm">
         <img class="add-icon" src="Add.png" />
       </button>
@@ -228,7 +241,7 @@ export default {
                   type="text"
                   name="newCategory"
                   list="categories"
-                  v-model="newCategory"
+                  v-model="currentCategory"
                 />
                 <datalist id="categories">
                   <div v-for="category in categories">
@@ -338,7 +351,7 @@ export default {
           :key="index"
           class="category"
         >
-          <WordPictureTile
+          <WordPictureTilePhrase
             :word="category.toUpperCase()"
             :symbol="category.symbol"
             @click="expandPhrase(category)"
@@ -347,21 +360,40 @@ export default {
       </div>
 
       <!-- Expanded Phrases -->
-      <div v-if="toggleExpandedPhrase">
-        <button class="btn" @click="hidePhrases"><img class="btn-back" src="/back.png"></button>
-        <div class="phrase-container">
-        <h1>{{currentCategory}}</h1>
-          <div v-for="phrase in phrases" :key="phrase.id">
-            <div class="phrase" @click="texttospeech(phrase.word)">
-              <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
-                <WordPictureTileMessage :word="item" :tts="tts" />
+      <Transition name="fade" appear>
+        <div v-if="toggleExpandedPhrase">
+
+          <div class="phrase-container">
+            <div v-for="phrase in phrases" :key="phrase.id">
+              <div class="phrase" @click="texttospeech(phrase.word)">
+                <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
+                  <WordPictureTileMessage :word="item" :tts="tts" />
+                </div>
+              </div>
+              <div class="phrase-opts">
+                <button
+                  type="button"
+                  class="btn delete-btn"
+                  @click="AutoDelete(phrase.id, currentCategory)"
+                >
+                  <img src="delete.png" alt="" />
+                  <p>Delete</p>
+                </button>
+                <button
+                  type="button"
+                  class="btn delete-btn"
+                  @click="expandEditForm(phrase.id)"
+                >
+                  <img src="edit.png" alt="" />
+                  <p>Edit</p>
+                </button>
               </div>
             </div>
             <div class="phrase-opts">
               <button
                 type="button"
                 class="btn delete-btn"
-                @click="AutoDelete(phrase.id, currentCategory)"
+                @click="removePhrase(phrase.id, currentCategory)"
               >
                 <img src="delete.png" alt="" />
                 <p>Delete</p>
@@ -377,12 +409,17 @@ export default {
             </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
   </div>
 </template>
 
 <style scoped>
+.back-btn-container{
+  width: 200px;
+  height: 200px;
+}
+
 .form-error{
   font-size: 26px;
   font-weight: bolder;
@@ -463,7 +500,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .phrase {
