@@ -299,7 +299,7 @@ export default {
       <img class="btn-img" src="/refresh-page-option.png" />
     </button>
 
-    <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
+    <button v-if="!pinsOn" :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
       <img class="btn-img" src="/search.png" />
     </button>
 
@@ -329,6 +329,8 @@ export default {
             :word="word.word.toUpperCase()"
             :symbol="word.symbol"
             @click="addWord(word.id, word.word, word.symbol)"
+            draggable="true"
+            @dragstart="cachePinnedWord(word.id)"
           />
         </div>
         <div v-if="searchResults.length <= 0">
