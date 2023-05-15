@@ -8,7 +8,12 @@ const tts = window.speechSynthesis;
 
 export default {
   name: "PhrasesContainer",
-  components: {WordPictureTilePhraseOpen, WordPictureTilePhrase, WordPictureTile, WordPictureTileMessage },
+  components: {
+    WordPictureTilePhraseOpen,
+    WordPictureTilePhrase,
+    WordPictureTile,
+    WordPictureTileMessage,
+  },
 
   data() {
     return {
@@ -22,8 +27,8 @@ export default {
       newCategory: "",
       newPhrase: "",
       currentId: 0,
-      error : '',
-      message : ''
+      error: "",
+      message: "",
     };
   },
   mounted() {
@@ -52,7 +57,7 @@ export default {
         });
     },
     expandPhrase(category) {
-      console.log("Expanding ", category)
+      console.log("Expanding ", category);
       let self = this;
       this.toggleExpandedPhrase = true;
       self.currentCategory = category;
@@ -93,18 +98,21 @@ export default {
           console.log(error);
         });
     },
-    sendPhraseFetch(phrase,category){
-      return fetch(`/api/saved_phrases?category=${category}&saved_phrases=${phrase}`, {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": this.csrf_token,
-        },
-      })
+    sendPhraseFetch(phrase, category) {
+      return fetch(
+        `/api/saved_phrases?category=${category}&saved_phrases=${phrase}`,
+        {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": this.csrf_token,
+          },
+        }
+      )
         .then(function (response) {
           return response.json();
         })
         .then(function (data) {
-          if (data.message || data.error){
+          if (data.message || data.error) {
             return data;
           }
         })
@@ -271,7 +279,7 @@ export default {
                 />
                 <datalist id="categories">
                   <div v-for="category in categories">
-                    <option  :value="category">{{ category }}</option>
+                    <option :value="category">{{ category }}</option>
                   </div>
                 </datalist>
               </div>
@@ -433,18 +441,18 @@ export default {
   height: 200px;
 }
 
-.form-error{
+.form-error {
   font-size: 26px;
   font-weight: bolder;
   color: crimson;
 }
-.form-message{
+.form-message {
   font-size: 26px;
   font-weight: bolder;
   color: #3a7bd5;
 }
 
-.success-wrapper-btn{
+.success-wrapper-btn {
   width: 150px;
   height: 150px;
 }
@@ -509,11 +517,11 @@ input {
   text-align: center;
 }
 
-.phrase-group{
+.phrase-group {
   margin: 20px;
 }
 
-.phrase-term-wrapper{
+.phrase-term-wrapper {
   display: flex;
   flex-wrap: wrap;
 }
@@ -529,7 +537,7 @@ input {
   cursor: pointer;
   min-height: 100px;
   border: 2px solid black;
-  border-radius: 20px;;
+  border-radius: 20px;
 }
 
 .phrase:hover{

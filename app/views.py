@@ -18,18 +18,9 @@ from flask_wtf.csrf import generate_csrf
 import os
 from app.models import *
 from werkzeug.utils import secure_filename
-from app.Scripts.tts import *
-from app.Scripts.vosk_speech_rec import *
-from vosk import Model, KaldiRecognizer
 import pandas as pd
 from sqlalchemy import func
 from difflib import get_close_matches
-
-phrases = []
-rootdir = os.getcwd()
-model_dir = os.path.join(rootdir + r"\model\vosk-model-small-en-us-0.15")
-model = Model(model_dir)
-rec = KaldiRecognizer(model, 16000)
 
 
 ###
@@ -401,7 +392,7 @@ def search_word(word):
         search_result = Words.query.filter(Words.word.ilike(f"%{word}%")).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        matches = [(w.word_id, w.symbol, w.word) for w in search_result]
+        matches = [(w.word_id, w.symbol, w.word, w.category) for w in search_result]
         matches = list(
             set(
                 get_close_matches(
@@ -416,7 +407,12 @@ def search_word(word):
                     mword["id"] for mword in matched
                 ]:
                     matched.append(
-                        {"id": word.word_id, "word": word.word, "symbol": word.symbol}
+                        {
+                            "id": word.word_id,
+                            "word": word.word,
+                            "symbol": word.symbol,
+                            "category": word.category,
+                        }
                     )
         return jsonify(matched)
 
@@ -740,7 +736,10 @@ def seed_database():
                         if isinstance(row["word"], str)
                         else row["word"],
                         partofspeech=(row["part_of_speech"]),
-                        category=(row["category"]),
+                        category=str(row["category"]).lower()
+                        if isinstance(row["category"], str)
+                        else row["category"],
+                        # category=(row["category"]),
                         grade_level=(row["grade_level"]),
                         time=(row["time"]),
                         place=(row["place"]),
