@@ -757,6 +757,14 @@ def seed_database():
                     )
                     db.session.add(cterm)
                     db.session.commit()
+            if sheet_name == "SavedPhrases":
+                for index, row in sheet_data.iterrows():
+                    sphrases = SavedPhrases(
+                        saved_phrases=(row["saved_phrases"]),
+                        category=(row["category"])                        
+                    )
+                    db.session.add(sphrases)
+                    db.session.commit()
 
             try:
                 if sheet_name == "Parts_of_speech":
