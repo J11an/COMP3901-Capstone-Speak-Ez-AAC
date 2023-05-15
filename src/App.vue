@@ -15,7 +15,7 @@ export default {
     ListeningMessageContainer,
     MessageBar,
     WordDisplay,
-    SettingsDisplay
+    SettingsDisplay,
   },
   data() {
     return {
@@ -24,59 +24,70 @@ export default {
       currentMessage: [],
       messageList: [],
       micActive: false,
-      recognizer: new webkitSpeechRecognition() ? new webkitSpeechRecognition() : null,
-      //tts: window.speechSynthesis,
+      recognizer: new webkitSpeechRecognition()
+        ? new webkitSpeechRecognition()
+        : null,
+      tts: window.speechSynthesis,
     };
   },
   methods: {
     updateBody(screen) {
-      if (!(this.currentScreen==='SPEAKING' && screen==='SPEAKLISTEN')){
-        if ((screen==='SPEAKLISTEN' || screen==='PINNED') && (this.currentScreen==='SPEAKLISTEN' || this.currentScreen==='PINNED')){
+      if (!(this.currentScreen === "SPEAKING" && screen === "SPEAKLISTEN")) {
+        if (
+          (screen === "SPEAKLISTEN" || screen === "PINNED") &&
+          (this.currentScreen === "SPEAKLISTEN" ||
+            this.currentScreen === "PINNED")
+        ) {
           this.currentScreen = this.previousScreen;
           this.previousScreen = "";
-        } else if (screen==='SPEAKLISTEN' || screen==='PINNED') {
+        } else if (screen === "SPEAKLISTEN" || screen === "PINNED") {
           this.previousScreen = this.currentScreen;
           this.currentScreen = screen;
         } else {
           this.currentScreen = screen;
         }
       }
-
     },
     updateMessage(request) {
       const requestType = request[0];
       const requestBody = request[1];
-      if (requestType==='add'){
+      if (requestType === "add") {
         this.currentMessage.push(requestBody);
       }
-      if (requestType==='backspace' && this.currentMessage){
+      if (requestType === "backspace" && this.currentMessage) {
         this.currentMessage.pop();
       }
-      if (requestType==='clear'){
+      if (requestType === "clear") {
         this.currentMessage = [];
       }
     },
     updateMessageList(request) {
       const from = request[0];
       const msg = request[1];
-      if (from==='SPEAKER') {
+      if (from === "SPEAKER") {
         this.messageList.push({
-          id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
+          id:
+            this.messageList.length !== 0
+              ? this.messageList[this.messageList.length - 1].id + 1
+              : 0,
           msg: [...msg],
-          from: from
-        })
+          from: from,
+        });
       } else {
         this.messageList.push({
-          id: this.messageList.length!==0 ? this.messageList[this.messageList.length-1].id+1 : 0,
+          id:
+            this.messageList.length !== 0
+              ? this.messageList[this.messageList.length - 1].id + 1
+              : 0,
           msg: [...msg],
-          from: from
-        })
+          from: from,
+        });
       }
     },
-    updateMicState(newState){
+    updateMicState(newState) {
       this.micActive = newState;
     },
-    filterSentence(sentence){
+    filterSentence(sentence) {
       return fetch(`/api/filter_words?message=${sentence}`, {
         method: "GET",
         headers: {
@@ -93,37 +104,32 @@ export default {
           return error;
         });
     },
-    configureRecognizer(){
-      if (this.recognizer){
+    configureRecognizer() {
+      if (this.recognizer) {
         this.recognizer.continuous = true;
         this.recognizer.lang = "en-US";
         this.recognizer.interimResults = false;
         this.recognizer.maxAlternatives = 1;
         this.recognizer.onresult = (event) => {
-          const msg = event.results[event.results.length-1][0].transcript;
-          this.filterSentence(msg)
-              .then((filteredSentence)=>{
-                this.updateMessageList(
-                    ["SPEAKER",
-                      filteredSentence.map(
-                          (val)=>{
-                            return {
-                              id: 0,
-                              word: val,
-                            }
-                          }
-                      )
-                    ]
-                )
-              })
+          const msg = event.results[event.results.length - 1][0].transcript;
+          this.filterSentence(msg).then((filteredSentence) => {
+            this.updateMessageList([
+              "SPEAKER",
+              filteredSentence.map((val) => {
+                return {
+                  id: 0,
+                  word: val,
+                };
+              }),
+            ]);
+          });
         };
       }
-
     },
   },
   mounted() {
     this.configureRecognizer();
-  }
+  },
 };
 </script>
 
@@ -138,37 +144,37 @@ export default {
         :mic-state="micActive"
         :recognizer="recognizer"
         :tts="tts"
-        v-if="currentScreen === 'LISTENING' || currentScreen==='SPEAKLISTEN'"
+        v-if="currentScreen === 'LISTENING' || currentScreen === 'SPEAKLISTEN'"
         @updateMessages="updateMessageList"
         @sendMicState="updateMicState"
       />
     </Transition>
 
-
     <Transition name="fade" appear>
       <MessageBar
-          :current-sentence="currentMessage"
-          :tts="tts"
-          @updateSentence="updateMessage"
-          @updateMessages="updateMessageList"
-          @updateMicState="updateMicState"
-          @updateScreen="updateBody"
-          v-if="
+        :current-sentence="currentMessage"
+        :tts="tts"
+        @updateSentence="updateMessage"
+        @updateMessages="updateMessageList"
+        @updateMicState="updateMicState"
+        @updateScreen="updateBody"
+        v-if="
           currentScreen === 'SPEAKING' ||
           currentScreen === 'LISTENING' ||
           currentScreen === 'PINNED' ||
-          currentScreen==='SPEAKLISTEN'
+          currentScreen === 'SPEAKLISTEN'
         "
       />
     </Transition>
 
     <Transition name="fade" appear>
       <SpeakingBoardContainer
-          :current-message="currentMessage"
-          :current-screen="currentScreen"
-          @updateScreen="updateBody"
-          @updateSentence="updateMessage"
-          v-if="currentScreen === 'SPEAKING' || currentScreen==='SPEAKLISTEN'" />
+        :current-message="currentMessage"
+        :current-screen="currentScreen"
+        @updateScreen="updateBody"
+        @updateSentence="updateMessage"
+        v-if="currentScreen === 'SPEAKING' || currentScreen === 'SPEAKLISTEN'"
+      />
     </Transition>
 
     <Transition name="fade" appear>
@@ -185,7 +191,7 @@ export default {
 </template>
 
 <style>
-*{
+* {
   transition: 200ms;
 }
 
@@ -197,7 +203,7 @@ export default {
   transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.fade-enter-from{
+.fade-enter-from {
   opacity: 0;
 }
 .fade-leave-to {
