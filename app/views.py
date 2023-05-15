@@ -563,20 +563,32 @@ def phrases():
     id = request.args.get("id")
 
     if request.method == "POST":
-        saved_phrases = request.args.get("saved_phrases").lower()
-        category = request.args.get("category").lower()
+        saved_phrases = (
+            request.args.get("saved_phrases").lower().replace("%20", " ").strip()
+        )
+        category = (
+            request.args.get("category").lower().lower().replace("%20", " ").strip()
+        )
         num_categories = db.session.query(
             db.func.count(db.distinct(SavedPhrases.category))
         ).scalar()
         try:
-            if num_categories < 10 and category != "" and category != None:
+            if (
+                num_categories < 10
+                and category != ""
+                and category != None
+                and saved_phrases != ""
+                and saved_phrases != None
+            ):
                 savedphrase = SavedPhrases(saved_phrases, category)
                 db.session.add(savedphrase)
                 db.session.commit()
                 return jsonify({"message": "Saved Phrase Added"}), 201
             else:
                 return jsonify(
-                    {"error": "There are 10 categories or the category field is empty"}
+                    {
+                        "error": "There are 10 categories or the category/saved phrase field is empty"
+                    }
                 )
         except IntegrityError:
             return jsonify({"error": "A phrase already exists for this category"})
@@ -594,9 +606,11 @@ def phrases():
     if request.method == "PUT":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
         if not phrase:
-            return jsonify({"message": "Phrase not found"}), 404
-        saved_phrases = request.args.get("saved_phrases")
-        category = request.args.get("category")
+            return jsonify({"error": "Phrase not found"}), 404
+        saved_phrases = (
+            request.args.get("saved_phrases").lower().replace("%20", " ").strip()
+        )
+        category = request.args.get("category").lower().replace("%20", " ").strip()
         if (
             saved_phrases != ""
             and category != ""
@@ -607,12 +621,12 @@ def phrases():
             phrase.category = category
             db.session.commit()
             return jsonify({"message": "Saved Phrase Updated"}), 201
-        return jsonify({"message": "Phrase or Category field is blank"})
+        return jsonify({"error": "Phrase or Category field is blank"})
 
     if request.method == "DELETE":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
         if not phrase:
-            return jsonify({"message": "Phrase not found"}), 404
+            return jsonify({"error": "Phrase not found"}), 404
         db.session.delete(phrase)
         db.session.commit()
         return jsonify({"message": "Saved Phrase Deleted"}), 201
@@ -648,9 +662,9 @@ def words():
     id = request.args.get("id")
 
     if request.method == "POST":
-        word = request.args.get("word").lower().replace("%20", " ")
+        word = request.args.get("word").lower().replace("%20", " ").strip()
         symbol = request.args.get("symbol")
-        category = request.args.get("category").lower().replace("%20", " ")
+        category = request.args.get("category").lower().replace("%20", " ").strip()
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
@@ -681,10 +695,10 @@ def words():
     if request.method == "PUT":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
-            return jsonify({"message": "Word not found"}), 404
-        cword = request.args.get("word").lower()
+            return jsonify({"error": "Word not found"}), 404
+        cword = request.args.get("word").lower().replace("%20", " ").strip()
         symbol = request.args.get("symbol")
-        category = request.args.get("category")
+        category = request.args.get("category").lower().replace("%20", " ").strip()
         if cword != "" and cword != None:
             db.session.query(Words).filter_by(word_id=id).update(
                 {"word": cword, "category": category, "symbol": symbol}
@@ -697,7 +711,7 @@ def words():
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
-            return jsonify({"message": "Word not found"}), 404
+            return jsonify({"error": "Word not found"}), 404
         db.session.delete(word)
         db.session.commit()
         return jsonify({"message": "Word Deleted"}), 201
@@ -714,7 +728,7 @@ def check_message():
     )
     if exists == True and saved_phrases != "":
         return jsonify({"message": "Phrase exists"}), 201
-    return jsonify({"message": "Phrase does not exist"})
+    return jsonify({"error": "Phrase does not exist"})
 
 
 # Seed Vocab List
@@ -875,7 +889,7 @@ def pinned_words():
         id = request.args.get("id")
         pword = PinnedWords.query.filter_by(pinnedwords_id=id).first()
         if not pword:
-            return jsonify({"message": "Pinned Word not found"}), 404
+            return jsonify({"error": "Pinned Word not found"}), 404
         db.session.delete(pword)
         db.session.commit()
         return jsonify({"message": "Pinned Word Deleted"}), 200
