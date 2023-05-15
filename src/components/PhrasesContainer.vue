@@ -43,6 +43,7 @@ export default {
           return response.json();
         })
         .then(function (data) {
+          self.phrases = [];
           self.phrases = data;
           console.log("phrases", self.phrases);
         })
@@ -61,10 +62,10 @@ export default {
     hidePhrases() {
       this.toggleExpandedPhrase = false;
     },
-    expandEditForm(id) {
-      let self = this;
+    expandEditForm(id, phrase) {
       this.toggleEditPhraseForm = true;
-      self.currentId = id;
+      this.currentId = id;
+      this.newPhrase = phrase;
     },
     hideEditForm() {
       this.toggleEditPhraseForm = false;
@@ -76,7 +77,7 @@ export default {
       this.toggleAddPhraseForm = false;
     },
     deletePhrase(id) {
-      fetch(`/api/saved_phrases?id=${id}`, {
+      return fetch(`/api/saved_phrases?id=${id}`, {
         method: "DELETE",
         headers: {
           "X-CSRFToken": this.csrf_token,
@@ -116,6 +117,7 @@ export default {
           .then((data)=>{
             if (data.message){
               this.getCategories();
+              this.getPhrases(category);
               this.message = data.message;
               this.error = '';
               setTimeout(()=>{
@@ -133,8 +135,8 @@ export default {
 
           })
     },
-    updatePhrase(id, saved_phrases, category) {
-      fetch(
+    updatePhraseRequest(id, saved_phrases, category) {
+      return fetch(
         `/api/saved_phrases?id=${id}&saved_phrases=${saved_phrases}&category=${category}`,
         {
           method: "PUT",
@@ -147,11 +149,34 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
+          if (data.message || data.error){
+            return data;
+          }
         })
         .catch(function (error) {
           console.log(error);
         });
+    },
+    updatePhrase(id, saved_phrases, category){
+      this.updatePhraseRequest(id,saved_phrases,category)
+          .then((data)=>{
+            if (data.message){
+              this.getCategories();
+              this.getPhrases(category);
+              this.message = data.message;
+              this.error = '';
+              setTimeout(()=>{
+                this.toggleEditPhraseForm = false;
+                setTimeout(()=>{
+                  this.error = '';
+                  this.message = '';
+                },100)
+              },3000);
+            }
+            if (data.error) {
+              this.error = data.error;
+            }
+          })
     },
     getCategories() {
       let self = this;
@@ -165,6 +190,7 @@ export default {
           return response.json();
         })
         .then(function (data) {
+          self.categories = [];
           self.categories = data;
         })
         .catch(function (error) {
@@ -259,7 +285,7 @@ export default {
             </button>
           </div>
           <div>
-            <div v-if="message">
+            <div class="success-group" v-if="message">
               <img class="success-wrapper-btn" src="/checked.png"/>
               <p class="form-message">{{ message }}</p>
             </div>
@@ -291,49 +317,47 @@ export default {
               ></button>
             </div>
             <div class="modal-body">
-              <div class="form-outline row-mb-4"></div>
-              <label class="form-label" for="phrase">Phrase</label>
-              <input
-                id="phrase"
-                type="text"
-                class="form-control"
-                name="newPhrase"
-                v-model="newPhrase"
-                placeholder="Enter your phrase here"
-              />
-              <div class="form-outline mb-4">
-                <label class="form-label" for="category">Category</label>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    name="newCategory"
-                    list="categories"
-                    v-model="newCategory"
-                  />
-                  <datalist id="categories">
-                    <div v-for="category in categories">
-                      <option  :value="category">{{ category }}</option>
+              <div v-if="!message" class="form-outline row-mb-4">
+                <label class="form-label" for="phrase">Phrase</label>
+                <input
+                  id="phrase"
+                  type="text"
+                  class="form-control"
+                  name="newPhrase"
+                  v-model="newPhrase"
+                  placeholder="Enter your phrase here"
+                />
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="category">Category</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        name="newCategory"
+                        list="categories"
+                        v-model="currentCategory"
+                      />
+                      <datalist id="categories">
+                        <div v-for="category in categories">
+                          <option  :value="category">{{ category }}</option>
+                        </div>
+                      </datalist>
                     </div>
-                  </datalist>
-                </div>
+                  </div>
+                  <button
+                    @click="updatePhrase(currentId, newPhrase, currentCategory)"
+                    class="btn btn-success btn-md submit-btn"
+                    type="submit"
+                  >
+                    Save Changes
+                  </button>
               </div>
-              <button
-                @click="updatePhrase(currentId, newPhrase, newCategory)"
-                class="btn btn-success btn-md submit-btn"
-                type="submit"
-              >
-                Save Changes
-              </button>
               <div>
-                <div v-if="message">
-                  <p class="form-message">
-                    {{ message }}
-                  </p>
+                <div class="success-group" v-if="message">
+                  <img class="success-wrapper-btn" src="/checked.png"/>
+                  <p class="form-message">{{ message }}</p>
                 </div>
                 <div v-if="error">
-                  <p class="form-error">
-                    {{ error }}
-                  </p>
+                  <p class="form-error">{{ error }}</p>
                 </div>
               </div>
             </div>
@@ -363,6 +387,7 @@ export default {
       <Transition name="fade" appear>
           <div v-if="toggleExpandedPhrase" class="phrase-container">
             <div class="phrase-group" v-for="phrase in phrases" :key="phrase.id">
+              <Transition name="fade" appear>
               <div class="phrase-term-wrapper">
                 <div class="phrase d-flex flex-wrap" @click="texttospeech(phrase.word)">
                   <div class="phrase-tile" v-for="(item, index) in phrase.word.split(' ')" :key="index">
@@ -373,7 +398,7 @@ export default {
                   <button
                     type="button"
                     class="btn delete-btn"
-                    @click="expandEditForm(phrase.id)"
+                    @click="expandEditForm(phrase.id, phrase.word)"
                   >
                     <img class="modify-image" src="edit.png" alt="" />
                     <p>Edit</p>
@@ -381,13 +406,14 @@ export default {
                   <button
                     type="button"
                     class="btn delete-btn"
-                    @click="AutoDelete(phrase.id, currentCategory)"
+                    @click="removePhrase(phrase.id, currentCategory)"
                   >
                     <img class="modify-image" src="delete.png" alt="" />
                     <p>Delete</p>
                   </button>
                 </div>
               </div>
+              </Transition>
             </div>
           </div>
       </Transition>
@@ -396,6 +422,12 @@ export default {
 </template>
 
 <style scoped>
+.success-group{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .back-btn-container{
   width: 200px;
   height: 200px;
@@ -496,9 +528,13 @@ input {
 .phrase {
   cursor: pointer;
   min-height: 100px;
-  border: 1px;
   border: 2px solid black;
   border-radius: 20px;;
+}
+
+.phrase:hover{
+  background-color: lightblue;
+  border: 5px solid black;
 }
 
 .phrase-container {
@@ -508,20 +544,6 @@ input {
   height: 50vh;
 }
 
-.delete-btn {
-  height: 80px;
-  width: 80px;
-}
-
-.delete-btn {
-  width: 70px;
-  height: 70px;
-}
-
-.delete-btn:hover{
-  width: 85px;
-  height: 85px;
-}
 
 .modify-image{
   width: 60px;
@@ -529,5 +551,12 @@ input {
 }
 
 .delete-btn img {
+  width: 70px;
+  height: 70px;
+}
+
+.delete-btn img:hover {
+  width: 85px;
+  height: 85px;
 }
 </style>

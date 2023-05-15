@@ -84,6 +84,12 @@ export default {
   background-size: 200px 200px;
 }
 
+.card:hover{
+  width: 210px;
+  height: 210px;
+  background-size: 210px 210px;
+}
+
 .card img {
   display: block;
   width: 50px;

@@ -56,6 +56,12 @@ export default {
 </template>
 
 <style scoped>
+.card:hover{
+  width: 210px;
+  height: 210px;
+  background-size: 210px 210px;
+}
+
 .container{
   cursor: pointer;
 }
