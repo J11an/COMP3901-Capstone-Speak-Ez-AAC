@@ -53,6 +53,9 @@ export default {
       const container = document.querySelector("#con-container");
       container.scrollTop = container.scrollHeight;
     },
+    sendTileAudio(word) {
+      this.$emit("playAudio",word);
+    }
   },
 };
 </script>
@@ -73,7 +76,7 @@ export default {
       v-for="message in messageList"
       v-bind:key="message.id"
     >
-      <Message :msg="message.msg" :from="message.from" :tts="tts" />
+      <Message :msg="message.msg" :from="message.from" @playMessageTile="sendTileAudio" />
     </div>
 
     <div id="anchor"></div>

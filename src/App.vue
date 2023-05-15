@@ -28,6 +28,7 @@ export default {
         ? new webkitSpeechRecognition()
         : null,
       tts: window.speechSynthesis,
+      utterance: new SpeechSynthesisUtterance(),
     };
   },
   methods: {
@@ -126,6 +127,10 @@ export default {
         };
       }
     },
+    speak(sentence){
+      this.utterance.text = sentence;
+      this.tts.speak(this.utterance);
+    }
   },
   mounted() {
     this.configureRecognizer();
@@ -147,6 +152,7 @@ export default {
         v-if="currentScreen === 'LISTENING' || currentScreen === 'SPEAKLISTEN'"
         @updateMessages="updateMessageList"
         @sendMicState="updateMicState"
+        @playAudio="speak"
       />
     </Transition>
 
@@ -154,10 +160,12 @@ export default {
       <MessageBar
         :current-sentence="currentMessage"
         :tts="tts"
+        :utterance="utterance"
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
         @updateMicState="updateMicState"
         @updateScreen="updateBody"
+        @playAudio="speak"
         v-if="
           currentScreen === 'SPEAKING' ||
           currentScreen === 'LISTENING' ||

@@ -5,7 +5,6 @@ export default {
     word: String,
     symbol: String,
     partOfSpeech: String,
-    tts: Object
   },
   data(){
     return{
@@ -31,7 +30,7 @@ export default {
       this.fetchSearchedWordSymbol(this.word).then((data)=>{this.img = data.symbol || '/HelpIcon.png'})
     },
     speak(){
-      this.tts.speak(new SpeechSynthesisUtterance(this.word));
+      this.$emit("tileSpeech",this.word);
     },
     usePlaceholderImg(){
       this.img = '/HelpIcon.png';
