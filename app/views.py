@@ -655,7 +655,6 @@ def words():
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
         if exists == False and word != "" and word != None:
-            print(category, symbol)
             word = Words(word, category, "", "", "", "", symbol)
             db.session.add(word)
             db.session.commit()
@@ -686,13 +685,10 @@ def words():
         cword = request.args.get("word").lower()
         symbol = request.args.get("symbol")
         category = request.args.get("category")
-        if category == None:
-            category = "N/A"
-        category = category.lower()
         if cword != "" and cword != None:
-            word.word = cword
-            word.category = category
-            word.symbol = symbol
+            db.session.query(Words).filter_by(word_id=id).update(
+                {"word": cword, "category": category, "symbol": symbol}
+            )
             db.session.commit()
             return jsonify({"message": "Word Updated"}), 201
         else:
