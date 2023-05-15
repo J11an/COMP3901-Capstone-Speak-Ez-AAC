@@ -22,6 +22,7 @@ import pandas as pd
 from sqlalchemy import func
 from difflib import get_close_matches
 
+
 ###
 # Routing for your application.
 ###g
@@ -647,14 +648,9 @@ def words():
     id = request.args.get("id")
 
     if request.method == "POST":
-        word = request.args.get("word").lower()
-        word = word.replace("%20", " ")
+        word = request.args.get("word")
         symbol = request.args.get("symbol")
         category = request.args.get("category")
-
-        if category != None:
-            category = category.replace("%20", " ")
-            category = request.args.get("category").lower()
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
