@@ -657,9 +657,9 @@ def words():
     id = request.args.get("id")
 
     if request.method == "POST":
-        word = request.args.get("word")
+        word = request.args.get("word").lower()
         symbol = request.args.get("symbol")
-        category = request.args.get("category")
+        category = request.args.get("category").lower()
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
@@ -745,7 +745,10 @@ def seed_database():
                         if isinstance(row["word"], str)
                         else row["word"],
                         partofspeech=(row["part_of_speech"]),
-                        category=(row["category"]),
+                        category=str(row["category"]).lower()
+                        if isinstance(row["category"], str)
+                        else row["category"],
+                        # category=(row["category"]),
                         grade_level=(row["grade_level"]),
                         time=(row["time"]),
                         place=(row["place"]),

@@ -168,7 +168,6 @@ export default {
     },
     toggleSwitch() {
       this.searchOn = !this.searchOn;
-      this.pinsOn = false;
     },
   },
 };
@@ -452,5 +451,9 @@ input {
 
 .btn-img-hovered {
   width: 100px;
+}
+
+.clear-img {
+  width: 50px;
 }
 </style>
