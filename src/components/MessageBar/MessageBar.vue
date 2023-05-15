@@ -8,6 +8,7 @@ export default {
   props:{
     currentSentence: Array,
     tts: Object,
+    utterance: Object
   },
   data(){
     return {
@@ -29,14 +30,18 @@ export default {
       this.$emit("updateSentence", ['clear',{}]);
     },
     handleSpeaker() {
-      this.tts.speak(new SpeechSynthesisUtterance(this.currentSentence.map((wordObj)=>wordObj.word).join(" ")));
+      const sentence = this.currentSentence.map((wordObj)=>wordObj.word).join(" ");
+      this.$emit("playAudio",sentence);
       this.$emit("updateMessages",["LISTENER",this.currentSentence]);
+    },
+    playTile(word){
+      this.$emit("playAudio",word);
     },
     toggleListening(){
       if (!this.micActive) {
-        this.tts.speak(new SpeechSynthesisUtterance("I am listening"));
+          this.$emit("playAudio","I am listening");
       } else {
-        this.tts.speak(new SpeechSynthesisUtterance("Goodbye"));
+          this.$emit("playAudio","Goodbye");
       }
       this.micActive = !this.micActive;
       this.$emit("updateMicState",this.micActive);
@@ -157,7 +162,7 @@ export default {
     <div id="message" class="msg-display d-flex flex-wrap" @click="updateScreen('SPEAKLISTEN')">
       <div class="word-tile" v-for="word in currentSentence" v-bind:key="word.id">
               <WordPictureTileMessage :word="word.word.toUpperCase()"
-                               :symbol="word.symbol" :tts="tts"/>
+                               :symbol="word.symbol" @tileSpeech="playTile"/>
       </div>
     </div>
 

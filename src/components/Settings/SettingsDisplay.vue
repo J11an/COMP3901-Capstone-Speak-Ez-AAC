@@ -134,7 +134,7 @@ export default {
         min="0"
         max="1"
         value="1"
-        step="0.5"
+        step="0.1"
         id="rate"
         @input="setRate()"
         class="slider"
@@ -147,9 +147,9 @@ export default {
         min="0"
         max="1"
         value="1"
-        step="0.5"
+        step="0.1"
         id="pitch"
-        @input="setVolume()"
+        @input="setPitch"
         class="slider"
       />
       <span id="pitch-label" class="ms-2">1</span>

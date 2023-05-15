@@ -6,7 +6,11 @@ export default {
   props: {
     msg: Array,
     from: String,
-    tts: Object,
+  },
+  methods: {
+    playTile(word){
+      this.$emit("playMessageTile",word);
+    },
   }
 };
 </script>
@@ -16,14 +20,14 @@ export default {
   <section v-if="from === 'SPEAKER'">
     <div class="speaker-msg">
       <div v-for="word in msg" v-bind:key="word.id">
-        <WordPictureTileMessage :word="word.word" :symbol="word.symbol" :tts="tts"  v-if="word.word"/>
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol" :tts="tts"  v-if="word.word" @tileSpeech="playTile"/>
       </div>
     </div>
   </section>
 
   <section v-else class="listener-msg">
       <div v-for="word in msg" v-bind:key="word.id">
-        <WordPictureTileMessage :word="word.word" :symbol="word.symbol" :tts="tts"/>
+        <WordPictureTileMessage :word="word.word" :symbol="word.symbol" :tts="tts" @tileSpeech="playTile"/>
       </div>
   </section>
 </template>
