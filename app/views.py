@@ -561,11 +561,16 @@ def listen():
 @app.route("/api/saved_phrases", methods=["POST", "GET", "PUT", "DELETE"])
 def phrases():
     id = request.args.get("id")
+    cterms = set([row.term for row in CensoredTerms.query.all()])
 
     if request.method == "POST":
         saved_phrases = (
             request.args.get("saved_phrases").lower().replace("%20", " ").strip()
         )
+        words = saved_phrases.split()
+        filtered_words = [word for word in words if word not in cterms]
+        saved_phrases = " ".join(filtered_words)
+
         category = (
             request.args.get("category").lower().lower().replace("%20", " ").strip()
         )
@@ -610,6 +615,10 @@ def phrases():
         saved_phrases = (
             request.args.get("saved_phrases").lower().replace("%20", " ").strip()
         )
+        words = saved_phrases.split()
+        filtered_words = [word for word in words if word not in cterms]
+        saved_phrases = " ".join(filtered_words)
+
         category = request.args.get("category").lower().replace("%20", " ").strip()
         if (
             saved_phrases != ""
