@@ -567,13 +567,18 @@ def phrases():
         saved_phrases = (
             request.args.get("saved_phrases").lower().replace("%20", " ").strip()
         )
-        words = saved_phrases.split()
-        filtered_words = [word for word in words if word not in cterms]
-        saved_phrases = " ".join(filtered_words)
-
         category = (
             request.args.get("category").lower().lower().replace("%20", " ").strip()
         )
+        words, cat = saved_phrases.split(), category.split()
+        banned_word = [word for word in words if word in cterms]
+        cat_word = [word for word in cat if word in cterms]
+
+        if banned_word or cat_word:
+            message = "The following words are not allowed: " + ", ".join(
+                banned_word + cat_word
+            )
+            return jsonify({"error": message}), 201
         num_categories = db.session.query(
             db.func.count(db.distinct(SavedPhrases.category))
         ).scalar()
@@ -615,11 +620,16 @@ def phrases():
         saved_phrases = (
             request.args.get("saved_phrases").lower().replace("%20", " ").strip()
         )
-        words = saved_phrases.split()
-        filtered_words = [word for word in words if word not in cterms]
-        saved_phrases = " ".join(filtered_words)
-
         category = request.args.get("category").lower().replace("%20", " ").strip()
+        words, cat = saved_phrases.split(), category.split()
+        banned_word = [word for word in words if word in cterms]
+        cat_word = [word for word in cat if word in cterms]
+
+        if banned_word or cat_word:
+            message = "The following words are not allowed: " + ", ".join(
+                banned_word + cat_word
+            )
+            return jsonify({"error": message}), 201
         if (
             saved_phrases != ""
             and category != ""
@@ -669,11 +679,21 @@ def fetch_category_symbols():
 @app.route("/api/word", methods=["POST", "GET", "PUT", "DELETE"])
 def words():
     id = request.args.get("id")
+    cterms = set([row.term for row in CensoredTerms.query.all()])
 
     if request.method == "POST":
         word = request.args.get("word").lower().replace("%20", " ").strip()
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
+        words, cat = word.split(), category.split()
+        banned_word = [word for word in words if word in cterms]
+        cat_word = [word for word in cat if word in cterms]
+
+        if banned_word or cat_word:
+            message = "The following words are not allowed: " + ", ".join(
+                banned_word + cat_word
+            )
+            return jsonify({"error": message}), 201
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
@@ -708,6 +728,15 @@ def words():
         cword = request.args.get("word").lower().replace("%20", " ").strip()
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
+        words, cat = cword.split(), category.split()
+        banned_word = [word for word in words if word in cterms]
+        cat_word = [word for word in cat if word in cterms]
+
+        if banned_word or cat_word:
+            message = "The following words are not allowed: " + ", ".join(
+                banned_word + cat_word
+            )
+            return jsonify({"error": message}), 201
         if cword != "" and cword != None:
             db.session.query(Words).filter_by(word_id=id).update(
                 {"word": cword, "category": category, "symbol": symbol}
