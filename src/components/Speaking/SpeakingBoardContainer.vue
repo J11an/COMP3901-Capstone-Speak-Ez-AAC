@@ -224,7 +224,7 @@ export default {
       handler(oldVal, newVal) {
         const nextEvaluatedWord = newVal[newVal.length - 1];
         this.columns = [];
-        if (nextEvaluatedWord.id > 0) {
+        if (nextEvaluatedWord) {
           this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
             this.columns = columns;
           });

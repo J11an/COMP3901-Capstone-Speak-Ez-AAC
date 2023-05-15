@@ -407,7 +407,6 @@ export default {
                     @click="expandEditForm(phrase.id, phrase.word)"
                   >
                     <img class="modify-image" src="edit.png" alt="" />
-                    <p>Edit</p>
                   </button>
                   <button
                     type="button"
@@ -415,7 +414,6 @@ export default {
                     @click="removePhrase(phrase.id, currentCategory)"
                   >
                     <img class="modify-image" src="delete.png" alt="" />
-                    <p>Delete</p>
                   </button>
                 </div>
               </div>
@@ -522,6 +520,7 @@ input {
 .phrase-term-wrapper {
   display: flex;
   flex-wrap: wrap;
+  background-color: antiquewhite;
 }
 
 .phrase-header {
@@ -557,12 +556,12 @@ input {
 }
 
 .delete-btn img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
 }
 
 .delete-btn img:hover {
-  width: 85px;
-  height: 85px;
+  width: 95px;
+  height: 95px;
 }
 </style>
