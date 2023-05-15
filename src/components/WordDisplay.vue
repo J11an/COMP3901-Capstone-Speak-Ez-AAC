@@ -18,6 +18,9 @@ export default {
       newCategory: "",
       newSymbol: "",
       currentId: 0,
+      toggleWordColumn: false,
+      searchTerm: "",
+      searchResults: [],
     };
   },
 
@@ -27,6 +30,38 @@ export default {
   },
   created() {
     this.getCsrfToken();
+  },
+  watch: {
+    currentMessage: {
+      handler(oldVal, newVal) {
+        const nextEvaluatedWord = newVal[newVal.length - 1];
+        this.columns = [];
+        if (nextEvaluatedWord.id > 0) {
+          this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
+            this.columns = columns;
+          });
+        } else {
+          this.fetchInitColumns().then((columns) => {
+            this.columns = columns;
+          });
+        }
+
+        if (!this.columns) {
+          this.fetchInitColumns().then((columns) => {
+            this.columns = columns;
+          });
+        }
+      },
+      deep: true,
+    },
+    searchTerm: {
+      handler() {
+        this.fetchSearchedWord(this.searchTerm).then((data) => {
+          this.searchResults = data;
+        });
+      },
+      deep: true,
+    },
   },
 
   methods: {
@@ -118,12 +153,12 @@ export default {
         });
     },
 
-    expandEditForm(id, word, category , symbol) {
+    expandEditForm(id, word, category, symbol) {
       let self = this;
       self.currentId = id;
-    //   self.newWord = word;
-    //   self.newCategory = category;
-    //   self.newSymbol = symbol;
+      //   self.newWord = word;
+      //   self.newCategory = category;
+      //   self.newSymbol = symbol;
       this.toggleEditWordForm = true;
     },
 
@@ -137,8 +172,8 @@ export default {
       this.toggleAddWordForm = false;
     },
 
-    test() {
-      console.log("click");
+    expandWordColumn() {
+      this.toggleWordColumn = !this.toggleWordColumn;
     },
 
     getCsrfToken() {
@@ -149,6 +184,10 @@ export default {
           console.log(data);
           self.csrf_token = data.csrf_token;
         });
+    },
+    toggleSwitch() {
+      this.searchOn = !this.searchOn;
+      this.pinsOn = false;
     },
   },
 };
@@ -161,13 +200,63 @@ export default {
       <img id="add-icon" src="Add.png" />
       <p>ADD WORD</p>
     </button>
-    <button class="toggle-container btn" @click="">
+    <button class="toggle-container btn" @click="expandWordColumn">
       <img id="edit-icon" src="edit.png" />
       <p>EDIT WORD</p>
     </button>
+    <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
+      <img class="btn-img" src="/search.png" />
+    </button>
   </div>
 
-  <div v-for="column in this.columns" class="word-display">
+  <div class="search-btn-container" v-if="searchOn">
+    <input
+      name="search"
+      v-model="searchTerm"
+      type="text"
+      placeholder="Search here"
+    />
+    <span>
+      <button id="clear" class="btn" @click="handleClear">
+        <img src="/clear.png" class="clear-img" alt="Clear Icon" />
+      </button>
+    </span>
+  </div>
+
+  <div class="speaking-container container">
+    <!--Linear-->
+    <div v-if="searchOn" class="linear-container">
+      <div
+        v-if="searchResults && searchTerm"
+        class="search-section d-flex flex-wrap"
+      >
+        <div v-if="searchResults.length" v-for="word in searchResults">
+          <WordPictureTile
+            :word="word.word.toUpperCase()"
+            :symbol="word.symbol"
+            @click="addWord(word.id, word.word, word.symbol)"
+          />
+        </div>
+        <div v-if="searchResults.length <= 0">
+          <p>
+            Couldn't find {{ searchTerm }}. But you can still add it to your
+            sentence
+          </p>
+          <WordPictureTile
+            :word="searchTerm.toUpperCase()"
+            symbol="/HelpIcon.png"
+            @click="addWord(null, searchTerm, '/HelpIcon.png')"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    v-for="column in this.columns"
+    class="word-display"
+    v-if="toggleWordColumn"
+  >
     <div v-for="word in column" @draggable="true">
       <WordPictureTile
         :id="word.id"
@@ -235,7 +324,7 @@ export default {
               />
             </div>
             <button
-              @click="addWord(newWord,newCategory, newSymbol)"
+              @click="addWord(newWord, newCategory, newSymbol)"
               class="btn btn-success btn-md submit-btn"
               type="submit"
             >
