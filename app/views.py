@@ -568,7 +568,7 @@ def phrases():
 
     if request.method == "POST":
         saved_phrases = request.args.get("saved_phrases").lower()
-        category = request.args.get("category")
+        category = request.args.get("category").lower()
         exists = (
             db.session.query(SavedPhrases.saved_phrases_id)
             .filter_by(saved_phrases=saved_phrases)
@@ -762,11 +762,15 @@ def seed_database():
                     db.session.commit()
             if sheet_name == "SavedPhrases":
                 for index, row in sheet_data.iterrows():
-                    sphrases = SavedPhrases(
-                        saved_phrases=(row["saved_phrases"]),
-                        category=(row["category"])                        
+                    cPhrase = SavedPhrases(
+                        saved_phrases=str(row["saved_phrases"]).lower()
+                        if isinstance(row["saved_phrases"], str)
+                        else row["saved_phrases"],
+                        category=str(row["category"]).lower()
+                        if isinstance(row["category"], str)
+                        else row["category"],
                     )
-                    db.session.add(sphrases)
+                    db.session.add(cPhrase)
                     db.session.commit()
 
             try:
