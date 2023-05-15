@@ -97,7 +97,7 @@ export default {
     },
 
     addWord(word, category, symbol) {
-      fetch(`/api/word?word=${word}&?category=${category}&?symbol=${symbol}`, {
+      fetch(`/api/word?word=${word}&category=${category}&symbol=${symbol}`, {
         method: "POST",
         headers: {
           "X-CSRFToken": this.csrf_token,
@@ -244,7 +244,7 @@ export default {
         :word="word.word.toUpperCase()"
         :symbol="word.symbol"
         :category="word.category"
-        @click="expandEditForm(word.word, word.symbol, word.category)"
+        @click="expandEditForm(word.id, word.word, word.category, word.symbol)"
       />
     </div>
   </div>

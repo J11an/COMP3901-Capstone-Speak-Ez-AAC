@@ -648,13 +648,14 @@ def words():
     id = request.args.get("id")
 
     if request.method == "POST":
-        word = request.args.get("word")
+        word = request.args.get("word").lower().replace("%20", " ")
         symbol = request.args.get("symbol")
-        category = request.args.get("category")
+        category = request.args.get("category").lower().replace("%20", " ")
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
         if exists == False and word != "" and word != None:
+            print(category, symbol)
             word = Words(word, category, "", "", "", "", symbol)
             db.session.add(word)
             db.session.commit()
@@ -682,9 +683,12 @@ def words():
         word = Words.query.filter_by(word_id=id).first()
         if not word:
             return jsonify({"message": "Word not found"}), 404
-        cword = request.args.get("word")
+        cword = request.args.get("word").lower()
         symbol = request.args.get("symbol")
         category = request.args.get("category")
+        if category == None:
+            category = "N/A"
+        category = category.lower()
         if cword != "" and cword != None:
             word.word = cword
             word.category = category
