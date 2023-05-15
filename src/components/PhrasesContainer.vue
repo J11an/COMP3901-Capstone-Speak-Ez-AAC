@@ -214,9 +214,7 @@ export default {
       });
     },
     texttospeech(phrase) {
-      console.log(phrase);
-      let utterance = new SpeechSynthesisUtterance(phrase);
-      tts.speak(utterance);
+      this.$emit("playAudio",phrase);
     },
   },
 };

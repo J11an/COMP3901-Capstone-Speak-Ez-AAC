@@ -186,7 +186,7 @@ export default {
     </Transition>
 
     <Transition name="fade" appear>
-      <PhrasesContainer v-if="currentScreen === 'PHRASES'" />
+      <PhrasesContainer v-if="currentScreen === 'PHRASES'" @playAudio="speak" />
     </Transition>
     <Transition name="fade" appear>
       <WordDisplay v-if="currentScreen === 'WORDS'" />
