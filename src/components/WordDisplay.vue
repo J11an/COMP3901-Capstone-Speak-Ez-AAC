@@ -33,25 +33,6 @@ export default {
   },
   watch: {
     currentMessage: {
-      handler(oldVal, newVal) {
-        const nextEvaluatedWord = newVal[newVal.length - 1];
-        this.columns = [];
-        if (nextEvaluatedWord.id > 0) {
-          this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
-            this.columns = columns;
-          });
-        } else {
-          this.fetchInitColumns().then((columns) => {
-            this.columns = columns;
-          });
-        }
-
-        if (!this.columns) {
-          this.fetchInitColumns().then((columns) => {
-            this.columns = columns;
-          });
-        }
-      },
       deep: true,
     },
     searchTerm: {
@@ -156,9 +137,9 @@ export default {
     expandEditForm(id, word, category, symbol) {
       let self = this;
       self.currentId = id;
-      //   self.newWord = word;
-      //   self.newCategory = category;
-      //   self.newSymbol = symbol;
+      self.newWord = word;
+      self.newCategory = category;
+      self.newSymbol = symbol;
       this.toggleEditWordForm = true;
     },
 
@@ -234,18 +215,19 @@ export default {
           <WordPictureTile
             :word="word.word.toUpperCase()"
             :symbol="word.symbol"
-            @click="addWord(word.id, word.word, word.symbol)"
+            @click="
+              expandEditForm(word.id, word.word, word.category, word.symbol)
+            "
           />
         </div>
         <div v-if="searchResults.length <= 0">
           <p>
-            Couldn't find {{ searchTerm }}. But you can still add it to your
-            sentence
+            Couldn't find {{ searchTerm }}. But you can still add it as a word
           </p>
           <WordPictureTile
             :word="searchTerm.toUpperCase()"
             symbol="/HelpIcon.png"
-            @click="addWord(null, searchTerm, '/HelpIcon.png')"
+            @click="expandAddForm(null, searchTerm, '/HelpIcon.png')"
           />
         </div>
       </div>

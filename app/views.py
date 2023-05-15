@@ -401,7 +401,7 @@ def search_word(word):
         search_result = Words.query.filter(Words.word.ilike(f"%{word}%")).all()
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        matches = [(w.word_id, w.symbol, w.word) for w in search_result]
+        matches = [(w.word_id, w.symbol, w.word, w.category) for w in search_result]
         matches = list(
             set(
                 get_close_matches(
@@ -416,7 +416,12 @@ def search_word(word):
                     mword["id"] for mword in matched
                 ]:
                     matched.append(
-                        {"id": word.word_id, "word": word.word, "symbol": word.symbol}
+                        {
+                            "id": word.word_id,
+                            "word": word.word,
+                            "symbol": word.symbol,
+                            "category": word.category,
+                        }
                     )
         return jsonify(matched)
 
