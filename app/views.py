@@ -606,7 +606,7 @@ def phrases():
     if request.method == "PUT":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
         if not phrase:
-            return jsonify({"message": "Phrase not found"}), 404
+            return jsonify({"error": "Phrase not found"}), 404
         saved_phrases = (
             request.args.get("saved_phrases").lower().replace("%20", " ").strip()
         )
@@ -626,7 +626,7 @@ def phrases():
     if request.method == "DELETE":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
         if not phrase:
-            return jsonify({"message": "Phrase not found"}), 404
+            return jsonify({"error": "Phrase not found"}), 404
         db.session.delete(phrase)
         db.session.commit()
         return jsonify({"message": "Saved Phrase Deleted"}), 201
@@ -695,7 +695,7 @@ def words():
     if request.method == "PUT":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
-            return jsonify({"message": "Word not found"}), 404
+            return jsonify({"error": "Word not found"}), 404
         cword = request.args.get("word").lower().replace("%20", " ").strip()
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
@@ -711,7 +711,7 @@ def words():
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
         if not word:
-            return jsonify({"message": "Word not found"}), 404
+            return jsonify({"error": "Word not found"}), 404
         db.session.delete(word)
         db.session.commit()
         return jsonify({"message": "Word Deleted"}), 201
@@ -728,7 +728,7 @@ def check_message():
     )
     if exists == True and saved_phrases != "":
         return jsonify({"message": "Phrase exists"}), 201
-    return jsonify({"message": "Phrase does not exist"})
+    return jsonify({"error": "Phrase does not exist"})
 
 
 # Seed Vocab List
@@ -889,7 +889,7 @@ def pinned_words():
         id = request.args.get("id")
         pword = PinnedWords.query.filter_by(pinnedwords_id=id).first()
         if not pword:
-            return jsonify({"message": "Pinned Word not found"}), 404
+            return jsonify({"error": "Pinned Word not found"}), 404
         db.session.delete(pword)
         db.session.commit()
         return jsonify({"message": "Pinned Word Deleted"}), 200
