@@ -251,7 +251,7 @@ export default {
               </div>
             </div>
             <button
-              @click="savePhrase(newPhrase, newCategory)"
+              @click="savePhrase(newPhrase, currentCategory)"
               class="btn btn-success btn-md submit-btn"
               type="submit"
             >
@@ -365,47 +365,31 @@ export default {
 
           <div class="phrase-container">
             <div v-for="phrase in phrases" :key="phrase.id">
-              <div class="phrase" @click="texttospeech(phrase.word)">
-                <div v-for="(item, index) in phrase.word.split(' ')" :key="index">
-                  <WordPictureTileMessage :word="item" :tts="tts" />
+              <div class="phrase-term-wrapper">
+                <div class="phrase d-flex flex-wrap" @click="texttospeech(phrase.word)">
+                  <div class="phrase-tile" v-for="(item, index) in phrase.word.split(' ')" :key="index">
+                    <WordPictureTileMessage :word="item" :tts="tts" />
+                  </div>
+                </div>
+                <div class="btn-group btn-group-md options">
+                  <button
+                    type="button"
+                    class="btn delete-btn"
+                    @click="expandEditForm(phrase.id)"
+                  >
+                    <img src="edit.png" alt="" />
+                    <p>Edit</p>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn delete-btn"
+                    @click="AutoDelete(phrase.id, currentCategory)"
+                  >
+                    <img src="delete.png" alt="" />
+                    <p>Delete</p>
+                  </button>
                 </div>
               </div>
-              <div class="phrase-opts">
-                <button
-                  type="button"
-                  class="btn delete-btn"
-                  @click="AutoDelete(phrase.id, currentCategory)"
-                >
-                  <img src="delete.png" alt="" />
-                  <p>Delete</p>
-                </button>
-                <button
-                  type="button"
-                  class="btn delete-btn"
-                  @click="expandEditForm(phrase.id)"
-                >
-                  <img src="edit.png" alt="" />
-                  <p>Edit</p>
-                </button>
-              </div>
-            </div>
-            <div class="phrase-opts">
-              <button
-                type="button"
-                class="btn delete-btn"
-                @click="removePhrase(phrase.id, currentCategory)"
-              >
-                <img src="delete.png" alt="" />
-                <p>Delete</p>
-              </button>
-              <button
-                type="button"
-                class="btn delete-btn"
-                @click="expandEditForm(phrase.id)"
-              >
-                <img src="edit.png" alt="" />
-                <p>Edit</p>
-              </button>
             </div>
           </div>
         </div>
@@ -496,6 +480,13 @@ input {
   text-align: center;
 }
 
+
+.phrase-term-wrapper{
+  display: flex;
+  flex-direction: row;
+  width: 60vw;
+}
+
 .phrase-header {
   display: flex;
   align-items: center;
@@ -504,22 +495,19 @@ input {
 }
 
 .phrase {
-  display: flex;
-  flex-direction: row;
+  cursor: pointer;
+  width: 100vw;
+  min-height: 100px;
+  border: 1px;
   border: 2px solid black;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  height: auto;
-  min-width: fit-content;
-  border-radius: 10px;
-  margin: 20px;
+  border-radius: 20px;;
 }
 
 .phrase-container {
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: auto;
 }
 
 .phrase-opts {
@@ -531,7 +519,7 @@ input {
 }
 
 .delete-btn {
-  height: 50%;
+  height: 80px;
   width: 80px;
 }
 
