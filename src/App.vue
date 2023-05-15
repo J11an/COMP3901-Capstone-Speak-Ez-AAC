@@ -23,11 +23,16 @@ export default {
       previousScreen: "",
       currentMessage: [],
       messageList: [],
-      micActive: false,
+      micActive: true,
       recognizer: new webkitSpeechRecognition()
         ? new webkitSpeechRecognition()
         : null,
       tts: window.speechSynthesis,
+      voiceIsOn: true,
+      selectedVoice: 0,
+      volume: 1,
+      rate: 1,
+      pitch: 1,
       utterance: new SpeechSynthesisUtterance(),
     };
   },
@@ -130,6 +135,20 @@ export default {
     speak(sentence){
       this.utterance.text = sentence;
       this.tts.speak(this.utterance);
+    },
+    toggleVoice(voiceState){
+      this.micActive = voiceState;
+      if (this.micActive){
+        this.tts.pause();
+      } else {
+        this.tts.cancel();
+      }
+    },
+    editVoice(configuration){
+      this.utterance.voice = configuration[0];
+      this.utterance.volume = configuration[1];
+      this.utterance.rate = configuration[2];
+      this.utterance.pitch = configuration[3];
     }
   },
   mounted() {
@@ -193,7 +212,17 @@ export default {
     </Transition>
 
     <Transition name="fade" appear>
-      <SettingsDisplay :tts="tts" v-if="currentScreen === 'SETTINGS'" />
+      <SettingsDisplay
+          :tts="tts"
+          :voice-is-on="micActive"
+          :hardness="pitch"
+          :speed="rate"
+          :voice="selectedVoice"
+          :vol="volume"
+          v-if="currentScreen === 'SETTINGS'"
+          @toggleVoice="toggleVoice"
+          @updateVoiceSettings="editVoice"
+      />
     </Transition>
   </main>
 </template>

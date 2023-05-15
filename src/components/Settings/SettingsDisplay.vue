@@ -2,13 +2,21 @@
 export default {
   props: {
     tts: Object,
+    voiceIsOn: Boolean,
+    voice: Number,
+    vol: Number,
+    speed: Number,
+    hardness: Number,
   },
 
   data() {
     return {
       speech: new SpeechSynthesisUtterance(),
       voices: [],
-      selectedVoice: "",
+      selectedVoice: this.voice,
+      volume: this.vol,
+      rate: this.speed,
+      pitch: this.hardness,
     };
   },
   mounted() {
@@ -71,15 +79,17 @@ export default {
     },
 
     pause() {
+      this.$emit("toggleVoice",false);
       window.speechSynthesis.pause();
     },
 
     cancel() {
+      this.$emit("toggleVoice",true);
       window.speechSynthesis.cancel();
     },
 
     updateSettings() {
-      this.tts = window.speechSynthesis;
+      this.$emit('updateVoiceSettings',[this.voices[document.querySelector("#voiceSelect").value], this.volume, this.rate, this.pitch])
     },
   },
 };
@@ -91,6 +101,7 @@ export default {
     <br />
 
     <form class="settings-container" @submit.prevent>
+      <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">Voice is {{ voiceIsOn ? "On" : "Off"}}</h3>
       <label class="form-label">Select voice</label>
       <select
         id="voiceSelect"
@@ -113,17 +124,18 @@ export default {
           Pause
         </button>
         <button id="stop" class="btn btn-primary mt-5 me-3" @click="cancel">
-          Stop
+          Start
         </button>
       </div>
 
       <input
         type="range"
         min="0"
-        max="1"
+        max="2"
         step="0.1"
         id="volume"
         @input="setVolume()"
+        v-model="volume"
         class="slider"
       />
       <span id="volume-label" class="ms-2">1</span>
@@ -132,11 +144,11 @@ export default {
       <input
         type="range"
         min="0"
-        max="1"
-        value="1"
+        max="2"
         step="0.1"
         id="rate"
         @input="setRate()"
+        v-model="rate"
         class="slider"
       />
       <span id="rate-label" class="ms-2">1</span>
@@ -144,12 +156,12 @@ export default {
 
       <input
         type="range"
-        min="0"
-        max="1"
-        value="1"
+        min="-1"
+        max="2"
         step="0.1"
         id="pitch"
         @input="setPitch"
+        v-model="pitch"
         class="slider"
       />
       <span id="pitch-label" class="ms-2">1</span>
@@ -164,6 +176,14 @@ export default {
 </template>
 
 <style scoped>
+.voice-off{
+  color: crimson;
+}
+
+.voice-on{
+  color: #3a7bd5;
+}
+
 .container {
   display: flex;
   flex-direction: column;
