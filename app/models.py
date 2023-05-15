@@ -1,6 +1,6 @@
 # Add any model classes for Flask-SQLAlchemy here
 from . import db
-from sqlalchemy import Index
+from sqlalchemy import Index, UniqueConstraint
 
 
 class Words(db.Model):
@@ -194,6 +194,10 @@ class SavedPhrases(db.Model):
     saved_phrases_id = db.Column(db.Integer, primary_key=True)
     saved_phrases = db.Column(db.String(80))
     category = db.Column(db.String(20))
+
+    __table_args__ = (
+        UniqueConstraint("saved_phrases", "category", name="uq_saved_phrases_category"),
+    )
 
     def __init__(self, saved_phrases, category):
         self.saved_phrases = saved_phrases
