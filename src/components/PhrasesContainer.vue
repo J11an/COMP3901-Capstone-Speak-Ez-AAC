@@ -361,23 +361,21 @@ export default {
 
       <!-- Expanded Phrases -->
       <Transition name="fade" appear>
-        <div v-if="toggleExpandedPhrase">
-
-          <div class="phrase-container">
-            <div v-for="phrase in phrases" :key="phrase.id">
+          <div v-if="toggleExpandedPhrase" class="phrase-container">
+            <div class="phrase-group" v-for="phrase in phrases" :key="phrase.id">
               <div class="phrase-term-wrapper">
                 <div class="phrase d-flex flex-wrap" @click="texttospeech(phrase.word)">
                   <div class="phrase-tile" v-for="(item, index) in phrase.word.split(' ')" :key="index">
                     <WordPictureTileMessage :word="item" :tts="tts" />
                   </div>
                 </div>
-                <div class="btn-group btn-group-md options">
+                <div class="">
                   <button
                     type="button"
                     class="btn delete-btn"
                     @click="expandEditForm(phrase.id)"
                   >
-                    <img src="edit.png" alt="" />
+                    <img class="modify-image" src="edit.png" alt="" />
                     <p>Edit</p>
                   </button>
                   <button
@@ -385,14 +383,13 @@ export default {
                     class="btn delete-btn"
                     @click="AutoDelete(phrase.id, currentCategory)"
                   >
-                    <img src="delete.png" alt="" />
+                    <img class="modify-image" src="delete.png" alt="" />
                     <p>Delete</p>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </Transition>
     </div>
   </div>
@@ -480,11 +477,13 @@ input {
   text-align: center;
 }
 
+.phrase-group{
+  margin: 20px;
+}
 
 .phrase-term-wrapper{
   display: flex;
-  flex-direction: row;
-  width: 60vw;
+  flex-wrap: wrap;
 }
 
 .phrase-header {
@@ -496,7 +495,6 @@ input {
 
 .phrase {
   cursor: pointer;
-  width: 100vw;
   min-height: 100px;
   border: 1px;
   border: 2px solid black;
@@ -506,16 +504,8 @@ input {
 .phrase-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
   overflow: auto;
-}
-
-.phrase-opts {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding-top: 30px;
+  height: 50vh;
 }
 
 .delete-btn {
@@ -523,8 +513,21 @@ input {
   width: 80px;
 }
 
+.delete-btn {
+  width: 70px;
+  height: 70px;
+}
+
+.delete-btn:hover{
+  width: 85px;
+  height: 85px;
+}
+
+.modify-image{
+  width: 60px;
+  height: 60px;
+}
+
 .delete-btn img {
-  height: 100%;
-  max-width: 100%;
 }
 </style>
