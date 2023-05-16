@@ -164,6 +164,7 @@ export default {
       this.toggleWordColumn = !this.toggleWordColumn;
     },
     refreshResults() {
+      this.columns = [];
       this.fetchInitColumns().then((columns) => (this.columns = columns));
     },
     getCsrfToken() {
