@@ -104,6 +104,9 @@ export default {
         this.toggleSaveSettings = false;
       }, 2500);
     },
+    closebutton() {
+      this.toggleSaveSettings = false;
+    },
   },
 };
 </script>
@@ -217,7 +220,7 @@ export default {
                   class="btn-close"
                   data-mdb-dismiss="modal"
                   aria-label="Close"
-                  @click="hideSaveSettings"
+                  @click="closebutton"
                 ></button>
               </div>
               <div>
@@ -316,6 +319,6 @@ input.vertical {
   .modal-container {
     width: fit-content;
     height: fit-content;
-}
+  }
 }
 </style>
