@@ -101,6 +101,7 @@ export default {
 </script>
 
 <template>
+  <Transition name="fade" appear>
   <div class="container">
     <h1>Settings</h1>
     <form class="settings-container" @submit.prevent>
@@ -195,6 +196,7 @@ export default {
       </button>
     </form>
   </div>
+  </Transition>
 </template>
 
 <style scoped>

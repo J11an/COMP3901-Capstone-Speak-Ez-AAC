@@ -214,7 +214,7 @@ export default {
     <Transition name="fade" appear>
       <SettingsDisplay
           :tts="tts"
-          :voice-is-on="micActive"
+          :voice-is-on="voiceIsOn"
           :hardness="pitch"
           :speed="rate"
           :voice="selectedVoice"
