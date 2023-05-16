@@ -508,6 +508,10 @@ export default {
   background-color: #9bb8e3;
 }
 
+.pinned-container{
+  padding-top: 10px;
+}
+
 #clear {
 }
 </style>
