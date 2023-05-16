@@ -292,13 +292,14 @@ export default {
 }
 
 .btn-img {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
+  margin: 0 10px;
 }
 
 .btn-img:hover{
-  width: 85px;
-  height: 85px;
+  width: 75px;
+  height: 75px;
 }
 
 .btn-modal{
