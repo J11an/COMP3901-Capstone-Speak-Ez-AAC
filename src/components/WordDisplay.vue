@@ -285,221 +285,195 @@ export default {
               @click="expandAddForm(null, searchTerm, '/HelpIcon.png')"
             />
           </div>
-          <div class="word-container row">
-            <h1>Here you can add or edit a word</h1>
-            <div class="word-option col-sm">
-              <button class="toggle-container btn" @click="expandAddForm">
-                <img id="add-icon" src="Add.png" />
-                <p>ADD WORD</p>
-              </button>
-            </div>
-            <div class="word-option col-sm">
-              <button class="toggle-container btn" @click="expandWordColumn">
-                <img id="edit-icon" src="edit.png" />
-                <p>EDIT WORD</p>
-              </button>
-            </div>
-            <div class="word-option col-sm">
-              <button
-                :class="searchOn ? 'active btn' : 'btn'"
-                @click="toggleSwitch"
-              >
-                <img class="btn-img" src="/search.png" />
-                <p>SEARCH WORD</p>
-              </button>
-            </div>
-          </div>
         </div>
-
-        <div v-if="toggleWordColumn">
-          <!-- Button to refresh board -->
-          <div class="edit-header">
-            <h2>Click to edit a word</h2>
-            <div class="refresh-container">
-              <button id="refresh-btn" class="btn" @click="refreshResults">
-                <img class="btn-img" src="/refresh-page-option.png" />
-                <text>Refresh for more words</text>
-              </button>
-            </div>
-          </div>
-          <div
-            v-for="column in this.columns"
-            class="word-display"
-            v-if="toggleWordColumn"
-          >
-            <div v-for="word in column" @draggable="true">
-              <WordPictureTile
-                :id="word.id"
-                :word="word.word.toUpperCase()"
-                :symbol="word.symbol"
-                :category="word.category"
-                @click="
-                  expandEditForm(word.id, word.word, word.category, word.symbol)
-                "
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- START OF ADD WORD MODAL -->
-        <div v-if="toggleAddWordForm">
-          <Transition name="modal">
-            <div class="modal-mask">
-              <div class="modal-container">
-                <div class="modal-header">
-                  <slot name="header">
-                    <p id="modal-title">Add a Word</p>
-                  </slot>
-                  <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-mdb-dismiss="modal"
-                    aria-label="Close"
-                    @click="hideAddForm"
-                  ></button>
-                </div>
-                <div v-if="!message" class="modal-body">
-                  <div class="form-outline row-mb-4"></div>
-                  <label class="form-label" for="newWord">Word</label>
-                  <input
-                    id="newWord"
-                    type="text"
-                    class="form-control"
-                    name="newWord"
-                    v-model="newWord"
-                    placeholder="Enter your word here"
-                  />
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="category">Category</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        name="newCategory"
-                        list="categories"
-                        v-model="newCategory"
-                      />
-                      <datalist id="categories">
-                        <option value="Home">Home</option>
-                        <option value="School">School</option>
-                        <option value="Basic Info">Basic Info</option>
-                        <option value="Emergency">Emergency</option>
-                      </datalist>
-                    </div>
-                    <label class="form-label" for="newSymbol">Symbol</label>
-                    <input
-                      id="newSymbol"
-                      type="text"
-                      class="form-control"
-                      name="newSymbol"
-                      v-model="newSymbol"
-                      placeholder="Enter your image url here"
-                    />
-                  </div>
-                  <button
-                    @click="saveWord(newWord, newCategory, newSymbol)"
-                    class="btn btn-success btn-md submit-btn"
-                    type="submit"
-                  >
-                    Add Word
-                  </button>
-                </div>
-                <div>
-                  <div class="success-group" v-if="message">
-                    <img class="success-wrapper-btn" src="/checked.png" />
-                    <p class="form-message">{{ message }}</p>
-                  </div>
-                  <div v-if="error">
-                    <p class="form-error">{{ error }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Transition>
-        </div>
-        <!-- END OF ADD WORD MODAL -->
-
-        <!-- START OF EDIT WORDS MODAL -->
-        <div v-if="toggleEditWordForm">
-          <Transition name="modal">
-            <div class="modal-mask">
-              <div class="modal-container">
-                <div class="modal-header">
-                  <slot name="header">
-                    <p id="modal-title">Edit a Word</p>
-                  </slot>
-                  <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-mdb-dismiss="modal"
-                    aria-label="Close"
-                    @click="hideEditForm"
-                  ></button>
-                </div>
-                <div v-if="!message" class="modal-body">
-                  <div class="form-outline row-mb-4"></div>
-                  <label class="form-label" for="newWord">Word</label>
-                  <input
-                    id="newWord"
-                    type="text"
-                    class="form-control"
-                    name="newWord"
-                    v-model="newWord"
-                    placeholder="Enter your word here"
-                  />
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="category">Category</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        name="newCategory"
-                        list="categories"
-                        v-model="newCategory"
-                      />
-                      <datalist id="categories">
-                        <option value="Home">Home</option>
-                        <option value="School">School</option>
-                        <option value="Basic Info">Basic Info</option>
-                        <option value="Emergency">Emergency</option>
-                      </datalist>
-                    </div>
-                    <label class="form-label" for="newSymbol">Symbol</label>
-                    <input
-                      id="newSymbol"
-                      type="text"
-                      class="form-control"
-                      name="newSymbol"
-                      v-model="newSymbol"
-                      placeholder="Enter your image url here"
-                    />
-                  </div>
-                  <button
-                    @click="
-                      editWord(currentId, newWord, newCategory, newSymbol)
-                    "
-                    class="btn btn-success btn-md submit-btn"
-                    type="submit"
-                  >
-                    Save Changes
-                  </button>
-                </div>
-                <div>
-                  <div class="success-group" v-if="message">
-                    <img class="success-wrapper-btn" src="/checked.png" />
-                    <p class="form-message">{{ message }}</p>
-                  </div>
-                  <div v-if="error">
-                    <p class="form-error">{{ error }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Transition>
-        </div>
-        <!-- END OF EDIT word MODAL -->
       </div>
     </div>
+
+    <div v-if="toggleWordColumn">
+      <!-- Button to refresh board -->
+      <div class="edit-header">
+        <h2>Click to edit a word</h2>
+        <div class="refresh-container">
+          <button id="refresh-btn" class="btn" @click="refreshResults">
+            <img class="btn-img" src="/refresh-page-option.png" />
+            <text>Refresh for more words</text>
+          </button>
+        </div>
+      </div>
+      <div
+        v-for="column in this.columns"
+        class="word-display"
+        v-if="toggleWordColumn"
+      >
+        <div v-for="word in column" @draggable="true">
+          <WordPictureTile
+            :id="word.id"
+            :word="word.word.toUpperCase()"
+            :symbol="word.symbol"
+            :category="word.category"
+            @click="
+              expandEditForm(word.id, word.word, word.category, word.symbol)
+            "
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- START OF ADD WORD MODAL -->
+    <div v-if="toggleAddWordForm">
+      <Transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-container">
+            <div class="modal-header">
+              <slot name="header">
+                <p id="modal-title">Add a Word</p>
+              </slot>
+              <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-dismiss="modal"
+                aria-label="Close"
+                @click="hideAddForm"
+              ></button>
+            </div>
+            <div v-if="!message" class="modal-body">
+              <div class="form-outline row-mb-4"></div>
+              <label class="form-label" for="newWord">Word</label>
+              <input
+                id="newWord"
+                type="text"
+                class="form-control"
+                name="newWord"
+                v-model="newWord"
+                placeholder="Enter your word here"
+              />
+              <div class="form-outline mb-4">
+                <label class="form-label" for="category">Category</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="newCategory"
+                    list="categories"
+                    v-model="newCategory"
+                  />
+                  <datalist id="categories">
+                    <option value="Home">Home</option>
+                    <option value="School">School</option>
+                    <option value="Basic Info">Basic Info</option>
+                    <option value="Emergency">Emergency</option>
+                  </datalist>
+                </div>
+                <label class="form-label" for="newSymbol">Symbol</label>
+                <input
+                  id="newSymbol"
+                  type="text"
+                  class="form-control"
+                  name="newSymbol"
+                  v-model="newSymbol"
+                  placeholder="Enter your image url here"
+                />
+              </div>
+              <button
+                @click="saveWord(newWord, newCategory, newSymbol)"
+                class="btn btn-success btn-md submit-btn"
+                type="submit"
+              >
+                Add Word
+              </button>
+            </div>
+            <div>
+              <div class="success-group" v-if="message">
+                <img class="success-wrapper-btn" src="/checked.png" />
+                <p class="form-message">{{ message }}</p>
+              </div>
+              <div v-if="error">
+                <p class="form-error">{{ error }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </div>
+    <!-- END OF ADD WORD MODAL -->
+
+    <!-- START OF EDIT WORDS MODAL -->
+    <div v-if="toggleEditWordForm">
+      <Transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-container">
+            <div class="modal-header">
+              <slot name="header">
+                <p id="modal-title">Edit a Word</p>
+              </slot>
+              <!-- <button class="btn btn-dark" @click="hideEditForm">BACK</button> -->
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-dismiss="modal"
+                aria-label="Close"
+                @click="hideEditForm"
+              ></button>
+            </div>
+            <div v-if="!message" class="modal-body">
+              <div class="form-outline row-mb-4"></div>
+              <label class="form-label" for="newWord">Word</label>
+              <input
+                id="newWord"
+                type="text"
+                class="form-control"
+                name="newWord"
+                v-model="newWord"
+                placeholder="Enter your word here"
+              />
+              <div class="form-outline mb-4">
+                <label class="form-label" for="category">Category</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="newCategory"
+                    list="categories"
+                    v-model="newCategory"
+                  />
+                  <datalist id="categories">
+                    <option value="Home">Home</option>
+                    <option value="School">School</option>
+                    <option value="Basic Info">Basic Info</option>
+                    <option value="Emergency">Emergency</option>
+                  </datalist>
+                </div>
+                <label class="form-label" for="newSymbol">Symbol</label>
+                <input
+                  id="newSymbol"
+                  type="text"
+                  class="form-control"
+                  name="newSymbol"
+                  v-model="newSymbol"
+                  placeholder="Enter your image url here"
+                />
+              </div>
+              <button
+                @click="editWord(currentId, newWord, newCategory, newSymbol)"
+                class="btn btn-success btn-md submit-btn"
+                type="submit"
+              >
+                Save Changes
+              </button>
+            </div>
+            <div>
+              <div class="success-group" v-if="message">
+                <img class="success-wrapper-btn" src="/checked.png" />
+                <p class="form-message">{{ message }}</p>
+              </div>
+              <div v-if="error">
+                <p class="form-error">{{ error }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </div>
+    <!-- END OF EDIT word MODAL -->
   </div>
 </template>
 
