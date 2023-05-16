@@ -4,7 +4,8 @@ Jinja2 Documentation:    https://jinja.palletsprojects.com/
 Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
-from sqlalchemy.exc import IntegrityError
+import string
+from sqlalchemy.exc import *
 from app import app, socketio
 from flask import (
     abort,
@@ -506,7 +507,9 @@ def get_phrase_categories():
 @app.route("/api/get_word_symbol", methods=["GET"])
 def get_word_symbol():
     reqword = request.args.get("word")
-    word = Words.query.filter_by(word=reqword).first()
+    filteredreqword = reqword.translate(str.maketrans("", "", string.punctuation))
+    word = Words.query.filter_by(word=filteredreqword).first()
+
     if word == None:
         return jsonify({"error": "Word is not in database"})
     else:
@@ -602,6 +605,12 @@ def phrases():
                 )
         except IntegrityError:
             return jsonify({"error": "A phrase already exists for this category"})
+        except DataError as e:
+            return jsonify(
+                {
+                    "error": "The phrase or category is too long. Phrases should be under 80 and categories under 20 characters"
+                }
+            )
 
     if request.method == "GET":
         category = request.args.get("category")
@@ -630,17 +639,26 @@ def phrases():
                 banned_word + cat_word
             )
             return jsonify({"error": message}), 201
-        if (
-            saved_phrases != ""
-            and category != ""
-            and saved_phrases != None
-            and category != None
-        ):
-            phrase.saved_phrases = saved_phrases
-            phrase.category = category
-            db.session.commit()
-            return jsonify({"message": "Saved Phrase Updated"}), 201
-        return jsonify({"error": "Phrase or Category field is blank"})
+        try:
+            if (
+                saved_phrases != ""
+                and category != ""
+                and saved_phrases != None
+                and category != None
+            ):
+                phrase.saved_phrases = saved_phrases
+                phrase.category = category
+                db.session.commit()
+                return jsonify({"message": "Saved Phrase Updated"}), 201
+            return jsonify({"error": "Phrase or Category field is blank"})
+        except IntegrityError:
+            return jsonify({"error": "A phrase already exists for this category"})
+        except DataError as e:
+            return jsonify(
+                {
+                    "error": "The phrase or category is too long. Phrases should be under 80 and categories under 20 characters"
+                }
+            )
 
     if request.method == "DELETE":
         phrase = SavedPhrases.query.filter_by(saved_phrases_id=id).first()
@@ -697,15 +715,18 @@ def words():
         exists = (
             db.session.query(Words.word_id).filter_by(word=word).first() is not None
         )
-        if exists == False and word != "" and word != None:
-            word = Words(word, category, "", "", "", "", symbol)
-            db.session.add(word)
-            db.session.commit()
-            return jsonify({"message": "Word Added"}), 201
-        else:
-            if word == "" or word == None:
-                return jsonify({"error": "Word field is empty"})
-            return jsonify({"error": "Word already exists"})
+        try:
+            if exists == False and word != "" and word != None:
+                word = Words(word, category, "", "", "", "", symbol)
+                db.session.add(word)
+                db.session.commit()
+                return jsonify({"message": "Word Added"}), 201
+            else:
+                if word == "" or word == None:
+                    return jsonify({"error": "Word field is empty"})
+                return jsonify({"error": "Word already exists"})
+        except DataError as e:
+            return jsonify({"error": "Word larger than 20 characters"})
 
     if request.method == "GET":
         words = Words.query.all()
@@ -737,14 +758,17 @@ def words():
                 banned_word + cat_word
             )
             return jsonify({"error": message}), 201
-        if cword != "" and cword != None:
-            db.session.query(Words).filter_by(word_id=id).update(
-                {"word": cword, "category": category, "symbol": symbol}
-            )
-            db.session.commit()
-            return jsonify({"message": "Word Updated"}), 201
-        else:
-            return jsonify({"error": "Word field is blank"}), 201
+        try:
+            if cword != "" and cword != None:
+                db.session.query(Words).filter_by(word_id=id).update(
+                    {"word": cword, "category": category, "symbol": symbol}
+                )
+                db.session.commit()
+                return jsonify({"message": "Word Updated"}), 201
+            else:
+                return jsonify({"error": "Word field is blank"}), 201
+        except DataError:
+            return jsonify({"error": "Word larger than 20 characters"})
 
     if request.method == "DELETE":
         word = Words.query.filter_by(word_id=id).first()
