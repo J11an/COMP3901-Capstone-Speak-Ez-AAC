@@ -94,7 +94,7 @@ export default {
 }
 
 .card {
-  width: 130px;
+  width: 200px;
   height: 130px;
   /*background: linear-gradient(
       0deg,
@@ -106,6 +106,7 @@ export default {
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   overflow: hidden;
+  word-break: break-all;
   justify-self: center;
   align-items: center;
   margin-bottom: 15px;
@@ -128,14 +129,15 @@ export default {
 }
 
 .card-content {
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
 
 .word {
   letter-spacing: 2px;
+  overflow-wrap: break-word;
   font-weight: bolder;
-  font-size: 18px;
+  font-size: 20px;
   @media (max-width: 600px) {
     font-size: 9px;
   }

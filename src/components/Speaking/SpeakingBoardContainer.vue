@@ -354,7 +354,7 @@ export default {
       </span>
     </div>
   </div>
-  <div class="speaking-container container">
+  <div class="container speaking-container">
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
       <div
@@ -389,7 +389,7 @@ export default {
       <div>
         <div
           v-if="!searchOn"
-          class="board-container d-flex justify-content-between mt-3"
+          class="d-flex justify-content-between mt-1 board-container"
         >
           <div v-for="column in this.sortColumns(columns)">
             <Transition name="fade" appear>
@@ -430,6 +430,7 @@ export default {
 </template>
 
 <style scoped>
+
 .clear-img {
   width: 50px;
 }
@@ -442,7 +443,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  max-height: 100vh;
+  height: 100vh;
   @media (min-height: 300px) {
     max-height: 55vh;
   }
@@ -485,7 +486,7 @@ export default {
 }
 
 .btn-img {
-  width: 60px;
+  width: 50px;
   margin: 0 20px;
   @media (max-width: 600px) {
     width: 30px;
@@ -512,6 +513,8 @@ export default {
   padding-top: 10px;
 }
 
-#clear {
+.board-container{
+  height: 100px;
 }
+
 </style>

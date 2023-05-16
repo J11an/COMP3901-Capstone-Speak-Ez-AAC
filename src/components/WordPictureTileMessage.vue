@@ -66,8 +66,8 @@ export default {
 }
 
 .card {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -90,8 +90,8 @@ export default {
 
 .card img {
   display: block;
-  width: 65px;
-  height: 65px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   margin: 3px;
   @media (max-width: 600px) {
@@ -108,7 +108,7 @@ export default {
 }
 
 p{
-  font-size: 18px;
+  font-size: 15px;
   word-break: break-word;
   @media (max-width: 600px) {
     font-size: 9px;

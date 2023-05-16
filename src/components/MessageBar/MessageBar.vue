@@ -263,9 +263,8 @@ export default {
 }
 
 .msg-container {
-
   margin-top: 10px;
-  padding: 10px;
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,7 +275,7 @@ export default {
 }
 
 .msg-display {
-  height: 100%;
+  height: fit-content;
   width: 90%;
   display: flex;
   background: #ffffff;
@@ -292,8 +291,8 @@ export default {
 }
 
 .btn-img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   margin: 0 10px;
   @media (max-width: 600px) {
     width: 30px;
@@ -302,8 +301,8 @@ export default {
 }
 
 .btn-img:hover{
-  width: 75px;
-  height: 75px;
+  width: 70px;
+  height: 70px;
 }
 
 .btn-modal{
