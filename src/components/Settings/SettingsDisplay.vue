@@ -136,10 +136,10 @@ export default {
             Speak
           </button>
           <button id="pause" class="btn btn-primary mt-5 me-3" @click="pause">
-            Pause
+            Stop
           </button>
           <button id="stop" class="btn btn-primary mt-5 me-3" @click="cancel">
-            Stop
+            Start
           </button>
         </div>
 

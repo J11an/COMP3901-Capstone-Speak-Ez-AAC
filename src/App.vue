@@ -143,8 +143,8 @@ export default {
       this.tts.speak(this.utterance);
     },
     toggleVoice(voiceState){
-      this.micActive = voiceState;
-      if (this.micActive){
+      this.voiceIsOn = voiceState;
+      if (this.voiceIsOn){
         this.tts.pause();
       } else {
         this.tts.cancel();
