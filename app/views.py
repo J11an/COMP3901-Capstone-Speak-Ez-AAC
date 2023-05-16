@@ -4,6 +4,7 @@ Jinja2 Documentation:    https://jinja.palletsprojects.com/
 Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
+import string
 from sqlalchemy.exc import *
 from app import app, socketio
 from flask import (
@@ -506,7 +507,9 @@ def get_phrase_categories():
 @app.route("/api/get_word_symbol", methods=["GET"])
 def get_word_symbol():
     reqword = request.args.get("word")
-    word = Words.query.filter_by(word=reqword).first()
+    filteredreqword = reqword.translate(str.maketrans("", "", string.punctuation))
+    word = Words.query.filter_by(word=filteredreqword).first()
+
     if word == None:
         return jsonify({"error": "Word is not in database"})
     else:
