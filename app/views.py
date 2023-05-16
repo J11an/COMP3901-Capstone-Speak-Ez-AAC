@@ -748,6 +748,7 @@ def words():
         if not word:
             return jsonify({"error": "Word not found"}), 404
         cword = request.args.get("word").lower().replace("%20", " ").strip()
+        cword = cword.translate(str.maketrans("", "", string.punctuation))
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
         words, cat = cword.split(), category.split()
