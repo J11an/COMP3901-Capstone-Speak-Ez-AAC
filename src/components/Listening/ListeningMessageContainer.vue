@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     toggleListening() {
-      if (!this.listeningActive) {
+      if (this.micState) {
         this.recognizer.start();
         console.log("Ready to receive audio");
       } else {

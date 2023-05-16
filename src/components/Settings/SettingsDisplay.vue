@@ -17,6 +17,7 @@ export default {
       volume: this.vol,
       rate: this.speed,
       pitch: this.hardness,
+      toggleSaveSettings: false,
     };
   },
   mounted() {
@@ -79,108 +80,166 @@ export default {
     },
 
     pause() {
-      this.$emit("toggleVoice",false);
+      this.$emit("toggleVoice", false);
       window.speechSynthesis.pause();
     },
 
     cancel() {
-      this.$emit("toggleVoice",true);
+      this.$emit("toggleVoice", true);
       window.speechSynthesis.cancel();
     },
 
     updateSettings() {
-      this.$emit('updateVoiceSettings',[this.voices[document.querySelector("#voiceSelect").value], this.volume, this.rate, this.pitch])
+      this.toggleSaveSettings = true;
+      this.$emit("updateVoiceSettings", [
+        this.voices[document.querySelector("#voiceSelect").value],
+        this.volume,
+        this.rate,
+        this.pitch,
+      ]);
+      this.hideSaveSettings();
+    },
+    hideSaveSettings() {
+      setTimeout(() => {
+        this.toggleSaveSettings = false;
+      }, 2500);
     },
   },
 };
 </script>
 
 <template>
-  <div class="container">
-    <h1>Settings</h1>
-    <br />
+  <Transition name="fade" appear>
+    <div class="container">
+      <h1>Settings</h1>
+      <form class="settings-container" @submit.prevent>
+        <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'"></h3>
+        <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">
+          Voice is {{ voiceIsOn ? "On" : "Off" }}
+        </h3>
+        <label class="form-label">Select voice</label>
+        <select
+          id="voiceSelect"
+          class="form-select"
+          v-model="selectedVoice"
+          @change="setVoice()"
+        ></select>
+        <br />
+        <label class="form-label">Type here to hear the voice selected</label>
+        <textarea
+          rows="3"
+          class="form-control"
+          placeholder="Type here to hear the voice selected"
+        ></textarea>
+        <div class="btn-group">
+          <button id="play" class="btn btn-primary mt-5 me-3" @click="play">
+            Speak
+          </button>
+          <button id="pause" class="btn btn-primary mt-5 me-3" @click="pause">
+            Pause
+          </button>
+          <button id="stop" class="btn btn-primary mt-5 me-3" @click="cancel">
+            Stop
+          </button>
+        </div>
 
-    <form class="settings-container" @submit.prevent>
-      <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">Voice is {{ voiceIsOn ? "On" : "Off"}}</h3>
-      <label class="form-label">Select voice</label>
-      <select
-        id="voiceSelect"
-        class="form-select"
-        v-model="selectedVoice"
-        @change="setVoice()"
-      ></select>
-      <br />
-      <label class="form-label">Type here to hear the voice selected</label>
-      <textarea
-        rows="3"
-        class="form-control"
-        placeholder="Type here to hear the voice selected"
-      ></textarea>
-      <div class="btn-group">
-        <button id="play" class="btn btn-primary mt-5 me-3" @click="play">
-          Speak
+        <div class="controls">
+          <div>
+            <!-- <span id="volume-label" class="ms-2">1</span> -->
+            <input
+              type="range"
+              min="0"
+              max="2"
+              step="0.1"
+              id="volume"
+              @input="setVolume()"
+              v-model="volume"
+              class="vertical"
+              orient="vertical"
+            />
+            <div>
+              <label class="form-label">Volume</label>
+            </div>
+          </div>
+          <div>
+            <input
+              type="range"
+              min="0"
+              max="2"
+              step="0.1"
+              id="rate"
+              @input="setRate()"
+              v-model="rate"
+              class="vertical"
+              orient="vertical"
+            />
+            <div>
+              <label class="form-label">Rate</label>
+              <!-- <span id="rate-label" class="ms-2">1</span> -->
+            </div>
+          </div>
+
+          <div>
+            <input
+              type="range"
+              min="0"
+              max="2"
+              step="0.1"
+              id="pitch"
+              @input="setPitch"
+              v-model="pitch"
+              class="vertical"
+              orient="vertical"
+            />
+            <div>
+              <!-- <span id="pitch-label" class="ms-2">1</span> -->
+              <label class="form-label">Pitch</label>
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <button @click="updateSettings" class="btn btn-success btn-lg">
+          Save Changes
         </button>
-        <button id="pause" class="btn btn-primary mt-5 me-3" @click="pause">
-          Pause
-        </button>
-        <button id="stop" class="btn btn-primary mt-5 me-3" @click="cancel">
-          Start
-        </button>
+      </form>
+
+      <div v-if="toggleSaveSettings">
+        <Transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-container">
+              <div class="modal-header">
+                <slot name="header">
+                  <p id="modal-title">Save Settings</p>
+                </slot>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                  @click="hideSaveSettings"
+                ></button>
+              </div>
+              <div>
+                <div class="success-group">
+                  <img class="success-wrapper-btn" src="/checked.png" />
+                  <p class="form-message">Settings Updated</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Transition>
       </div>
-
-      <input
-        type="range"
-        min="0"
-        max="2"
-        step="0.1"
-        id="volume"
-        @input="setVolume()"
-        v-model="volume"
-        class="slider"
-      />
-      <span id="volume-label" class="ms-2">1</span>
-      <label class="form-label">Volume</label>
-
-      <input
-        type="range"
-        min="0"
-        max="2"
-        step="0.1"
-        id="rate"
-        @input="setRate()"
-        v-model="rate"
-        class="slider"
-      />
-      <span id="rate-label" class="ms-2">1</span>
-      <label class="form-label">Rate</label>
-
-      <input
-        type="range"
-        min="-1"
-        max="2"
-        step="0.1"
-        id="pitch"
-        @input="setPitch"
-        v-model="pitch"
-        class="slider"
-      />
-      <span id="pitch-label" class="ms-2">1</span>
-      <label class="form-label">Pitch</label>
-      <br />
-
-      <button @click="updateSettings" class="btn btn-success btn-lg">
-        Save Changes
-      </button>
-    </form>
-  </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
-.voice-off{
+.voice-off {
   color: crimson;
 }
 
-.voice-on{
+.voice-on {
   color: #3a7bd5;
 }
 
@@ -204,5 +263,59 @@ export default {
 
 .ms-2 {
   font-size: x-large;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+input.vertical {
+  -webkit-appearance: slider-vertical;
+  writing-mode: bt-lr;
+}
+
+.form-message {
+  font-size: 26px;
+  font-weight: bolder;
+  color: #3a7bd5;
+}
+
+.success-wrapper-btn {
+  width: 150px;
+  height: 150px;
+}
+
+.success-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: auto;
+}
+
+#modal-title {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0;
+}
+
+.modal-body {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 425px) {
+  .modal-container {
+    width: fit-content;
+    height: fit-content;
+}
 }
 </style>

@@ -94,8 +94,8 @@ export default {
 }
 
 .card {
-  width: 170px;
-  height: 170px;
+  width: 130px;
+  height: 130px;
   /*background: linear-gradient(
       0deg,
       rgba(103, 80, 164, 0.08),
@@ -109,14 +109,22 @@ export default {
   justify-self: center;
   align-items: center;
   margin-bottom: 15px;
+  @media (max-width: 600px) {
+    width: 75px;
+    height: 70px;
+  }
 }
 
 .card img {
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   margin: 3px;
+  @media (max-width: 600px) {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .card-content {
@@ -128,5 +136,8 @@ export default {
   letter-spacing: 2px;
   font-weight: bolder;
   font-size: 18px;
+  @media (max-width: 600px) {
+    font-size: 9px;
+  }
 }
 </style>

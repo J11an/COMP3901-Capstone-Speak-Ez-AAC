@@ -69,10 +69,14 @@ export default {
 .nav-img {
   width: 50px;
   height: 50px;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px
+  }
 }
 .nav-img:hover{
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
 }
 
 .nav-link {
@@ -83,9 +87,16 @@ export default {
   align-items: center;
 }
 
-p {
+a {
   margin: 0;
   padding: 0;
   font-size: 1rem;
+  @media (max-width: 600px) {
+    font-size: 0.7rem;
+  }
+  @media (max-width: 500px) {
+    font-size: 0.5rem;
+  }
+
 }
 </style>

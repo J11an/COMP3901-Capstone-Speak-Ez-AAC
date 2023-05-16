@@ -6,6 +6,7 @@ export default {
   components: { WordPictureTile, draggable },
   props: {
     currentMessage: Array,
+    wordColumnCache: Array
   },
   data() {
     return {
@@ -48,6 +49,9 @@ export default {
     cachePinnedWord(word) {
       console.log(word);
       this.currentHoveredWord = word;
+    },
+    cacheWordColumns(word,column){
+      this.$emit('updateColCache',[word,column])
     },
     addPinnedWord() {
       this.addPinnedWordRequest(this.currentHoveredWord).then((data) => {
@@ -197,9 +201,13 @@ export default {
       if (lastWord) {
         this.fetchColumnsFromWord(lastWord.word).then((columns) => {
           this.columns = columns;
+          this.cacheWordColumns(lastWord.word,columns);
         });
       } else {
-        this.fetchInitColumns().then((columns) => (this.columns = columns));
+        this.fetchInitColumns().then((columns) => {
+          this.columns = columns;
+          this.cacheWordColumns(null,columns);
+        });
       }
     },
     getCsrfToken() {
@@ -213,7 +221,14 @@ export default {
     },
   },
   mounted() {
-    this.fetchInitColumns().then((columns) => (this.columns = columns));
+    this.fetchInitColumns().then((columns) => {
+             if (this.wordColumnCache[null]){
+                this.columns = this.wordColumnCache[null];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(null, columns);
+              }
+          });
     this.fetchPins().then((pins) => (this.pinnedResults = pins));
   },
   created() {
@@ -224,19 +239,36 @@ export default {
       handler(oldVal, newVal) {
         const nextEvaluatedWord = newVal[newVal.length - 1];
         this.columns = [];
+        console.log("Message Update",nextEvaluatedWord,this.wordColumnCache);
         if (nextEvaluatedWord) {
-          this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
-            this.columns = columns;
-          });
+            this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
+              if (this.wordColumnCache[nextEvaluatedWord.word]){
+                this.columns = this.wordColumnCache[nextEvaluatedWord.word];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(nextEvaluatedWord.word, columns);
+              }
+            });
+
         } else {
           this.fetchInitColumns().then((columns) => {
-            this.columns = columns;
+              if (this.wordColumnCache[null]){
+                this.columns = this.wordColumnCache[null];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(null, columns);
+              }
           });
         }
 
         if (!this.columns) {
           this.fetchInitColumns().then((columns) => {
-            this.columns = columns;
+             if (this.wordColumnCache[null]){
+                this.columns = this.wordColumnCache[null];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(null, columns);
+              }
           });
         }
       },
@@ -274,6 +306,7 @@ export default {
         "
         alt="Speaker Icon"
       />
+      <p>DRAG TO PIN</p>
     </button>
 
     <button
@@ -289,18 +322,22 @@ export default {
         :src="hoverActiveDelete ? '/trashOpen.png' : '/trashClosed.png'"
         alt="Speaker Icon"
       />
+      <p>Delete</p>
     </button>
 
+    <!-- Button to refresh board -->
     <button
       class="refresh-container btn"
       @click="refreshResults"
       v-if="!searchOn && !pinsOn"
     >
       <img class="btn-img" src="/refresh-page-option.png" />
+      <p>REFRESH WORDS</p>
     </button>
 
-    <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
+    <button v-if="!pinsOn" :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
       <img class="btn-img" src="/search.png" />
+      <p>SEARCH</p>
     </button>
 
     <div class="search-btn-container" v-if="searchOn">
@@ -329,6 +366,8 @@ export default {
             :word="word.word.toUpperCase()"
             :symbol="word.symbol"
             @click="addWord(word.id, word.word, word.symbol)"
+            draggable="true"
+            @dragstart="cachePinnedWord(word.id)"
           />
         </div>
         <div v-if="searchResults.length <= 0">
@@ -435,15 +474,31 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
 }
+
+.btn p{
+  margin:0;
+  padding: 0;
+  @media (max-width: 600px) {
+    font-size: 14px
+  }
+}
+
 .btn-img {
   width: 60px;
   margin: 0 20px;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .btn-img:hover {
   width: 65px;
+  @media (max-width: 600px) {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .btn-img-hovered {
@@ -451,6 +506,10 @@ export default {
 }
 .active {
   background-color: #9bb8e3;
+}
+
+.pinned-container{
+  padding-top: 10px;
 }
 
 #clear {
