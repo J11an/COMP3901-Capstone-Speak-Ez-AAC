@@ -169,14 +169,17 @@ export default {
     <div class="btn-group btn-group-md options">
       <button class="btn" @click="handleBackspace">
         <img class="btn-img" src="/Backspace.png" alt="Backspace Icon" />
+        <p>Delete</p>
       </button>
       <button class="btn" @click="handleSpeaker">
         <img  class="btn-img" src="/SpeakerIcon.png" alt="Speaker Icon" />
+        <p>Speak</p>
       </button>
 
       <button class="btn" @click="showSavePhraseModal = true">
         <img v-if="!phraseExists" src="/saveIconOff.png" class="btn-img">
         <img v-else src="/saveIconOn.png" class="btn-img">
+        <p>Save</p>
       </button>
       <Teleport to="body">
         <SavedPhraseModal :show="showSavePhraseModal">
@@ -214,9 +217,11 @@ export default {
       <button class="btn" @click="toggleListening">
         <img class="btn-img" src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
         <img class="btn-img" src="/micOn.png" alt="Mic On" v-else/>
+        <p>Listen</p>
       </button>
       <button class="btn" @click="handleClear">
         <img class="btn-img" src="/clear.png" alt="Clear Icon" />
+        <p>Clear</p>
       </button>
     </div>
 

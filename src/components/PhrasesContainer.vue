@@ -234,6 +234,7 @@ export default {
       </Transition>
       <button class="toggle-container btn p-4" @click="expandAddForm">
         <img class="add-icon" src="Add.png" />
+        <p>Add a Phrase</p>
       </button>
     </div>
 
@@ -392,6 +393,7 @@ export default {
       <!-- Expanded Phrases -->
       <Transition name="fade" appear>
           <div v-if="toggleExpandedPhrase" class="phrase-container">
+            <h2>Tap your phrase to say it aloud</h2>
             <div class="phrase-group" v-for="phrase in phrases" :key="phrase.id">
               <Transition name="fade" appear>
               <div class="phrase-term-wrapper">
@@ -400,13 +402,14 @@ export default {
                     <WordPictureTileMessage :word="item" :tts="tts" />
                   </div>
                 </div>
-                <div class="">
+                <div class="phrase-opts">
                   <button
                     type="button"
                     class="btn delete-btn"
                     @click="expandEditForm(phrase.id, phrase.word)"
                   >
                     <img class="modify-image" src="edit.png" alt="" />
+                    <p>Edit Phrase</p>
                   </button>
                   <button
                     type="button"
@@ -414,7 +417,9 @@ export default {
                     @click="removePhrase(phrase.id, currentCategory)"
                   >
                     <img class="modify-image" src="delete.png" alt="" />
+                    <p>Delete Phrase</p>
                   </button>
+                  
                 </div>
               </div>
               </Transition>
@@ -426,8 +431,15 @@ export default {
 </template>
 
 <style scoped>
+.container{
+  text-align: center;
+  justify-content: center;
+  align-items:center;
+}
+
 .success-group{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -453,6 +465,7 @@ export default {
   height: 150px;
 }
 
+
 .category-container {
   display: flex;
   flex-direction: row;
@@ -460,10 +473,15 @@ export default {
   flex: auto;
   align-items: center;
   justify-content: center;
+  margin-bottom: -100px;
+}
+
+.category{
+  margin: 5px;
 }
 
 .btn-back {
-  width: 50px;
+  width: 50px; 
   height: 50px;
 }
 
@@ -514,13 +532,15 @@ input {
 }
 
 .phrase-group {
-  margin: 20px;
+  margin: 5px;
 }
 
 .phrase-term-wrapper {
   display: flex;
   flex-wrap: wrap;
-  background-color: antiquewhite;
+  flex-direction: row;
+  /*border: 2px solid black;*/
+  /*background-color: antiquewhite;*/
 }
 
 .phrase-header {
@@ -532,9 +552,12 @@ input {
 
 .phrase {
   cursor: pointer;
-  min-height: 100px;
-  border: 2px solid black;
+  min-height: 150px;
+  border: 4px solid rgb(53, 200, 112);
   border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+  width: 80%;
 }
 
 .phrase:hover{
@@ -545,10 +568,12 @@ input {
 .phrase-container {
   display: flex;
   flex-direction: column;
+  text-align: center;
+  justify-content: center;
   overflow: auto;
-  height: 50vh;
+  height: auto;
+  width: 100%;
 }
-
 
 .modify-image{
   width: 60px;
@@ -564,4 +589,15 @@ input {
   width: 95px;
   height: 95px;
 }
+
+@media screen and (max-width:425px) {
+  .category-container{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 </style>

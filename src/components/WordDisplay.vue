@@ -156,7 +156,9 @@ export default {
     expandWordColumn() {
       this.toggleWordColumn = !this.toggleWordColumn;
     },
-
+    refreshResults(){
+      this.fetchInitColumns().then((columns) => (this.columns = columns));
+    },
     getCsrfToken() {
       let self = this;
       fetch("/api/csrf-token")
@@ -177,22 +179,22 @@ export default {
   <div class="container">
   <div class="word-container row">
     <h1>Here you can add or edit a word</h1>
-    <div class="word-option col-sm">
-      <button class="toggle-container btn" @click="expandAddForm">
+    <div class="word-option col-sm" @click="expandAddForm">
+      <button class="toggle-container btn">
         <img id="add-icon" src="Add.png" />
-        <p>ADD WORD</p>
+        <p>ADD A WORD</p>
       </button>
     </div>
-    <div class="word-option col-sm">
-      <button class="toggle-container btn" @click="expandWordColumn">
+    <div class="word-option col-sm" @click="expandWordColumn">
+      <button class="toggle-container btn">
         <img id="edit-icon" src="edit.png" />
-        <p>EDIT WORD</p>
+        <p>EDIT A WORD</p>
       </button>
     </div>
-    <div class="word-option col-sm">
-      <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
+    <div class="word-option col-sm" @click="toggleSwitch">
+      <button :class="searchOn ? 'active btn' : 'btn'">
         <img class="btn-img" src="/search.png" />
-        <p>SEARCH WORD</p>
+        <p>SEARCH FOR A WORD</p>
       </button>
     </div>
   </div>
@@ -241,19 +243,35 @@ export default {
     </div>
   </div>
 
-  <div
-    v-for="column in this.columns"
-    class="word-display"
-    v-if="toggleWordColumn"
-  >
-    <div v-for="word in column" @draggable="true">
-      <WordPictureTile
-        :id="word.id"
-        :word="word.word.toUpperCase()"
-        :symbol="word.symbol"
-        :category="word.category"
-        @click="expandEditForm(word.id, word.word, word.category, word.symbol)"
-      />
+  <div v-if="toggleWordColumn">
+    <!-- Button to refresh board -->
+    <div class="edit-header">
+    <h2>Click to edit a word</h2>
+    <div class="refresh-container">
+      <button
+        id="refresh-btn"
+        class="btn"
+        @click="refreshResults"
+      >
+        <img class="btn-img" src="/refresh-page-option.png" />
+        <text>Refresh for more words</text>
+      </button>
+    </div>
+    </div>
+    <div
+      v-for="column in this.columns"
+      class="word-display"
+      v-if="toggleWordColumn"
+    >
+      <div v-for="word in column" @draggable="true">
+        <WordPictureTile
+          :id="word.id"
+          :word="word.word.toUpperCase()"
+          :symbol="word.symbol"
+          :category="word.category"
+          @click="expandEditForm(word.id, word.word, word.category, word.symbol)"
+        />
+      </div>
     </div>
   </div>
 
@@ -481,12 +499,33 @@ input {
   margin: auto;
 }
 
+#refresh-btn img{
+  width: 50px;
+  margin:0;
+}
+
+#refresh-btn{
+  display:flex;
+  flex-direction: column;
+  text-align:center;
+  justify-content: center;
+  align-items:center;
+}
+
 .word-display {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+}
+
+.edit-header{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom:10px;
 }
 
 .btn-img {

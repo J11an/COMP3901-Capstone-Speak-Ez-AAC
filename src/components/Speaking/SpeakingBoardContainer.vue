@@ -274,6 +274,7 @@ export default {
         "
         alt="Speaker Icon"
       />
+      <p>Pin a word</p>
     </button>
 
     <button
@@ -291,18 +292,23 @@ export default {
       />
     </button>
 
+    <!-- Button to refresh board -->
     <button
       class="refresh-container btn"
       @click="refreshResults"
       v-if="!searchOn && !pinsOn"
     >
       <img class="btn-img" src="/refresh-page-option.png" />
+      <p>Refresh for more words</p>
     </button>
 
+    <!-- Search functionality -->
     <button :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
       <img class="btn-img" src="/search.png" />
+      <p>Search for a word</p>
     </button>
 
+    
     <div class="search-btn-container" v-if="searchOn">
       <input
         name="search"
@@ -318,6 +324,7 @@ export default {
     </div>
   </div>
   <div class="speaking-container container">
+
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
       <div
