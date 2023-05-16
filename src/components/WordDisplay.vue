@@ -225,19 +225,19 @@ export default {
   <div class="container">
     <div class="word-container row">
       <h1>Here you can add or edit a word</h1>
-      <div class="word-option col-sm" @click="expandAddForm">
+      <div class="word-option" @click="expandAddForm">
         <button class="toggle-container btn">
           <img id="add-icon" src="Add.png" />
           <p>ADD A WORD</p>
         </button>
       </div>
-      <div class="word-option col-sm" @click="expandWordColumn">
+      <div class="word-option" @click="expandWordColumn">
         <button class="toggle-container btn">
           <img id="edit-icon" src="edit.png" />
           <p>EDIT A WORD</p>
         </button>
       </div>
-      <div class="word-option col-sm" @click="toggleSwitch">
+      <div class="word-option" @click="toggleSwitch">
         <button :class="searchOn ? 'active btn' : 'btn'">
           <img class="btn-img" src="/search.png" />
           <p>SEARCH FOR A WORD</p>
@@ -379,7 +379,7 @@ export default {
                 class="btn btn-success btn-md submit-btn"
                 type="submit"
               >
-                Add Word
+                ADD WORD
               </button>
             </div>
             <div>
@@ -457,7 +457,7 @@ export default {
                 class="btn btn-success btn-md submit-btn"
                 type="submit"
               >
-                Save Changes
+                SAVE CHANGES
               </button>
             </div>
             <div>
@@ -490,7 +490,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 50px;
+  padding: 40px;
 }
 
 .word-option {
@@ -523,6 +523,7 @@ p {
   height: auto;
 }
 
+
 #modal-title {
   font-size: x-large;
   font-weight: bold;
@@ -548,7 +549,7 @@ input {
 }
 
 #add-icon {
-  width: 80%;
+  width: 60%;
   height: auto;
   margin: auto;
   background: transparent;
@@ -556,7 +557,7 @@ input {
 
 #edit-icon {
   height: auto;
-  width: 100px;
+  width: 60%;
   margin: auto;
 }
 
@@ -590,8 +591,8 @@ input {
 }
 
 .btn-img {
-  width: 80px;
-  margin: 10px 90px;
+  width: 50px;
+  margin: 10px 10px;
 }
 
 .btn-img:hover {
@@ -605,6 +606,7 @@ input {
 .clear-img {
   width: 50px;
 }
+
 .form-error {
   font-size: 26px;
   font-weight: bolder;
@@ -615,9 +617,38 @@ input {
   font-weight: bolder;
   color: #3a7bd5;
 }
-
 .success-wrapper-btn {
   width: 150px;
   height: 150px;
+}
+
+@media screen and (max-width: 425px) {
+  .modal-container {
+    width: fit-content;
+    height: fit-content;
+}
+.word-option {
+  width: fit-content;
+  height: fit-content;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  padding-top: 3px;
+}
+
+#add-icon {
+  width: 100%;
+  height: auto;
+  background: transparent;
+}
+
+#edit-icon {
+  height: auto;
+  width: 100%;
+}
+p{
+  font-size: x-small;
+}
+
 }
 </style>

@@ -230,7 +230,7 @@ export default {
       </Transition>
       <button class="toggle-container btn p-4" @click="expandAddForm">
         <img class="add-icon" src="Add.png" />
-        <p>Add a Phrase</p>
+        <p>ADD A PHRASE</p>
       </button>
     </div>
 
@@ -253,16 +253,20 @@ export default {
             ></button>
           </div>
           <div v-if="!message" class="modal-body">
-            <div class="form-outline row-mb-4"></div>
-            <label class="form-label" for="phrase">Phrase</label>
-            <input
-              id="phrase"
-              type="text"
-              class="form-control"
-              name="newPhrase"
-              v-model="newPhrase"
-              placeholder="Enter your phrase here"
-            />
+            <div class="form-outline row-mb-4">
+              <label class="form-label" for="phrase">Phrase</label>
+              <input
+                id="phrase"
+                type="text"
+                class="form-control"
+                name="newPhrase"
+                v-model="newPhrase"
+                placeholder="Enter your phrase here"
+              />
+              <span class="form-text">
+                A phrase can only be 80 characters long.
+              </span>
+            </div>
             <div class="form-outline mb-4">
               <label class="form-label" for="category">Category</label>
               <div class="input-group">
@@ -278,13 +282,16 @@ export default {
                   </div>
                 </datalist>
               </div>
+              <span class="form-text">
+                A category can only be 20 characters long
+              </span>
             </div>
             <button
               @click="savePhrase(newPhrase, currentCategory)"
               class="btn btn-success btn-md submit-btn"
               type="submit"
             >
-              Add Phrase
+              ADD PHRASE
             </button>
           </div>
           <div>
@@ -351,7 +358,7 @@ export default {
                   class="btn btn-success btn-md submit-btn"
                   type="submit"
                 >
-                  Save Changes
+                 SAVE CHANGES
                 </button>
               </div>
               <div>
@@ -525,6 +532,7 @@ input {
   padding: 5px;
   outline: none;
   width: 100%;
+  word-break: break-word;
   border-radius: 5px;
 }
 
@@ -560,7 +568,7 @@ input {
   border-radius: 20px;
   padding: 10px;
   margin: 10px;
-  width: 80%;
+  width: 70%;
 }
 
 .phrase:hover {
@@ -601,6 +609,10 @@ input {
     align-items: center;
     justify-content: center;
   }
+  .modal-container {
+  width: fit-content;
+  height: fit-content;
+}
 }
 
 </style>

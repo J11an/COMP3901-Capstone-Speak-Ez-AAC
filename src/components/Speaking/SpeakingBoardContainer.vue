@@ -306,7 +306,7 @@ export default {
         "
         alt="Speaker Icon"
       />
-      <p>PIN</p>
+      <p>DRAG TO PIN</p>
     </button>
 
     <button
@@ -332,7 +332,7 @@ export default {
       v-if="!searchOn && !pinsOn"
     >
       <img class="btn-img" src="/refresh-page-option.png" />
-      <p>REFRESH</p>
+      <p>REFRESH WORDS</p>
     </button>
 
     <button v-if="!pinsOn" :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
