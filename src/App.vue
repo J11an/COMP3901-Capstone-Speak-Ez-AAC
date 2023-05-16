@@ -34,9 +34,15 @@ export default {
       rate: 1,
       pitch: 1,
       utterance: new SpeechSynthesisUtterance(),
+      wordColumnCache: {}
     };
   },
   methods: {
+    updateWordColumnCache(newObj){
+      const word = newObj[0];
+      const cols = newObj[1];
+      this.wordColumnCache[word] = cols;
+    },
     updateBody(screen) {
       if (!(this.currentScreen === "SPEAKING" && screen === "SPEAKLISTEN")) {
         if (
@@ -198,8 +204,10 @@ export default {
       <SpeakingBoardContainer
         :current-message="currentMessage"
         :current-screen="currentScreen"
+        :word-column-cache="wordColumnCache"
         @updateScreen="updateBody"
         @updateSentence="updateMessage"
+        @updateColCache="updateWordColumnCache"
         v-if="currentScreen === 'SPEAKING' || currentScreen === 'SPEAKLISTEN'"
       />
     </Transition>

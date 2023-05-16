@@ -6,6 +6,7 @@ export default {
   components: { WordPictureTile, draggable },
   props: {
     currentMessage: Array,
+    wordColumnCache: Array
   },
   data() {
     return {
@@ -48,6 +49,9 @@ export default {
     cachePinnedWord(word) {
       console.log(word);
       this.currentHoveredWord = word;
+    },
+    cacheWordColumns(word,column){
+      this.$emit('updateColCache',[word,column])
     },
     addPinnedWord() {
       this.addPinnedWordRequest(this.currentHoveredWord).then((data) => {
@@ -197,9 +201,13 @@ export default {
       if (lastWord) {
         this.fetchColumnsFromWord(lastWord.word).then((columns) => {
           this.columns = columns;
+          this.cacheWordColumns(lastWord.word,columns);
         });
       } else {
-        this.fetchInitColumns().then((columns) => (this.columns = columns));
+        this.fetchInitColumns().then((columns) => {
+          this.columns = columns;
+          this.cacheWordColumns(null,columns);
+        });
       }
     },
     getCsrfToken() {
@@ -213,7 +221,14 @@ export default {
     },
   },
   mounted() {
-    this.fetchInitColumns().then((columns) => (this.columns = columns));
+    this.fetchInitColumns().then((columns) => {
+             if (this.wordColumnCache[null]){
+                this.columns = this.wordColumnCache[null];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(null, columns);
+              }
+          });
     this.fetchPins().then((pins) => (this.pinnedResults = pins));
   },
   created() {
@@ -224,19 +239,36 @@ export default {
       handler(oldVal, newVal) {
         const nextEvaluatedWord = newVal[newVal.length - 1];
         this.columns = [];
+        console.log("Message Update",nextEvaluatedWord,this.wordColumnCache);
         if (nextEvaluatedWord) {
-          this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
-            this.columns = columns;
-          });
+            this.fetchColumnsFromWord(nextEvaluatedWord.word).then((columns) => {
+              if (this.wordColumnCache[nextEvaluatedWord.word]){
+                this.columns = this.wordColumnCache[nextEvaluatedWord.word];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(nextEvaluatedWord.word, columns);
+              }
+            });
+
         } else {
           this.fetchInitColumns().then((columns) => {
-            this.columns = columns;
+              if (this.wordColumnCache[null]){
+                this.columns = this.wordColumnCache[null];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(null, columns);
+              }
           });
         }
 
         if (!this.columns) {
           this.fetchInitColumns().then((columns) => {
-            this.columns = columns;
+             if (this.wordColumnCache[null]){
+                this.columns = this.wordColumnCache[null];
+              } else {
+                this.columns = columns;
+                this.cacheWordColumns(null, columns);
+              }
           });
         }
       },
