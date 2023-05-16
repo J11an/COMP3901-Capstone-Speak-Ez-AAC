@@ -311,4 +311,11 @@ input.vertical {
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 425px) {
+  .modal-container {
+    width: fit-content;
+    height: fit-content;
+}
+}
 </style>

@@ -604,11 +604,12 @@ input {
 @media screen and (max-width:425px) {
   .category-container{
     display: grid;
-    grid-template-columns: 70% 30%;
-    gap: 2em;
+    grid-template-columns: 50% 50%;
+    gap: 1em;
     align-items: center;
     justify-content: center;
   }
+
   .modal-container {
   width: fit-content;
   height: fit-content;

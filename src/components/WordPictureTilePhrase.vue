@@ -109,4 +109,20 @@ p{
   font-size: 18px;
   word-break: break-word;
 }
+
+@media screen and (max-width:425px) {
+  .card{
+    width: 155px;
+    height: 155px;
+    background-size: 150px 150px;
+  }
+
+  .card img {
+    display: block;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin: auto;
+}
+}
 </style>
