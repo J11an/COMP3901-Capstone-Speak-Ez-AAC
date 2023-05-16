@@ -701,6 +701,7 @@ def words():
 
     if request.method == "POST":
         word = request.args.get("word").lower().replace("%20", " ").strip()
+        word = word.translate(str.maketrans("", "", string.punctuation))
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
         words, cat = word.split(), category.split()
