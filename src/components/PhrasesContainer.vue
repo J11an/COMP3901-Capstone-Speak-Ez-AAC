@@ -601,11 +601,11 @@ input {
   height: 95px;
 }
 
-@media screen and (max-width:425px) {
+@media screen and (max-width:768px) {
   .category-container{
     display: grid;
     grid-template-columns: 50% 50%;
-    gap: 1em;
+    gap: 15px;
     align-items: center;
     justify-content: center;
   }

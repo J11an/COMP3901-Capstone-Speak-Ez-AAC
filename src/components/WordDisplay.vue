@@ -501,7 +501,6 @@ export default {
   justify-content: center;
   text-align: center;
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.15);
-  /* background-color: rgb(198, 216, 37); */
   border-radius: 10px;
   overflow: hidden;
   width: 200px;
@@ -511,8 +510,13 @@ export default {
   float: right;
 }
 
+.word-option:hover{
+  background-color: #3a7bd5;
+  width: 20%;
+}
+
 p {
-  font-size: x-large;
+  font-size: large;
   font-weight: bold;
   padding-top: 5px;
 }
@@ -549,17 +553,12 @@ input {
   border-radius: 5px;
 }
 
-#add-icon {
-  width: 60%;
-  height: auto;
-  margin: auto;
-  background: transparent;
-}
 
-#edit-icon {
+#edit-icon, .btn-img {
+  width: 50%;
   height: auto;
-  width: 60%;
   margin: auto;
+  background: none;
 }
 
 #refresh-btn img {
@@ -583,6 +582,7 @@ input {
   margin-bottom: 10px;
 }
 
+
 .edit-header {
   display: flex;
   flex-direction: column;
@@ -591,12 +591,12 @@ input {
   margin-bottom: 10px;
 }
 
-.btn-img {
-  width: 50px;
-  margin: 10px 10px;
+#add-icon{
+  width: 70%;
+  border-radius: 70%;
+  
 }
-
-.btn-img:hover {
+.btn-img:hover, #add-icon:hover, #edit-icon:hover {
   width: 65px;
 }
 
@@ -637,16 +637,6 @@ input {
   padding-top: 3px;
 }
 
-#add-icon {
-  width: 100%;
-  height: auto;
-  background: transparent;
-}
-
-#edit-icon {
-  height: auto;
-  width: 100%;
-}
 p{
   font-size: x-small;
 }
