@@ -442,15 +442,31 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
 }
+
+.btn p{
+  margin:0;
+  padding: 0;
+  @media (max-width: 600px) {
+    font-size: 14px
+  }
+}
+
 .btn-img {
   width: 60px;
   margin: 0 20px;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .btn-img:hover {
   width: 65px;
+  @media (max-width: 600px) {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .btn-img-hovered {

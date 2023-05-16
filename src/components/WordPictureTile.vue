@@ -109,6 +109,10 @@ export default {
   justify-self: center;
   align-items: center;
   margin-bottom: 15px;
+  @media (max-width: 600px) {
+    width: 75px;
+    height: 70px;
+  }
 }
 
 .card img {
@@ -117,6 +121,10 @@ export default {
   height: 100px;
   object-fit: contain;
   margin: 3px;
+  @media (max-width: 600px) {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .card-content {
@@ -128,5 +136,8 @@ export default {
   letter-spacing: 2px;
   font-weight: bolder;
   font-size: 18px;
+  @media (max-width: 600px) {
+    font-size: 9px;
+  }
 }
 </style>

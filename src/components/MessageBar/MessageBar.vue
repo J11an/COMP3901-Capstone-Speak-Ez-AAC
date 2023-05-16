@@ -169,17 +169,17 @@ export default {
     <div class="btn-group btn-group-md options">
       <button class="btn" @click="handleBackspace">
         <img class="btn-img" src="/Backspace.png" alt="Backspace Icon" />
-        <p>Delete</p>
+        <p>DELETE</p>
       </button>
       <button class="btn" @click="handleSpeaker">
         <img  class="btn-img" src="/SpeakerIcon.png" alt="Speaker Icon" />
-        <p>Speak</p>
+        <p>SPEAK</p>
       </button>
 
       <button class="btn" @click="showSavePhraseModal = true">
         <img v-if="!phraseExists" src="/saveIconOff.png" class="btn-img">
         <img v-else src="/saveIconOn.png" class="btn-img">
-        <p>Save</p>
+        <p>SAVE</p>
       </button>
       <Teleport to="body">
         <SavedPhraseModal :show="showSavePhraseModal">
@@ -217,11 +217,11 @@ export default {
       <button class="btn" @click="toggleListening">
         <img class="btn-img" src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>
         <img class="btn-img" src="/micOn.png" alt="Mic On" v-else/>
-        <p>Listen</p>
+        <p>LISTEN</p>
       </button>
       <button class="btn" @click="handleClear">
         <img class="btn-img" src="/clear.png" alt="Clear Icon" />
-        <p>Clear</p>
+        <p>CLEAR</p>
       </button>
     </div>
 
@@ -295,6 +295,10 @@ export default {
   width: 60px;
   height: 60px;
   margin: 0 10px;
+  @media (max-width: 600px) {
+    width: 30px;
+    height: 30px
+  }
 }
 
 .btn-img:hover{
@@ -310,5 +314,8 @@ export default {
 p{
   margin: 0;
   padding: 0;
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 }
 </style>
