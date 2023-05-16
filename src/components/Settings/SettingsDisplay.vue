@@ -79,17 +79,22 @@ export default {
     },
 
     pause() {
-      this.$emit("toggleVoice",false);
+      this.$emit("toggleVoice", false);
       window.speechSynthesis.pause();
     },
 
     cancel() {
-      this.$emit("toggleVoice",true);
+      this.$emit("toggleVoice", true);
       window.speechSynthesis.cancel();
     },
 
     updateSettings() {
-      this.$emit('updateVoiceSettings',[this.voices[document.querySelector("#voiceSelect").value], this.volume, this.rate, this.pitch])
+      this.$emit("updateVoiceSettings", [
+        this.voices[document.querySelector("#voiceSelect").value],
+        this.volume,
+        this.rate,
+        this.pitch,
+      ]);
     },
   },
 };
@@ -100,7 +105,9 @@ export default {
     <h1>Settings</h1>
     <form class="settings-container" @submit.prevent>
       <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'"></h3>
-      <!-- <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">Voice is {{ voiceIsOn ? "On" : "Off"}}</h3> -->
+      <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">
+        Voice is {{ voiceIsOn ? "On" : "Off" }}
+      </h3>
       <label class="form-label">Select voice</label>
       <select
         id="voiceSelect"
@@ -126,9 +133,9 @@ export default {
           Stop
         </button>
       </div>
-      
+
       <div class="controls">
-       <div>
+        <div>
           <!-- <span id="volume-label" class="ms-2">1</span> -->
           <input
             type="range"
@@ -138,31 +145,31 @@ export default {
             id="volume"
             @input="setVolume()"
             v-model="volume"
-            class="vertical" 
+            class="vertical"
             orient="vertical"
           />
           <div>
             <label class="form-label">Volume</label>
           </div>
-       </div>
+        </div>
         <div>
           <input
-              type="range"
-              min="0"
-              max="2"
-              step="0.1"
-              id="rate"
-              @input="setRate()"
-              v-model="rate"
-              class="vertical" 
-              orient="vertical"
-            />
-            <div>
-              <label class="form-label">Rate</label>
-              <!-- <span id="rate-label" class="ms-2">1</span> -->
-            </div>
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            id="rate"
+            @input="setRate()"
+            v-model="rate"
+            class="vertical"
+            orient="vertical"
+          />
+          <div>
+            <label class="form-label">Rate</label>
+            <!-- <span id="rate-label" class="ms-2">1</span> -->
+          </div>
         </div>
-        
+
         <div>
           <input
             type="range"
@@ -172,7 +179,7 @@ export default {
             id="pitch"
             @input="setPitch"
             v-model="pitch"
-            class="vertical" 
+            class="vertical"
             orient="vertical"
           />
           <div>
@@ -191,11 +198,11 @@ export default {
 </template>
 
 <style scoped>
-.voice-off{
+.voice-off {
   color: crimson;
 }
 
-.voice-on{
+.voice-on {
   color: #3a7bd5;
 }
 
@@ -221,15 +228,14 @@ export default {
   font-size: x-large;
 }
 
-.controls{
-  display:flex;
+.controls {
+  display: flex;
   flex-direction: row;
-  text-align:center;
+  text-align: center;
 }
 
 input.vertical {
-	-webkit-appearance: slider-vertical;
-	writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+  writing-mode: bt-lr;
 }
-
 </style>

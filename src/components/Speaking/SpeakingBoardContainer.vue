@@ -274,7 +274,7 @@ export default {
         "
         alt="Speaker Icon"
       />
-      <p>Pin a word</p>
+      <p>Drag a word to pin</p>
     </button>
 
     <button
@@ -290,6 +290,7 @@ export default {
         :src="hoverActiveDelete ? '/trashOpen.png' : '/trashClosed.png'"
         alt="Speaker Icon"
       />
+      <p>Drag to delete</p>
     </button>
 
     <!-- Button to refresh board -->
@@ -308,7 +309,6 @@ export default {
       <p>Search for a word</p>
     </button>
 
-    
     <div class="search-btn-container" v-if="searchOn">
       <input
         name="search"
@@ -324,7 +324,6 @@ export default {
     </div>
   </div>
   <div class="speaking-container container">
-
     <!--Linear-->
     <div v-if="searchOn" class="linear-container">
       <div
