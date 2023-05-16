@@ -79,17 +79,22 @@ export default {
     },
 
     pause() {
-      this.$emit("toggleVoice",false);
+      this.$emit("toggleVoice", false);
       window.speechSynthesis.pause();
     },
 
     cancel() {
-      this.$emit("toggleVoice",true);
+      this.$emit("toggleVoice", true);
       window.speechSynthesis.cancel();
     },
 
     updateSettings() {
-      this.$emit('updateVoiceSettings',[this.voices[document.querySelector("#voiceSelect").value], this.volume, this.rate, this.pitch])
+      this.$emit("updateVoiceSettings", [
+        this.voices[document.querySelector("#voiceSelect").value],
+        this.volume,
+        this.rate,
+        this.pitch,
+      ]);
     },
   },
 };
@@ -98,10 +103,11 @@ export default {
 <template>
   <div class="container">
     <h1>Settings</h1>
-    <br />
-
     <form class="settings-container" @submit.prevent>
-      <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">Voice is {{ voiceIsOn ? "On" : "Off"}}</h3>
+      <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'"></h3>
+      <h3 :class="voiceIsOn ? 'voice-on' : 'voice-off'">
+        Voice is {{ voiceIsOn ? "On" : "Off" }}
+      </h3>
       <label class="form-label">Select voice</label>
       <select
         id="voiceSelect"
@@ -124,48 +130,64 @@ export default {
           Pause
         </button>
         <button id="stop" class="btn btn-primary mt-5 me-3" @click="cancel">
-          Start
+          Stop
         </button>
       </div>
 
-      <input
-        type="range"
-        min="0"
-        max="2"
-        step="0.1"
-        id="volume"
-        @input="setVolume()"
-        v-model="volume"
-        class="slider"
-      />
-      <span id="volume-label" class="ms-2">1</span>
-      <label class="form-label">Volume</label>
+      <div class="controls">
+        <div>
+          <!-- <span id="volume-label" class="ms-2">1</span> -->
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            id="volume"
+            @input="setVolume()"
+            v-model="volume"
+            class="vertical"
+            orient="vertical"
+          />
+          <div>
+            <label class="form-label">Volume</label>
+          </div>
+        </div>
+        <div>
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            id="rate"
+            @input="setRate()"
+            v-model="rate"
+            class="vertical"
+            orient="vertical"
+          />
+          <div>
+            <label class="form-label">Rate</label>
+            <!-- <span id="rate-label" class="ms-2">1</span> -->
+          </div>
+        </div>
 
-      <input
-        type="range"
-        min="0"
-        max="2"
-        step="0.1"
-        id="rate"
-        @input="setRate()"
-        v-model="rate"
-        class="slider"
-      />
-      <span id="rate-label" class="ms-2">1</span>
-      <label class="form-label">Rate</label>
-
-      <input
-        type="range"
-        min="-1"
-        max="2"
-        step="0.1"
-        id="pitch"
-        @input="setPitch"
-        v-model="pitch"
-        class="slider"
-      />
-      <span id="pitch-label" class="ms-2">1</span>
-      <label class="form-label">Pitch</label>
+        <div>
+          <input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            id="pitch"
+            @input="setPitch"
+            v-model="pitch"
+            class="vertical"
+            orient="vertical"
+          />
+          <div>
+            <!-- <span id="pitch-label" class="ms-2">1</span> -->
+            <label class="form-label">Pitch</label>
+          </div>
+        </div>
+      </div>
       <br />
 
       <button @click="updateSettings" class="btn btn-success btn-lg">
@@ -176,11 +198,11 @@ export default {
 </template>
 
 <style scoped>
-.voice-off{
+.voice-off {
   color: crimson;
 }
 
-.voice-on{
+.voice-on {
   color: #3a7bd5;
 }
 
@@ -204,5 +226,16 @@ export default {
 
 .ms-2 {
   font-size: x-large;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+input.vertical {
+  -webkit-appearance: slider-vertical;
+  writing-mode: bt-lr;
 }
 </style>

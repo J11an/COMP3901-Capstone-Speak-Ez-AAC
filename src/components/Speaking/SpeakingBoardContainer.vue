@@ -274,6 +274,7 @@ export default {
         "
         alt="Speaker Icon"
       />
+      <p>Drag a word to pin</p>
     </button>
 
     <button
@@ -289,18 +290,22 @@ export default {
         :src="hoverActiveDelete ? '/trashOpen.png' : '/trashClosed.png'"
         alt="Speaker Icon"
       />
+      <p>Drag to delete</p>
     </button>
 
+    <!-- Button to refresh board -->
     <button
       class="refresh-container btn"
       @click="refreshResults"
       v-if="!searchOn && !pinsOn"
     >
       <img class="btn-img" src="/refresh-page-option.png" />
+      <p>Refresh for more words</p>
     </button>
 
     <button v-if="!pinsOn" :class="searchOn ? 'active btn' : 'btn'" @click="toggleSwitch">
       <img class="btn-img" src="/search.png" />
+      <p>Search for a word</p>
     </button>
 
     <div class="search-btn-container" v-if="searchOn">

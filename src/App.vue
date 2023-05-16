@@ -23,7 +23,7 @@ export default {
       previousScreen: "",
       currentMessage: [],
       messageList: [],
-      micActive: true,
+      micActive: false,
       recognizer: new webkitSpeechRecognition()
         ? new webkitSpeechRecognition()
         : null,
