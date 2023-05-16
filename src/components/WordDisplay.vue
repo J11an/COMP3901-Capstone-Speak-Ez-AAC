@@ -212,6 +212,9 @@ export default {
         }
       });
     },
+    handleClear() {
+      this.searchTerm = "";
+    },
   },
 };
 </script>

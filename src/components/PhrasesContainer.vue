@@ -121,27 +121,24 @@ export default {
         });
     },
     savePhrase(phrase, category) {
-      this.sendPhraseFetch(phrase,category)
-          .then((data)=>{
-            if (data.message){
-              this.getCategories();
-              this.getPhrases(category);
-              this.message = data.message;
-              this.error = '';
-              setTimeout(()=>{
-                this.toggleAddPhraseForm = false;
-                setTimeout(()=>{
-                  this.error = '';
-                  this.message = '';
-                },100)
-              },3000);
-            }
-            if (data.error) {
-              this.error = data.error;
-            }
-
-
-          })
+      this.sendPhraseFetch(phrase, category).then((data) => {
+        if (data.message) {
+          this.getCategories();
+          this.getPhrases(category);
+          this.message = data.message;
+          this.error = "";
+          setTimeout(() => {
+            this.toggleAddPhraseForm = false;
+            setTimeout(() => {
+              this.error = "";
+              this.message = "";
+            }, 100);
+          }, 3000);
+        }
+        if (data.error) {
+          this.error = data.error;
+        }
+      });
     },
     updatePhraseRequest(id, saved_phrases, category) {
       return fetch(
@@ -157,7 +154,7 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          if (data.message || data.error){
+          if (data.message || data.error) {
             return data;
           }
         })
@@ -165,26 +162,25 @@ export default {
           console.log(error);
         });
     },
-    updatePhrase(id, saved_phrases, category){
-      this.updatePhraseRequest(id,saved_phrases,category)
-          .then((data)=>{
-            if (data.message){
-              this.getCategories();
-              this.getPhrases(category);
-              this.message = data.message;
-              this.error = '';
-              setTimeout(()=>{
-                this.toggleEditPhraseForm = false;
-                setTimeout(()=>{
-                  this.error = '';
-                  this.message = '';
-                },100)
-              },3000);
-            }
-            if (data.error) {
-              this.error = data.error;
-            }
-          })
+    updatePhrase(id, saved_phrases, category) {
+      this.updatePhraseRequest(id, saved_phrases, category).then((data) => {
+        if (data.message) {
+          this.getCategories();
+          this.getPhrases(category);
+          this.message = data.message;
+          this.error = "";
+          setTimeout(() => {
+            this.toggleEditPhraseForm = false;
+            setTimeout(() => {
+              this.error = "";
+              this.message = "";
+            }, 100);
+          }, 3000);
+        }
+        if (data.error) {
+          this.error = data.error;
+        }
+      });
     },
     getCategories() {
       let self = this;
@@ -214,7 +210,7 @@ export default {
       });
     },
     texttospeech(phrase) {
-      this.$emit("playAudio",phrase);
+      this.$emit("playAudio", phrase);
     },
   },
 };
@@ -292,7 +288,7 @@ export default {
           </div>
           <div>
             <div class="success-group" v-if="message">
-              <img class="success-wrapper-btn" src="/checked.png"/>
+              <img class="success-wrapper-btn" src="/checked.png" />
               <p class="form-message">{{ message }}</p>
             </div>
             <div v-if="error">
@@ -333,33 +329,33 @@ export default {
                   v-model="newPhrase"
                   placeholder="Enter your phrase here"
                 />
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="category">Category</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        name="newCategory"
-                        list="categories"
-                        v-model="currentCategory"
-                      />
-                      <datalist id="categories">
-                        <div v-for="category in categories">
-                          <option  :value="category">{{ category }}</option>
-                        </div>
-                      </datalist>
-                    </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="category">Category</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      name="newCategory"
+                      list="categories"
+                      v-model="currentCategory"
+                    />
+                    <datalist id="categories">
+                      <div v-for="category in categories">
+                        <option :value="category">{{ category }}</option>
+                      </div>
+                    </datalist>
                   </div>
-                  <button
-                    @click="updatePhrase(currentId, newPhrase, currentCategory)"
-                    class="btn btn-success btn-md submit-btn"
-                    type="submit"
-                  >
-                    Save Changes
-                  </button>
+                </div>
+                <button
+                  @click="updatePhrase(currentId, newPhrase, currentCategory)"
+                  class="btn btn-success btn-md submit-btn"
+                  type="submit"
+                >
+                  Save Changes
+                </button>
               </div>
               <div>
                 <div class="success-group" v-if="message">
-                  <img class="success-wrapper-btn" src="/checked.png"/>
+                  <img class="success-wrapper-btn" src="/checked.png" />
                   <p class="form-message">{{ message }}</p>
                 </div>
                 <div v-if="error">
@@ -391,12 +387,19 @@ export default {
 
       <!-- Expanded Phrases -->
       <Transition name="fade" appear>
-          <div v-if="toggleExpandedPhrase" class="phrase-container">
-            <div class="phrase-group" v-for="phrase in phrases" :key="phrase.id">
-              <Transition name="fade" appear>
+        <div v-if="toggleExpandedPhrase" class="phrase-container">
+          <div class="phrase-group" v-for="phrase in phrases" :key="phrase.id">
+            <Transition name="fade" appear>
               <div class="phrase-term-wrapper">
-                <div class="phrase d-flex flex-wrap" @click="texttospeech(phrase.word)">
-                  <div class="phrase-tile" v-for="(item, index) in phrase.word.split(' ')" :key="index">
+                <div
+                  class="phrase d-flex flex-wrap"
+                  @click="texttospeech(phrase.word)"
+                >
+                  <div
+                    class="phrase-tile"
+                    v-for="(item, index) in phrase.word.split(' ')"
+                    :key="index"
+                  >
                     <WordPictureTileMessage :word="item" :tts="tts" />
                   </div>
                 </div>
@@ -417,22 +420,22 @@ export default {
                   </button>
                 </div>
               </div>
-              </Transition>
-            </div>
+            </Transition>
           </div>
+        </div>
       </Transition>
     </div>
   </div>
 </template>
 
 <style scoped>
-.success-group{
+.success-group {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.back-btn-container{
+.back-btn-container {
   width: 200px;
   height: 200px;
 }
@@ -537,7 +540,7 @@ input {
   border-radius: 20px;
 }
 
-.phrase:hover{
+.phrase:hover {
   background-color: lightblue;
   border: 5px solid black;
 }
@@ -549,8 +552,7 @@ input {
   height: 50vh;
 }
 
-
-.modify-image{
+.modify-image {
   width: 60px;
   height: 60px;
 }
