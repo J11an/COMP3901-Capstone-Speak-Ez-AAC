@@ -34,7 +34,8 @@ export default {
       rate: 1,
       pitch: 1,
       utterance: new SpeechSynthesisUtterance(),
-      wordColumnCache: {}
+      wordColumnCache: {},
+      isProduction: false,
     };
   },
   methods: {
@@ -164,7 +165,7 @@ export default {
 </script>
 
 <template>
-  <AppHeader @updateScreen="updateBody" :current-screen="currentScreen" />
+  <AppHeader @updateScreen="updateBody" :current-screen="currentScreen" :is-production="isProduction" />
 
   <main>
     <Transition name="fade" appear>
@@ -186,6 +187,7 @@ export default {
         :current-sentence="currentMessage"
         :tts="tts"
         :utterance="utterance"
+        :is-production="isProduction"
         @updateSentence="updateMessage"
         @updateMessages="updateMessageList"
         @updateMicState="updateMicState"
@@ -212,12 +214,15 @@ export default {
       />
     </Transition>
 
-    <Transition name="fade" appear>
-      <PhrasesContainer v-if="currentScreen === 'PHRASES'" @playAudio="speak" />
-    </Transition>
-    <Transition name="fade" appear>
-      <WordDisplay v-if="currentScreen === 'WORDS'" />
-    </Transition>
+    <div v-if="!isProduction">
+      <Transition name="fade" appear>
+        <PhrasesContainer v-if="currentScreen === 'PHRASES'" @playAudio="speak" />
+      </Transition>
+      <Transition name="fade" appear>
+        <WordDisplay v-if="currentScreen === 'WORDS'" />
+      </Transition>
+    </div>
+
 
     <Transition name="fade" appear>
       <SettingsDisplay

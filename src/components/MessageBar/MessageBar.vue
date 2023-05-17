@@ -8,7 +8,8 @@ export default {
   props:{
     currentSentence: Array,
     tts: Object,
-    utterance: Object
+    utterance: Object,
+    isProduction: Boolean
   },
   data(){
     return {
@@ -176,43 +177,46 @@ export default {
         <p>SPEAK</p>
       </button>
 
-      <button class="btn" @click="showSavePhraseModal = true">
-        <img v-if="!phraseExists" src="/saveIconOff.png" class="btn-img">
-        <img v-else src="/saveIconOn.png" class="btn-img">
-        <p>SAVE</p>
-      </button>
-      <Teleport to="body">
-        <SavedPhraseModal :show="showSavePhraseModal">
-          <template #header>
-            <h3>Saving Phrase</h3>
-            <button class="btn" @click="showSavePhraseModal = false">
-              <img src="/clear.png" class="btn-modal"/>
-            </button>
-          </template>
-          <template #body>
-            <div v-if="!phraseAdded" class="phrase-section d-flex flex-wrap">
-              <div
-                  v-for="category in categories"
-                  @click="addPhrase(category)">
-                  <WordPictureTileCategory
-                    :id="-2"
-                    :word="category.toUpperCase()"
-                  />
-              </div>
-            </div>
-            <div class="d-flex flex-wrap success-wrapper" v-else>
-              <div v-if="success">
-                <img class="success-wrapper-btn" src="/checked.png"/>
+      <div v-if="isProduction">
+        <button class="btn" @click="showSavePhraseModal = true">
+          <img v-if="!phraseExists" src="/saveIconOff.png" class="btn-img">
+          <img v-else src="/saveIconOn.png" class="btn-img">
+          <p>SAVE</p>
+        </button>
+        <Teleport to="body">
+          <SavedPhraseModal :show="showSavePhraseModal">
+            <template #header>
+              <h3>Saving Phrase</h3>
+              <button class="btn" @click="showSavePhraseModal = false">
+                <img src="/clear.png" class="btn-modal"/>
+              </button>
+            </template>
+            <template #body>
+              <div v-if="!phraseAdded" class="phrase-section d-flex flex-wrap">
+                <div
+                    v-for="category in categories"
+                    @click="addPhrase(category)">
+                    <WordPictureTileCategory
+                      :id="-2"
+                      :word="category.toUpperCase()"
+                    />
+                </div>
               </div>
               <div class="d-flex flex-wrap success-wrapper" v-else>
-                <img class="success-wrapper-btn" src="/error.png"/>
-                <p class="text-center error-msg">{{ errorMsg }}</p>
-              </div>
+                <div v-if="success">
+                  <img class="success-wrapper-btn" src="/checked.png"/>
+                </div>
+                <div class="d-flex flex-wrap success-wrapper" v-else>
+                  <img class="success-wrapper-btn" src="/error.png"/>
+                  <p class="text-center error-msg">{{ errorMsg }}</p>
+                </div>
 
-            </div>
-          </template>
-        </SavedPhraseModal>
-      </Teleport>
+              </div>
+            </template>
+          </SavedPhraseModal>
+        </Teleport>
+      </div>
+
 
       <button class="btn" @click="toggleListening">
         <img class="btn-img" src="/micOff.png" alt="Mic Off" v-if="!this.micActive"/>

@@ -2,6 +2,7 @@
 export default {
   props: {
     currentScreen: String,
+    isProduction: Boolean
   },
   methods: {
     updateScreen(screen) {
@@ -30,16 +31,22 @@ export default {
               >LISTENING <img src="/ListeningScreen.png" class="nav-img"
             /></a>
           </li>
-          <li :class="this.currentScreen==='PHRASES' ? 'nav-item active' : 'nav-item'">
-            <a class="nav-link" v-on:click="updateScreen('PHRASES')"
-              >PHRASES <img src="/SavedPhrasesScreen.png" class="nav-img"
-            /></a>
-          </li>
-          <li :class="this.currentScreen==='WORDS' ? 'nav-item active' : 'nav-item'">
-            <a class="nav-link" v-on:click="updateScreen('WORDS')"
-              >WORDS <img src="/NewEditScreen.png" class="nav-img"
-            /></a>
-          </li>
+
+          <div v-if="!isProduction">
+             <li :class="this.currentScreen==='PHRASES' ? 'nav-item active' : 'nav-item'">
+              <a class="nav-link" v-on:click="updateScreen('PHRASES')"
+                >PHRASES <img src="/SavedPhrasesScreen.png" class="nav-img"
+              /></a>
+            </li>
+          </div>
+          <div v-if="!isProduction">
+            <li :class="this.currentScreen==='WORDS' ? 'nav-item active' : 'nav-item'">
+              <a class="nav-link" v-on:click="updateScreen('WORDS')"
+                >WORDS <img src="/NewEditScreen.png" class="nav-img"
+              /></a>
+            </li>
+          </div>
+
           <li :class="this.currentScreen==='SETTINGS' ? 'nav-item active' : 'nav-item'">
             <a class="nav-link" v-on:click="updateScreen('SETTINGS')"
               >SETTINGS <img src="/settings.png" class="nav-img"
