@@ -26,7 +26,7 @@ from difflib import get_close_matches
 
 ###
 # Routing for your application.
-###g
+###
 
 
 @app.route("/")
@@ -34,23 +34,7 @@ def index():
     return jsonify(message="This is the beginning of our API")
 
 
-###
-# The functions below should be applicable to all Flask apps.
-###
-
-
-# Speaking Screen
-@app.route("/api/speak", methods=["POST"])
-def speak():
-    if request.method == "POST":
-        text = request.form["speech"]
-        gender = request.form["voices"]
-        # rate = request.form['speed']
-        text_to_speech(text, gender)
-        mp3 = os.path.join(rootdir, r"message.mp3")
-        return send_file(mp3, mimetype="audio/mp3", as_attachment=True)
-
-
+# Based on the current word's part of speech a variety of words associated with that part of speech are given.
 @app.route("/api/word_associated/", methods=["POST", "GET"])
 def word_associated():
     next_partsofspeech = {}
@@ -386,14 +370,17 @@ def word_associated():
     return jsonify(next_partsofspeech), 200
 
 
+# Used on the speaking screen and the add/edit word screen
 @app.route("/api/search/<word>", methods=["GET"])
 def search_word(word):
     if request.method == "GET":
         matched = []
+        # Initial matching based on the likeness of word searched
         search_result = Words.query.filter(Words.word.ilike(f"%{word}%")).all()
+        matches = [(w.word_id, w.symbol, w.word, w.category) for w in search_result]
         # n specifies the maximum number of closest matches to return and
         # cutoff is specifies a threshold for how closely a word needs to match the input word to be considered a match between 0 and 1
-        matches = [(w.word_id, w.symbol, w.word, w.category) for w in search_result]
+        # Further processing to get a more likely word
         matches = list(
             set(
                 get_close_matches(
@@ -418,6 +405,7 @@ def search_word(word):
         return jsonify(matched)
 
 
+# Used to the populate the intial speaking mode word picture tiles
 @app.route("/api/inital_tree_setting", methods=["GET"])
 def inital_tree_setting():
     columns = {}
@@ -490,6 +478,7 @@ def inital_tree_setting():
     return jsonify(columns), 201
 
 
+# Gets the unique categories associated with words
 @app.route("/api/get_categories", methods=["GET"])
 def get_catergories():
     categories = db.session.query(Words.category).distinct().all()
@@ -497,6 +486,7 @@ def get_catergories():
     return jsonify(categories)
 
 
+# Gets the unique categories associated with saved phrases
 @app.route("/api/get_phrase_categories", methods=["GET"])
 def get_phrase_categories():
     categories = db.session.query(SavedPhrases.category).distinct().all()
@@ -504,6 +494,7 @@ def get_phrase_categories():
     return jsonify(categories)
 
 
+# Gets the word, its id, symbol and category based on the word.
 @app.route("/api/get_word_symbol", methods=["GET"])
 def get_word_symbol():
     reqword = request.args.get("word")
@@ -522,6 +513,7 @@ def get_word_symbol():
     return jsonify(result)
 
 
+# Gets the category associated with the words along with its id, word and symbol.
 @app.route("/api/get_categories_group/<string:word>", methods=["GET"])
 def get_categories_group(word):
     word = Words.query.filter_by(word=word).all()
@@ -535,6 +527,7 @@ def get_categories_group(word):
     return jsonify({word: result})
 
 
+# Gets the grade level associated with each word. Upper (4-6), Lower (1-3)
 @app.route("/api/get_grade_level", methods=["GET"])
 def get_grade_level():
     grade_level = request.args.get("grade_level")
@@ -549,18 +542,7 @@ def get_grade_level():
     return jsonify(results)
 
 
-# Listening Screen
-@app.route("/api/listen", methods=["POST"])
-def listen():
-    if request.method == "POST":
-        data = request.data
-        rec.AcceptWaveform(data)
-        result = rec.Result()
-        result_json = jsonify({"text": result})
-        return result_json
-
-
-# Saved Phrases
+# Allows for the crud of saved phrases.
 @app.route("/api/saved_phrases", methods=["POST", "GET", "PUT", "DELETE"])
 def phrases():
     id = request.args.get("id")
@@ -574,6 +556,7 @@ def phrases():
             request.args.get("category").lower().lower().replace("%20", " ").strip()
         )
         words, cat = saved_phrases.split(), category.split()
+        # Filters censored words located in the censored term table
         banned_word = [word for word in words if word in cterms]
         cat_word = [word for word in cat if word in cterms]
 
@@ -587,6 +570,7 @@ def phrases():
         ).scalar()
         try:
             if (
+                # Validation checks
                 num_categories < 10
                 and category != ""
                 and category != None
@@ -614,7 +598,7 @@ def phrases():
 
     if request.method == "GET":
         category = request.args.get("category")
-
+        # Gets all phrases based on their category
         phrases = [
             {"id": phrase.saved_phrases_id, "word": phrase.saved_phrases}
             for phrase in SavedPhrases.query.filter_by(category=category).all()
@@ -630,6 +614,8 @@ def phrases():
             request.args.get("saved_phrases").lower().replace("%20", " ").strip()
         )
         category = request.args.get("category").lower().replace("%20", " ").strip()
+
+        # Filters censored words located in the censored term table
         words, cat = saved_phrases.split(), category.split()
         banned_word = [word for word in words if word in cterms]
         cat_word = [word for word in cat if word in cterms]
@@ -641,6 +627,7 @@ def phrases():
             return jsonify({"error": message}), 201
         try:
             if (
+                # Validation Checks
                 saved_phrases != ""
                 and category != ""
                 and saved_phrases != None
@@ -669,6 +656,7 @@ def phrases():
         return jsonify({"message": "Saved Phrase Deleted"}), 201
 
 
+# Gets the category for saved phrases along with the symbols associated with them.
 @app.route("/api/fetch_category_symbols")
 def fetch_category_symbols():
     categories = [
@@ -683,7 +671,6 @@ def fetch_category_symbols():
             .filter(Words.word == category)
             .all()
         )
-        print(query)
         if query != []:
             phrases_by_category[category] = [
                 {"symbol": phrase.symbol} for phrase in query
@@ -694,6 +681,7 @@ def fetch_category_symbols():
     return jsonify(phrases_by_category)
 
 
+# Allow for crud of words.
 @app.route("/api/word", methods=["POST", "GET", "PUT", "DELETE"])
 def words():
     id = request.args.get("id")
@@ -705,6 +693,8 @@ def words():
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
         words, cat = word.split(), category.split()
+
+        # Filters censored words located in the censored term table
         banned_word = [word for word in words if word in cterms]
         cat_word = [word for word in cat if word in cterms]
 
@@ -752,6 +742,9 @@ def words():
         symbol = request.args.get("symbol")
         category = request.args.get("category").lower().replace("%20", " ").strip()
         words, cat = cword.split(), category.split()
+
+        # Filters censored words located in the censored term table
+
         banned_word = [word for word in words if word in cterms]
         cat_word = [word for word in cat if word in cterms]
 
@@ -781,6 +774,7 @@ def words():
         return jsonify({"message": "Word Deleted"}), 201
 
 
+# Checks to see if a phrase already exsts
 @app.route("/api/check_message")
 def check_message():
     saved_phrases = request.args.get("saved_phrases").lower()
@@ -795,10 +789,9 @@ def check_message():
     return jsonify({"error": "Phrase does not exist"})
 
 
-# Seed Vocab List
+# Seeds the Vocab List, Censored Terms and Saved Phrases
 @app.route("/api/seed_database")
 def seed_database():
-    # Change file path to the one on your computer (Temp Maybe). Lol use os.path
     df = pd.read_excel(
         f"{os.path.abspath(os.getcwd())}\\app\\Vocab list.xlsx", sheet_name=None
     )
@@ -817,7 +810,6 @@ def seed_database():
                         category=str(row["category"]).lower()
                         if isinstance(row["category"], str)
                         else row["category"],
-                        # category=(row["category"]),
                         grade_level=(row["grade_level"]),
                         time=(row["time"]),
                         place=(row["place"]),
@@ -919,11 +911,13 @@ def seed_database():
         return {"success": "database seeded"}, 202
 
 
+# Generates a csrf token to associated with a session
 @app.route("/api/csrf-token", methods=["GET"])
 def get_csrf():
     return jsonify({"csrf_token": generate_csrf()})
 
 
+# Allows for crud of pinned words
 @app.route("/api/pinned_words", methods=["GET", "POST", "DELETE"])
 def pinned_words():
     if request.method == "GET":
@@ -959,6 +953,7 @@ def pinned_words():
         return jsonify({"message": "Pinned Word Deleted"}), 200
 
 
+# Filters out the censored terms
 @app.route("/api/filter_words", methods=["GET", "POST"])
 def filter():
     cterms = set([row.term for row in CensoredTerms.query.all()])
